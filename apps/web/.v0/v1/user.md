@@ -1,1 +1,0 @@
-in the web app, add a fixed tiny black popup at the bottom right corner that shows the nextjs version on all the pages /apps/web/app/layout.tsx
