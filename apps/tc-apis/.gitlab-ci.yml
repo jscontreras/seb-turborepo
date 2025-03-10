@@ -1,0 +1,51 @@
+default:
+  image: node:latest
+deploy_production:
+  stage: deploy
+  only:
+    - main
+  script:
+    # Get Vercel CLI installed
+    - npm install --global vercel
+    # Connect to existing project
+    - vercel link --yes --project=$PROD_PROJECT_NAME --token=$VERCEL_TOKEN --scope=$VERCEL_SCOPE
+    # Get env variables configured for project (production in this case)
+    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN --scope=$VERCEL_SCOPE
+    # Build and Deploy in Vercel and capture the deployment URL
+    - DEPLOYMENT_URL=$(vercel deploy --prod --token=$VERCEL_TOKEN --scope=$VERCEL_SCOPE)
+    # OPTIONAL: Set domain (domain handled by Vercel)
+    - vercel alias set $DEPLOYMENT_URL $PROD_URL --token=$VERCEL_TOKEN --scope=$VERCEL_SCOPE
+deploy_staging:
+  stage: deploy
+  only:
+    - staging
+  script:
+    - npm install --global vercel
+    - vercel link --yes --project=$STAGING_PROJECT_NAME --token=$VERCEL_TOKEN --scope=$VERCEL_SCOPE
+    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN  --scope=$VERCEL_SCOPE
+    - DEPLOYMENT_URL=$(vercel deploy --prod --token=$VERCEL_TOKEN --scope=$VERCEL_SCOPE)
+    - vercel alias set $DEPLOYMENT_URL $STAGING_URL --token=$VERCEL_TOKEN --scope=$VERCEL_SCOPE
+
+deploy_develop:
+  stage: deploy
+  only:
+    - develop
+  script:
+    - npm install --global vercel
+    - vercel link --yes --project=$PROD_PROJECT_NAME --token=$VERCEL_TOKEN --scope=$VERCEL_SCOPE
+    - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN --scope=$VERCEL_SCOPE
+    - DEPLOYMENT_URL=$(vercel deploy --token=$VERCEL_TOKEN --scope=$VERCEL_SCOPE)
+    - vercel alias set $DEPLOYMENT_URL $DEV_URL --token=$VERCEL_TOKEN --scope=$VERCEL_SCOPE
+
+deploy_feature:
+  stage: deploy
+  except:
+    - main
+    - staging
+    - develop
+  script:
+    - npm install --global vercel
+    - vercel link --yes --project=$PROD_PROJECT_NAME --token=$VERCEL_TOKEN --scope=$VERCEL_SCOPE
+    - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN --scope=$VERCEL_SCOPE
+    - DEPLOYMENT_URL=$(vercel deploy --token=$VERCEL_TOKEN --scope=$VERCEL_SCOPE)
+    - vercel alias set $DEPLOYMENT_URL $CI_COMMIT_BRANCH-$PROD_PROJECT_NAME.$VERCEL_SCOPE.vercel.app --token=$VERCEL_TOKEN --scope=$VERCEL_SCOPE
