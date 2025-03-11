@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
 
-  const env_vars: any = {};
+  const env_vars: { [key: string]: string } = {};
   const var_names = [
     'NEW_RELIC_APP_NAME',
     'NEW_RELIC_LICENSE_KEY',

@@ -9,6 +9,9 @@
     "build": {
       "env": [
         "OPENAI_API_KEY"
+      ],
+      "dependsOn": [
+        "^build"
       ]
     }
   }

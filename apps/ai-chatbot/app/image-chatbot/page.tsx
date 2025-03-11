@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -65,9 +66,11 @@ export default function ImageGenerator() {
 
       {imageData && (
         <div className="mt-4">
-          <img
+          <Image
             src={imageData}
             alt="Generated image"
+            width={500}
+            height={500}
             className="w-full rounded-lg shadow-lg"
           />
         </div>
