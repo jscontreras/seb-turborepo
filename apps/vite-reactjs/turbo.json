@@ -4,11 +4,11 @@
   ],
   "globalEnv": [
     "AUTH0_CLIENT_SECRET",
-    "VITE_AUTH0_AUDIENCE",
-    "VITE_AUTH0_CALLBACK_URL",
-    "VITE_AUTH0_CLIENT_ID",
-    "VITE_AUTH0_DOMAIN",
-    "VITE_AUTH0_SCOPE"
+    "AUTH0_AUDIENCE",
+    "AUTH0_CALLBACK_URL",
+    "AUTH0_CLIENT_ID",
+    "AUTH0_DOMAIN",
+    "AUTH0_SCOPE"
   ],
   "tasks": {
     "build": {
