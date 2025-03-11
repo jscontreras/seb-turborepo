@@ -40,7 +40,7 @@ export default async function handler(
     }
 
     // Get info from AUTH0
-    const userDetails = await fetch(`https://${AUTH0_DOMAIN}/userinfo`, {
+    const userDetails: any = await fetch(`https://${AUTH0_DOMAIN}/userinfo`, {
       headers: {
         Authorization: `Bearer ${token}`,
       }
