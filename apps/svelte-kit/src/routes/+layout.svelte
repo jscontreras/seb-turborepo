@@ -44,6 +44,7 @@
         },
         validOrigins[validOrigins.indexOf(event.origin)]
       );
+      console.log('Sending:message.payload', message.payload)
     }
   };
 
