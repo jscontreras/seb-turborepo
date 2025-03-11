@@ -43,13 +43,14 @@ export default async function handler(
     const userDetails = await fetch(`https://${AUTH0_DOMAIN}/userinfo`, {
       headers: {
         Authorization: `Bearer ${token}`,
-      }});
+      }
+    });
 
-    const {name} = await userDetails.json() as any;
+    const { name } = await userDetails.json() as any;
 
     // If all checks pass, return success response
-    return response.status(200).json({ message: `Hello ${name}! (via OAUTH protected Vercel Function)` });
+    return (response.status(200) as VercelResponse).json({ message: `Hello ${name}! (via OAUTH protected Vercel Function)` });
   } catch (error: any) {
-    return response.status(401).json({ message: error.message });
+    return (response.status(401) as VercelResponse).json({ message: error.message });
   }
 }
