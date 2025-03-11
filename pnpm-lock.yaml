@@ -190,11 +190,9 @@ importers:
       reactstrap:
         specifier: ^9.2.3
         version: 9.2.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      "server\n":
-        specifier: |
-          link:@apollo/server
-        version: |
-          link:@apollo/server
+      server:
+        specifier: link:@apollo/server
+        version: link:@apollo/server
     devDependencies:
       '@eslint/js':
         specifier: ^9.17.0
