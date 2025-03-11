@@ -26,6 +26,24 @@
       "outputs": [
         "dist/**"
       ]
+    },
+    "vercel": {
+      "cache": false,
+      "persistent": true,
+      "env": [
+        "AUTH0_CLIENT_SECRET",
+        "VITE_AUTH0_AUDIENCE",
+        "VITE_AUTH0_CALLBACK_URL",
+        "VITE_AUTH0_CLIENT_ID",
+        "VITE_AUTH0_DOMAIN",
+        "VITE_AUTH0_SCOPE"
+      ],
+      "dependsOn": [
+        "^src"
+      ],
+      "outputs": [
+        "src/**"
+      ]
     }
   }
 }

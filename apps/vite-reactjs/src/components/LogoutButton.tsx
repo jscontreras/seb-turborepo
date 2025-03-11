@@ -1,7 +1,8 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useContext } from "react";
+import { AuthContext } from "../App";
 
 const LogoutButton = () => {
-  const { logout, isAuthenticated } = useAuth0();
+  const { logout, isAuthenticated } = useContext(AuthContext) as any;
 
   // Render nothing if the user is already authenticated
   if (!isAuthenticated) {

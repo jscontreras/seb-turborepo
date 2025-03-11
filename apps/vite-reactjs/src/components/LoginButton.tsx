@@ -1,16 +1,17 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import { getConfig } from "../auth0/config";
+import { useContext } from "react";
+import { AuthContext } from "../App";
 
 // Required for consent
 const { authorizationParams } = getConfig();
 
 const LoginButton = () => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, user } = useContext(AuthContext) as any;
 
   // Render a link to /profile if the user is authenticated
   if (isAuthenticated) {
-    return <Link className="p-4" to="/profile">Go to Profile</Link>;
+    return <Link className="p-4" to="/profile">Go to {user.name}'s' Profile</Link>;
   }
 
   // Render the login button if not authenticated

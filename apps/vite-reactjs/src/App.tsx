@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
@@ -8,11 +8,21 @@ import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import Profile from './components/Profile';
-import { useAuth0 } from '@auth0/auth0-react';
+import { Auth0ContextInterface, useAuth0, User } from '@auth0/auth0-react';
 
+export const AuthContext = createContext({});
+// 2. Create a Provider component
+const AuthProvider = ({ children, authContextInit }: { children: any, authContextInit :Auth0ContextInterface<User>}) => {
+  return (
+    <AuthContext.Provider value={authContextInit}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 function App() {
   const [count, setCount] = useState(0);
-  const { isLoading, getAccessTokenSilently } = useAuth0();
+  const authContextInit = useAuth0();
+  const { isLoading, getAccessTokenSilently } = authContextInit;
   const [messages, setMessages] = useState(
     {
       edge: '...Fetching Vercel Edge Function...',
@@ -112,35 +122,37 @@ function App() {
   return (
     <Router>
       <Auth0ProviderWithNavigate>
-        {/* Wrapper for max width and centering */}
-        <div className="flex flex-col min-h-screen items-center bg-gray-100">
-          {/* Navbar */}
-          <nav className="bg-blue-600 text-white px-8 py-3 flex justify-between items-center shadow-md w-full max-w-screen-xl">
-            {/* Transformed into a Link */}
-            <Link to="/" className="text-lg font-semibold hover:underline p-4">
-              Home
-            </Link>
-            <div className="flex space-x-4">
-              <LoginButton />
-              <LogoutButton />
-            </div>
-          </nav>
+        <AuthProvider authContextInit={authContextInit} >
+          {/* Wrapper for max width and centering */}
+          <div className="flex flex-col min-h-screen items-center bg-gray-100">
+            {/* Navbar */}
+            <nav className="bg-blue-600 text-white px-8 py-3 flex justify-between items-center shadow-md w-full max-w-screen-xl">
+              {/* Transformed into a Link */}
+              <Link to="/" className="text-lg font-semibold hover:underline p-4">
+                Home
+              </Link>
+              <div className="flex space-x-4">
+                <LoginButton />
+                <LogoutButton />
+              </div>
+            </nav>
 
-          {/* Main Content */}
-          <main className="flex-grow bg-white p-6 w-full max-w-screen-xl">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route
-                path="/profile"
-                element={
-                  <ProtectedRoute>
-                    <Profile />
-                  </ProtectedRoute>
-                }
-              />
-            </Routes>
-          </main>
-        </div>
+            {/* Main Content */}
+            <main className="flex-grow bg-white p-6 w-full max-w-screen-xl">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  }
+                />
+              </Routes>
+            </main>
+          </div>
+        </AuthProvider>
       </Auth0ProviderWithNavigate>
     </Router>
   );
