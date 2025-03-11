@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "//"
+  ],
+  "tasks": {
+    "build": {
+      "env": [
+        "OPENAI_API_KEY"
+      ]
+    }
+  }
+}
