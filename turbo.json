@@ -1,6 +1,9 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
+  "globalPassThroughEnv": [
+    "FLAGS_SECRET"
+  ],
   "tasks": {
     "build": {
       "dependsOn": [
@@ -14,7 +17,8 @@
         ".next/**",
         "!.next/cache/**",
         ".svelte-kit/**",
-        "dist/**"
+        "dist/**",
+        ".vercel/**"
       ]
     },
     "lint": {

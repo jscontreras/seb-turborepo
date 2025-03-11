@@ -6,27 +6,10 @@
     "FLAGS_SECRET"
   ],
   "tasks": {
-    "build": {
-      "outputs": [
-        ".svelte-kit/**",
-        "build/**"
-      ],
-      "dependsOn": [
-        "^build"
-      ]
-    },
-    "dev": {
-      "persistent": true,
-      "cache": false
-    },
     "preview": {
       "dependsOn": [
         "build"
       ]
-    },
-    "lint": {},
-    "test": {
-      "outputs": []
     }
   }
 }
