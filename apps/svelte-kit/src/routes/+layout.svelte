@@ -44,16 +44,16 @@
         },
         validOrigins[validOrigins.indexOf(event.origin)]
       );
-      console.log('Sending:message.payload', message.payload)
+      console.log("Sending:message.payload", message.payload);
     }
   };
 
   // This always shows the toolbar in production. In your project, you probably
   // want to show it only under certain conditions.
   onMount(() => {
-    console.log('Mounting main Layout')
     mountVercelToolbar();
     setTimeout(() => {
+      console.log("Mounting main Layout--", window);
       if (typeof window !== "undefined") {
         console.log("Mounting Listener!!");
         window.addEventListener("message", handleMessage);
@@ -77,8 +77,9 @@
     --bg: rgb(250, 250, 250);
     --svelte: #ff3e00;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-family:
+      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+      Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     background: var(--bg);
     color: var(--fg);
     overflow: hidden;
