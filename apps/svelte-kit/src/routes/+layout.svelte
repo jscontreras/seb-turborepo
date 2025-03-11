@@ -54,7 +54,7 @@
     mountVercelToolbar();
     setTimeout(() => {
       if (typeof window !== "undefined") {
-        console.log("Mounting Listener");
+        console.log("Mounting Listener!!");
         window.addEventListener("message", handleMessage);
       }
     }, 1000);
