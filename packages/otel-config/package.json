@@ -1,0 +1,34 @@
+{
+  "name": "otel-config",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/instrumentation.ts",
+      "default": "./dist/instrumentation.js"
+    },
+    "./node": {
+      "types": "./src/otel/instrumentation.vercel.node.ts",
+      "default": "./dist/otel/instrumentation.vercel.node.js"
+    },
+    "./edge": {
+      "types": "./src/otel/instrumentation.vercel.edge.ts",
+      "default": "./dist/otel/instrumentation.vercel.edge.js"
+    }
+  },
+  "dependencies": {
+    "@vercel/otel": "latest",
+    "@opentelemetry/sdk-metrics": "latest",
+    "@opentelemetry/sdk-trace-base": "latest",
+    "@opentelemetry/sdk-logs": "latest",
+    "@opentelemetry/exporter-logs-otlp-http": "latest"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "latest"
+  }
+}
