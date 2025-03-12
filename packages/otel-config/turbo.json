@@ -7,14 +7,16 @@
       "env": [
         "NEW_RELIC_LICENSE_KEY",
         "NEW_RELIC_APP_NAME",
-        "NEW_RELIC_USER_KEY"
+        "NEW_RELIC_USER_KEY",
+        "TELEMETRY_CUSTOM_PRODUCER"
       ]
     },
     "dev": {
       "env": [
         "NEW_RELIC_LICENSE_KEY",
         "NEW_RELIC_APP_NAME",
-        "NEW_RELIC_USER_KEY"
+        "NEW_RELIC_USER_KEY",
+        "TELEMETRY_CUSTOM_PRODUCER"
       ]
     }
   }

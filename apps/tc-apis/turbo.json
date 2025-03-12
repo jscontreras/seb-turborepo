@@ -8,6 +8,7 @@
         "NEW_RELIC_LICENSE_KEY",
         "NEW_RELIC_APP_NAME",
         "NEW_RELIC_USER_KEY",
+        "TELEMETRY_CUSTOM_PRODUCER",
         "WEBHOOK_SECRET",
         "SALUTE"
       ]
@@ -18,6 +19,7 @@
         "NEW_RELIC_APP_NAME",
         "NEW_RELIC_USER_KEY",
         "WEBHOOK_SECRET",
+        "TELEMETRY_CUSTOM_PRODUCER",
         "SALUTE"
       ]
     }

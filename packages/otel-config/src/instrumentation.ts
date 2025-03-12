@@ -1,7 +1,11 @@
 import { registerOTel } from "@vercel/otel";
 
 export async function register() {
-  console.log("<< OTEL EXECUTED ON >>>", process.env.NEXT_RUNTIME);
+  console.log(
+    "<< OTEL EXECUTED ON >>>",
+    process.env.NEXT_RUNTIME,
+    process.env.TELEMETRY_CUSTOM_PRODUCER,
+  );
   // vercel means using @vercel/otel natively without NewRelic extension.
   // This way will trace middlware but no context for some reason
   if (process.env.TELEMETRY_CUSTOM_PRODUCER === "manual") {
