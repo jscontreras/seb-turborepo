@@ -51,13 +51,13 @@
   // This always shows the toolbar in production. In your project, you probably
   // want to show it only under certain conditions.
   onMount(() => {
-    mountVercelToolbar();
     setTimeout(() => {
       console.log("Mounting main Layout--", window);
       if (typeof window !== "undefined") {
         console.log("Mounting Listener!!");
         window.addEventListener("message", handleMessage);
       }
+      mountVercelToolbar();
     }, 1000);
   });
 </script>
