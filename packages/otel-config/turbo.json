@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "//"
+  ],
+  "tasks": {
+    "build": {
+      "env": [
+        "NEW_RELIC_LICENSE_KEY",
+        "NEW_RELIC_APP_NAME",
+        "NEW_RELIC_USER_KEY"
+      ]
+    },
+    "dev": {
+      "env": [
+        "NEW_RELIC_LICENSE_KEY",
+        "NEW_RELIC_APP_NAME",
+        "NEW_RELIC_USER_KEY"
+      ]
+    }
+  }
+}
