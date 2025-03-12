@@ -2,18 +2,25 @@
   "extends": [
     "//"
   ],
-  "globalEnv": [
-    "AUTH0_CLIENT_SECRET",
-    "AUTH0_AUDIENCE",
-    "AUTH0_CALLBACK_URL",
-    "AUTH0_CLIENT_ID",
-    "AUTH0_DOMAIN",
-    "AUTH0_SCOPE"
-  ],
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^build"
+      "env": [
+        "AUTH0_CLIENT_SECRET",
+        "AUTH0_AUDIENCE",
+        "AUTH0_CALLBACK_URL",
+        "AUTH0_CLIENT_ID",
+        "AUTH0_DOMAIN",
+        "AUTH0_SCOPE"
+      ]
+    },
+    "dev": {
+      "env": [
+        "AUTH0_CLIENT_SECRET",
+        "AUTH0_AUDIENCE",
+        "AUTH0_CALLBACK_URL",
+        "AUTH0_CLIENT_ID",
+        "AUTH0_DOMAIN",
+        "AUTH0_SCOPE"
       ]
     },
     "vercel": {
