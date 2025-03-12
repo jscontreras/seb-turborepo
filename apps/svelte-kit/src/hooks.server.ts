@@ -1,7 +1,6 @@
-import { createHandle } from '@vercel/flags/sveltekit'
-import { FLAGS_SECRET } from '$env/static/private'
-import * as flags from '$lib/flags'
-
+import { createHandle } from "@vercel/flags/sveltekit";
+import { FLAGS_SECRET } from "$env/static/private";
+import * as flags from "$lib/flags";
 
 // Create the handle for feature flags
 const featureFlagsHandle = createHandle({ secret: FLAGS_SECRET, flags });
@@ -13,8 +12,8 @@ export const handle = async ({ event, resolve }) => {
 
   // Set the Content-Security-Policy header
   response.headers.set(
-    'Content-Security-Policy',
-    "frame-ancestors 'self' https://*.tc-vercel.dev http://localhost:3000;"
+    "Content-Security-Policy",
+    "frame-ancestors 'self' https://*.tc-vercel.dev http://localhost:3000;",
   );
 
   return response;

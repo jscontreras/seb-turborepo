@@ -5,38 +5,45 @@ I understand that the image generation functionality is not working as expected 
 First, let's update the `page.tsx` file:
 
 ```tsx file="app/page.tsx"
-"use client"
+"use client";
 
-import React, { useState } from "react"
-import { useChat } from "ai/react"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import React, { useState } from "react";
+import { useChat } from "ai/react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export default function ImageGenerator() {
-  const [imagePrompt, setImagePrompt] = useState("")
-  const [error, setError] = useState<string | null>(null)
+  const [imagePrompt, setImagePrompt] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    api: "/api/chat",
-    onError: (error) => {
-      console.error("Chat error:", error)
-      setError("An error occurred while generating the image. Please try again.")
-    },
-  })
+  const { messages, input, handleInputChange, handleSubmit, isLoading } =
+    useChat({
+      api: "/api/chat",
+      onError: (error) => {
+        console.error("Chat error:", error);
+        setError(
+          "An error occurred while generating the image. Please try again.",
+        );
+      },
+    });
 
-  const handleImagePromptSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setError(null)
+  const handleImagePromptSubmit = async (
+    e: React.FormEvent<HTMLFormElement>,
+  ) => {
+    e.preventDefault();
+    setError(null);
     try {
-      await handleSubmit(e, { body: { content: `Generate an image of: ${imagePrompt}` } })
-      setImagePrompt("") // Clear the input after submission
+      await handleSubmit(e, {
+        body: { content: `Generate an image of: ${imagePrompt}` },
+      });
+      setImagePrompt(""); // Clear the input after submission
     } catch (error) {
-      console.error("Submission error:", error)
-      setError("Failed to submit the request. Please try again.")
+      console.error("Submission error:", error);
+      setError("Failed to submit the request. Please try again.");
     }
-  }
+  };
 
   return (
     <div className="max-w-2xl mx-auto p-4">
@@ -88,20 +95,20 @@ export default function ImageGenerator() {
         ))}
       </div>
     </div>
-  )
+  );
 }
 ```
 
 Now, let's update the `route.ts` file in the `api/chat` directory to ensure it's properly handling the image generation:
 
 ```typescript file="app/api/chat/route.ts"
-import { openai } from "@ai-sdk/openai"
-import { experimental_generateImage, type Message, streamText, tool } from "ai"
-import { z } from "zod"
+import { openai } from "@ai-sdk/openai";
+import { experimental_generateImage, type Message, streamText, tool } from "ai";
+import { z } from "zod";
 
 export async function POST(request: Request) {
   try {
-    const { messages }: { messages: Message[] } = await request.json()
+    const { messages }: { messages: Message[] } = await request.json();
 
     const result = streamText({
       model: openai("gpt-4o"),
@@ -110,26 +117,28 @@ export async function POST(request: Request) {
         generateImage: tool({
           description: "Generate an image",
           parameters: z.object({
-            prompt: z.string().describe("The prompt to generate the image from"),
+            prompt: z
+              .string()
+              .describe("The prompt to generate the image from"),
           }),
           execute: async ({ prompt }) => {
             const { image } = await experimental_generateImage({
               model: openai.image("dall-e-3"),
               prompt,
-            })
-            return { image: image.base64, prompt }
+            });
+            return { image: image.base64, prompt };
           },
         }),
       },
-    })
+    });
 
-    return result.toDataStreamResponse()
+    return result.toDataStreamResponse();
   } catch (error) {
-    console.error("Error in chat API:", error)
+    console.error("Error in chat API:", error);
     return new Response(JSON.stringify({ error: "An error occurred" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
-    })
+    });
   }
 }
 ```
@@ -137,6 +146,7 @@ export async function POST(request: Request) {
 These changes should fix the issue with image generation not fetching the chat API correctly. Here's a summary of the modifications:
 
 1. In `page.tsx`:
+
    - Updated the import for `useChat` to use `ai/react` instead of `@ai-sdk/react`.
    - Modified the rendering logic to handle the `function_call` property of the assistant's message, which contains the generated image data.
    - Added error handling and improved the user experience by clearing the input after submission.

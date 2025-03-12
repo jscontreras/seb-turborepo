@@ -129,10 +129,12 @@ export default function TextGenerator() {
 These changes modify the app to generate text instead of images. Here's a summary of the modifications:
 
 1. In `app/api/chat/route.ts`:
+
    - We changed the model from "gpt-4" to "gpt-3.5-turbo" for text generation.
    - We removed any image-specific logic as we're now focusing on text generation.
 
 2. In `app/page.tsx`:
+
    - We renamed the component from `ImageGenerator` to `TextGenerator`.
    - We replaced `imagePrompt` with `textPrompt`.
    - We removed all image-related state and logic.

@@ -5,8 +5,8 @@ I'll modify the `page.tsx` and the API endpoint to work with the Vercel SDK, ass
 Let's start by updating the API endpoint:
 
 ```tsx file="app/api/chat/route.ts"
-import { OpenAIStream, StreamingTextResponse } from 'ai';
-import { Configuration, OpenAIApi } from 'openai-edge';
+import { OpenAIStream, StreamingTextResponse } from "ai";
+import { Configuration, OpenAIApi } from "openai-edge";
 
 // Create an OpenAI API client (that's edge friendly!)
 const config = new Configuration({
@@ -15,7 +15,7 @@ const config = new Configuration({
 const openai = new OpenAIApi(config);
 
 // IMPORTANT! Set the runtime to edge
-export const runtime = 'edge';
+export const runtime = "edge";
 
 export async function POST(req: Request) {
   // Extract the `messages` from the body of the request
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
   // Ask OpenAI for a streaming chat completion given the prompt
   const response = await openai.createChatCompletion({
-    model: 'gpt-4',
+    model: "gpt-4",
     stream: true,
     messages: messages.map((message: any) => ({
       content: message.content,
@@ -155,6 +155,7 @@ export default function ImageGenerator() {
 In these updates, I've made the following changes:
 
 1. In the API route (`app/api/chat/route.ts`):
+
    - Imported necessary functions from the Vercel AI SDK.
    - Set up the OpenAI configuration using the provided `OPENAI_API_KEY`.
    - Updated the POST function to use the Vercel AI SDK for streaming responses.

@@ -1,19 +1,24 @@
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
-import { Auth0ProviderWithNavigate } from './components/Auth0Provider';
-import LoginButton from './components/LoginButton';
-import LogoutButton from './components/LogoutButton';
-import { ProtectedRoute } from './components/ProtectedRoute';
-import Profile from './components/Profile';
-import { Auth0ContextInterface, useAuth0, User } from '@auth0/auth0-react';
-import { AuthContext } from './context/AuthContext';
-
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import { Auth0ProviderWithNavigate } from "./components/Auth0Provider";
+import LoginButton from "./components/LoginButton";
+import LogoutButton from "./components/LogoutButton";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import Profile from "./components/Profile";
+import { Auth0ContextInterface, useAuth0, User } from "@auth0/auth0-react";
+import { AuthContext } from "./context/AuthContext";
 
 // 2. Create a Provider component
-const AuthProvider = ({ children, authContextInit }: { children: React.ReactNode, authContextInit :Auth0ContextInterface<User>}) => {
+const AuthProvider = ({
+  children,
+  authContextInit,
+}: {
+  children: React.ReactNode;
+  authContextInit: Auth0ContextInterface<User>;
+}) => {
   return (
     <AuthContext.Provider value={authContextInit}>
       {children}
@@ -24,13 +29,12 @@ function App() {
   const [count, setCount] = useState(0);
   const authContextInit = useAuth0();
   const { isLoading, getAccessTokenSilently } = authContextInit;
-  const [messages, setMessages] = useState(
-    {
-      edge: '...Fetching Vercel Edge Function...',
-      nodejs: '...Fetching Vercel NodeJs Function...',
-      authApi: '...Fetching Auth-based API Vercel Function...',
-      ready: false
-    });
+  const [messages, setMessages] = useState({
+    edge: "...Fetching Vercel Edge Function...",
+    nodejs: "...Fetching Vercel NodeJs Function...",
+    authApi: "...Fetching Auth-based API Vercel Function...",
+    ready: false,
+  });
 
   const Home = () => (
     <div className="flex flex-col items-center justify-top pt-8 min-h-screen bg-gray-100 px-4">
@@ -45,9 +49,21 @@ function App() {
       </div>
       <h1 className="text-2xl font-semibold mt-8">Vite + React</h1>
       <div className={`text-center mt-4`}>
-        <p className={`text-lg ${messages.ready ? 'text-amber-600' : 'text-gray-500'}`}>{messages.edge}</p>
-        <p className={`text-lg ${messages.ready ? 'text-amber-600' : 'text-gray-500'}`}>{messages.nodejs}</p>
-        <p className={`text-lg ${messages.ready ? 'text-purple-700' : 'text-gray-500'}`}>{messages.authApi}</p>
+        <p
+          className={`text-lg ${messages.ready ? "text-amber-600" : "text-gray-500"}`}
+        >
+          {messages.edge}
+        </p>
+        <p
+          className={`text-lg ${messages.ready ? "text-amber-600" : "text-gray-500"}`}
+        >
+          {messages.nodejs}
+        </p>
+        <p
+          className={`text-lg ${messages.ready ? "text-purple-700" : "text-gray-500"}`}
+        >
+          {messages.authApi}
+        </p>
         {/* <AuthorizedApiCallbacks /> */}
       </div>
       <div className="card mt-6">
@@ -67,53 +83,60 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [edgeResponse, nodejsResponse, authApiResponse] = await Promise.all([
-          fetch('/api/edge/hello'),
-          fetch('/api/nodejs/hello'),
-          new Promise((resolve) => {
-            const fetchAuthApi = async () => {
-              let validToken = 'SAMPLE_FAKE_TOKEN_INITIAL';
-              try {
-                // Extract token if authenticated, throw errors otherwise.
-                const extractToken = await getAccessTokenSilently();
-                validToken = extractToken;
-              } catch {
-                // do nothing as we intentionally want to proceed with invalid token;
-              }
-              try {
-                const authRes = await fetch(`/api/nodejs/hello-auth`, {
-                  headers: {
-                    Authorization: `Bearer ${validToken}`,
-                  },
-                });
-                if (authRes.status === 200) {
-                  resolve(authRes);
-                } else {
-                  const body = await authRes.json();
+        const [edgeResponse, nodejsResponse, authApiResponse] =
+          await Promise.all([
+            fetch("/api/edge/hello"),
+            fetch("/api/nodejs/hello"),
+            new Promise((resolve) => {
+              const fetchAuthApi = async () => {
+                let validToken = "SAMPLE_FAKE_TOKEN_INITIAL";
+                try {
+                  // Extract token if authenticated, throw errors otherwise.
+                  const extractToken = await getAccessTokenSilently();
+                  validToken = extractToken;
+                } catch {
+                  // do nothing as we intentionally want to proceed with invalid token;
+                }
+                try {
+                  const authRes = await fetch(`/api/nodejs/hello-auth`, {
+                    headers: {
+                      Authorization: `Bearer ${validToken}`,
+                    },
+                  });
+                  if (authRes.status === 200) {
+                    resolve(authRes);
+                  } else {
+                    const body = await authRes.json();
 
-                  throw new Error(`[${authRes.status}] ${authRes.statusText}: ${body.message}`);
+                    throw new Error(
+                      `[${authRes.status}] ${authRes.statusText}: ${body.message}`,
+                    );
+                  }
+                } catch (e: unknown) {
+                  if (e instanceof Error) {
+                    console.log("e", e);
+                    resolve(Response.json({ message: e.message }));
+                  }
                 }
-              } catch (e: unknown) {
-                if (e instanceof Error) {
-                  console.log('e', e)
-                  resolve(Response.json({ message: e.message }))
-                }
-              }
-            };
-            fetchAuthApi();
-          }) as Promise<Response>
-        ]);
+              };
+              fetchAuthApi();
+            }) as Promise<Response>,
+          ]);
 
         const [edgeData, nodejsData, authjsData] = await Promise.all([
           edgeResponse.json(),
           nodejsResponse.json(),
-          authApiResponse.json()
+          authApiResponse.json(),
         ]);
 
-        setMessages({ edge: edgeData.message, nodejs: nodejsData.message, ready: true, authApi: authjsData.message });
-
+        setMessages({
+          edge: edgeData.message,
+          nodejs: nodejsData.message,
+          ready: true,
+          authApi: authjsData.message,
+        });
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
     if (!isLoading && !messages.ready) {
@@ -122,19 +145,22 @@ function App() {
   }, [messages, isLoading, getAccessTokenSilently]);
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (
     <Router>
       <Auth0ProviderWithNavigate>
-        <AuthProvider authContextInit={authContextInit} >
+        <AuthProvider authContextInit={authContextInit}>
           {/* Wrapper for max width and centering */}
           <div className="flex flex-col min-h-screen items-center bg-gray-100">
             {/* Navbar */}
             <nav className="bg-blue-600 text-white px-8 py-3 flex justify-between items-center shadow-md w-full max-w-screen-xl">
               {/* Transformed into a Link */}
-              <Link to="/" className="text-lg font-semibold hover:underline p-4">
+              <Link
+                to="/"
+                className="text-lg font-semibold hover:underline p-4"
+              >
                 Home
               </Link>
               <div className="flex space-x-4">

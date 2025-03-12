@@ -27,7 +27,10 @@ export async function POST(req: Request) {
     return Response.json({ imageUrl: response.data[0].url });
   } catch (error) {
     console.error("Image generation error:", error);
-    return Response.json({ error: "Failed to generate image" }, { status: 500 });
+    return Response.json(
+      { error: "Failed to generate image" },
+      { status: 500 },
+    );
   }
 }
 ```
@@ -68,7 +71,9 @@ export default function ImageGenerator() {
       setImageUrl(data.imageUrl);
     } catch (error) {
       console.error("Image generation error:", error);
-      setError("An error occurred while generating the image. Please try again.");
+      setError(
+        "An error occurred while generating the image. Please try again.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -100,7 +105,11 @@ export default function ImageGenerator() {
 
       {imageUrl && (
         <div className="mt-4">
-          <img src={imageUrl} alt="Generated image" className="w-full rounded-lg shadow-lg" />
+          <img
+            src={imageUrl}
+            alt="Generated image"
+            className="w-full rounded-lg shadow-lg"
+          />
         </div>
       )}
     </div>

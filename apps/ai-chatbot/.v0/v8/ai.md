@@ -38,6 +38,7 @@ export async function POST(req: Request) {
 The changes made to this file are:
 
 1. We've updated the import statement to use the correct named exports from the `ai` package:
+
    ```typescript
    import { StreamingTextResponse, OpenAIStream } from "ai";
    ```

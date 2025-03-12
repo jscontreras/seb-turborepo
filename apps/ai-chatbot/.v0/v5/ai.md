@@ -41,6 +41,7 @@ export async function POST(req: Request) {
 In this updated version, we've made the following changes:
 
 1. Changed the import statement to correctly import `OpenAIStream` from the `ai` package:
+
    ```typescript
    import { StreamingTextResponse, OpenAIStream } from "ai";
    ```

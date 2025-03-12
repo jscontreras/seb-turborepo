@@ -1,10 +1,10 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { createRemoteJWKSet, jwtVerify } from 'jose';
+import { createRemoteJWKSet, jwtVerify } from "jose";
 
 // Define constants for audience and required scope
-const AUTH0_DOMAIN = process.env.VITE_AUTH0_DOMAIN || '';
+const AUTH0_DOMAIN = process.env.VITE_AUTH0_DOMAIN || "";
 const JWKS_URL = `https://${AUTH0_DOMAIN}/.well-known/jwks.json`;
-const AUDIENCE = process.env.VITE_AUTH0_AUDIENCE || '';
+const AUDIENCE = process.env.VITE_AUTH0_AUDIENCE || "";
 const ISSUER = `https://${AUTH0_DOMAIN}/`; // Auth0 issuer
 
 // Helper function that validates Auth0 token
@@ -18,14 +18,14 @@ async function validateToken(token: string) {
   const { payload } = await jwtVerify(token, JWKS, {
     issuer: ISSUER,
     audience: AUDIENCE,
-    algorithms: ['RS256'], // Ensure RS256 is used
+    algorithms: ["RS256"], // Ensure RS256 is used
   });
   return payload;
 }
 
 export default async function handler(
   request: VercelRequest,
-  response: VercelResponse
+  response: VercelResponse,
 ) {
   try {
     const authHeader = request.headers.authorization;
@@ -40,22 +40,30 @@ export default async function handler(
     }
 
     // Get info from AUTH0
-    const userDetails: Response = await fetch(`https://${AUTH0_DOMAIN}/userinfo`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
-    });
+    const userDetails: Response = await fetch(
+      `https://${AUTH0_DOMAIN}/userinfo`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
 
     interface UserDetails {
       name: string;
     }
 
-    const { name } = await userDetails.json() as UserDetails;
+    const { name } = (await userDetails.json()) as UserDetails;
 
     // If all checks pass, return success response
-    return (response.status(200) as VercelResponse).json({ message: `Hello ${name}! (via OAUTH protected Vercel Function)` });
+    return (response.status(200) as VercelResponse).json({
+      message: `Hello ${name}! (via OAUTH protected Vercel Function)`,
+    });
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return (response.status(401) as VercelResponse).json({ message: errorMessage });
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+    return (response.status(401) as VercelResponse).json({
+      message: errorMessage,
+    });
   }
 }

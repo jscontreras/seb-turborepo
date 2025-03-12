@@ -1,5 +1,5 @@
-import Link from "next/link"
-import { Button } from "@workspace/ui/components/button"
+import Link from "next/link";
+import { Button } from "@repo/ui/components/button";
 
 export function Navbar() {
   return (
@@ -24,6 +24,5 @@ export function Navbar() {
         </nav>
       </div>
     </header>
-  )
+  );
 }
-
