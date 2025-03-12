@@ -1,8 +1,9 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { Auth0ContextInterface, User } from "@auth0/auth0-react";
 
 const Profile = () => {
-  const { user, isAuthenticated, isLoading } = useContext(AuthContext) as any;
+  const { user, isAuthenticated, isLoading } = useContext(AuthContext) as Auth0ContextInterface<User>;
 
   if (isLoading) {
     return <div>Loading ...</div>;

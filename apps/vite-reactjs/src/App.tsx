@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { createContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
@@ -119,7 +119,7 @@ function App() {
     if (!isLoading && !messages.ready) {
       fetchData();
     }
-  }, [messages, isLoading]);
+  }, [messages, isLoading, getAccessTokenSilently]);
 
   if (isLoading) {
     return <div>Loading...</div>

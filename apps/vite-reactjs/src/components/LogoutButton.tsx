@@ -1,8 +1,9 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { Auth0ContextInterface, User } from "@auth0/auth0-react";
 
 const LogoutButton = () => {
-  const { logout, isAuthenticated } = useContext(AuthContext) as any;
+  const { logout, isAuthenticated } = useContext(AuthContext) as Auth0ContextInterface<User>;
 
   // Render nothing if the user is already authenticated
   if (!isAuthenticated) {
