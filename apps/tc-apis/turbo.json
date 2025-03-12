@@ -19,9 +19,6 @@
         "NEW_RELIC_USER_KEY",
         "WEBHOOK_SECRET",
         "SALUTE"
-      ],
-      "dependsOn": [
-        "otel-config#build"
       ]
     }
   }
