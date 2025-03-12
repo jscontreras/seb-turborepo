@@ -361,6 +361,10 @@ importers:
         version: 5.8.2
 
   packages/eslint-config:
+    dependencies:
+      eslint-config-turbo:
+        specifier: ^2.4.4
+        version: 2.4.4(eslint@9.22.0(jiti@2.4.2))(turbo@2.4.4)
     devDependencies:
       '@eslint/js':
         specifier: ^9.22.0
@@ -2972,6 +2976,12 @@ packages:
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
+
+  eslint-config-turbo@2.4.4:
+    resolution: {integrity: sha512-4w/heWywWkFw09a5MY5lCvb9suJlhBSkzNtGTwM5+zRif4rksubaMYy1pD0++5rqoDVcQax25jCrtii9ptsNDw==}
+    peerDependencies:
+      eslint: '>6.6.0'
+      turbo: '>2.0.0'
 
   eslint-plugin-only-warn@1.1.0:
     resolution: {integrity: sha512-2tktqUAT+Q3hCAU0iSf4xAN1k9zOpjK5WO8104mB0rT/dGhOa09582HN5HlbxNbPRZ0THV7nLGvzugcNOSjzfA==}
@@ -7677,6 +7687,12 @@ snapshots:
   eslint-config-prettier@10.1.1(eslint@9.22.0(jiti@2.4.2)):
     dependencies:
       eslint: 9.22.0(jiti@2.4.2)
+
+  eslint-config-turbo@2.4.4(eslint@9.22.0(jiti@2.4.2))(turbo@2.4.4):
+    dependencies:
+      eslint: 9.22.0(jiti@2.4.2)
+      eslint-plugin-turbo: 2.4.4(eslint@9.22.0(jiti@2.4.2))(turbo@2.4.4)
+      turbo: 2.4.4
 
   eslint-plugin-only-warn@1.1.0: {}
 

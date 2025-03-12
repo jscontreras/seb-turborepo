@@ -6,9 +6,14 @@
     "FLAGS_SECRET"
   ],
   "tasks": {
-    "preview": {
-      "dependsOn": [
-        "build"
+    "build": {
+      "env": [
+        "FLAGS_SECRET"
+      ]
+    },
+    "dev": {
+      "env": [
+        "FLAGS_SECRET"
       ]
     }
   }
