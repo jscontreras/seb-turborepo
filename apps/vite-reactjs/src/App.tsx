@@ -9,10 +9,11 @@ import LogoutButton from './components/LogoutButton';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import Profile from './components/Profile';
 import { Auth0ContextInterface, useAuth0, User } from '@auth0/auth0-react';
+import { AuthContext } from './context/AuthContext';
 
-export const AuthContext = createContext({});
+
 // 2. Create a Provider component
-const AuthProvider = ({ children, authContextInit }: { children: any, authContextInit :Auth0ContextInterface<User>}) => {
+const AuthProvider = ({ children, authContextInit }: { children: React.ReactNode, authContextInit :Auth0ContextInterface<User>}) => {
   return (
     <AuthContext.Provider value={authContextInit}>
       {children}
@@ -69,33 +70,38 @@ function App() {
         const [edgeResponse, nodejsResponse, authApiResponse] = await Promise.all([
           fetch('/api/edge/hello'),
           fetch('/api/nodejs/hello'),
-          new Promise(async (resolve) => {
-            let validToken = 'SAMPLE_FAKE_TOKEN_INITIAL';
-            try {
-              // Extract token if authenticated, throw errors otherwisse.
-              const extractToken = await getAccessTokenSilently();
-              validToken = extractToken;
-            } catch (e) {
-              // do nothing as we intentionally want to proceed with invalid token;
-            }
-            try {
-              const authRes = await fetch(`/api/nodejs/hello-auth`, {
-                headers: {
-                  Authorization: `Bearer ${validToken}`,
-                },
-              });
-              if (authRes.status === 200) {
-                resolve(authRes);
-              } else {
-                const body = await authRes.json();
-
-                throw new Error(`[${authRes.status}] ${authRes.statusText}: ${body.message}`);
+          new Promise((resolve) => {
+            const fetchAuthApi = async () => {
+              let validToken = 'SAMPLE_FAKE_TOKEN_INITIAL';
+              try {
+                // Extract token if authenticated, throw errors otherwise.
+                const extractToken = await getAccessTokenSilently();
+                validToken = extractToken;
+              } catch {
+                // do nothing as we intentionally want to proceed with invalid token;
               }
-            } catch (e: any) {
-              console.log('e', e)
-              resolve({ json: () => ({ message: e.message }) });
-            }
-          }) as Promise<any>
+              try {
+                const authRes = await fetch(`/api/nodejs/hello-auth`, {
+                  headers: {
+                    Authorization: `Bearer ${validToken}`,
+                  },
+                });
+                if (authRes.status === 200) {
+                  resolve(authRes);
+                } else {
+                  const body = await authRes.json();
+
+                  throw new Error(`[${authRes.status}] ${authRes.statusText}: ${body.message}`);
+                }
+              } catch (e: unknown) {
+                if (e instanceof Error) {
+                  console.log('e', e)
+                  resolve(Response.json({ message: e.message }))
+                }
+              }
+            };
+            fetchAuthApi();
+          }) as Promise<Response>
         ]);
 
         const [edgeData, nodejsData, authjsData] = await Promise.all([

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AuthContext } from "../App";
+import { AuthContext } from "../context/AuthContext";
 
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useContext(AuthContext) as any;

@@ -40,17 +40,22 @@ export default async function handler(
     }
 
     // Get info from AUTH0
-    const userDetails: any = await fetch(`https://${AUTH0_DOMAIN}/userinfo`, {
+    const userDetails: Response = await fetch(`https://${AUTH0_DOMAIN}/userinfo`, {
       headers: {
         Authorization: `Bearer ${token}`,
       }
     });
 
-    const { name } = await userDetails.json() as any;
+    interface UserDetails {
+      name: string;
+    }
+
+    const { name } = await userDetails.json() as UserDetails;
 
     // If all checks pass, return success response
     return (response.status(200) as VercelResponse).json({ message: `Hello ${name}! (via OAUTH protected Vercel Function)` });
-  } catch (error: any) {
-    return (response.status(401) as VercelResponse).json({ message: error.message });
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return (response.status(401) as VercelResponse).json({ message: errorMessage });
   }
 }

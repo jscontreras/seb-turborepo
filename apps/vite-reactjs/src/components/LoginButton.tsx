@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { getConfig } from "../auth0/config";
 import { useContext } from "react";
-import { AuthContext } from "../App";
+import { AuthContext } from "../context/AuthContext";
 
 // Required for consent
 const { authorizationParams } = getConfig();

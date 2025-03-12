@@ -41,7 +41,7 @@ export default async function middleware(request: Request) {
     // Validate token
     try {
       await validateToken(token);
-    } catch (error) {
+    } catch {
       return new Response(JSON.stringify({ message: `Invalid Credentials [M]` }), { status: 401 });
     }
   }
