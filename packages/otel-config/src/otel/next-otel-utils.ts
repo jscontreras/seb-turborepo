@@ -6,9 +6,9 @@ import {
   SpanOptions,
   SpanStatusCode,
   trace as traceApi,
-} from '@opentelemetry/api';
+} from "@opentelemetry/api";
 
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
 /**
  * This function gets the active tracer (and span if any) and creates a new span with context
@@ -47,7 +47,7 @@ export function traceEnabler<T>(
 
   const options: SpanOptions = {
     attributes: {
-      middleware: 'hello from Vercel Middleware!!',
+      middleware: "hello from Vercel Middleware!!",
       ...extraAttributes,
     },
   };
@@ -63,9 +63,9 @@ export function traceEnabler<T>(
     activeSpan.setAttributes(options.attributes || {});
   }
   // Sending Trace (Will create a new span within the middleware)
-  const tracer = traceApi.getTracer(process.env.NEW_RELIC_APP_NAME || '');
+  const tracer = traceApi.getTracer(process.env.NEW_RELIC_APP_NAME || "");
   if (sendLogs) {
-    console.log('OTEL>>> Sending Span: ', spanName);
+    console.log("OTEL>>> Sending Span: ", spanName);
   }
   return tracer.startActiveSpan(spanName, options, async (span) => {
     return contextInjector(await spanFn(span));
@@ -82,7 +82,7 @@ function contextInjector(response: undefined | Response) {
   const { headers } = responseObj || {};
   propagation.inject(context.active(), headers);
   Object.keys(headers).forEach((key: string) => {
-    responseObj.headers.append(key, headers.get(key) + '');
+    responseObj.headers.append(key, headers.get(key) + "");
   });
   return responseObj;
 }
@@ -122,9 +122,9 @@ export function addCustomSpan(
     }
   };
 
-  const tracer = traceApi.getTracer(process.env.NEW_RELIC_APP_NAME || '');
+  const tracer = traceApi.getTracer(process.env.NEW_RELIC_APP_NAME || "");
   if (sendLogs) {
-    console.log('OTEL>>> Sending Span: ', spanName);
+    console.log("OTEL>>> Sending Span: ", spanName);
   }
   return tracer.startActiveSpan(spanName, options, spanFn);
 }
@@ -140,7 +140,7 @@ export function getTraceContextHeaders(sendLogs: boolean = false) {
   const headers = new Headers();
   propagation.inject(context.active(), headers);
   if (sendLogs) {
-    console.log('OTEL>>> Trace Headers: ', headers);
+    console.log("OTEL>>> Trace Headers: ", headers);
   }
   return headers;
 }

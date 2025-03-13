@@ -4,11 +4,11 @@ export const dynamic = "force-dynamic"; // This ensures the route is always dyna
 
 export async function GET(req: NextRequest) {
   // Simulate fetching some data
-  const middlewareHeader = req.headers.get('X-Custom-Header')|| 'none';
+  const middlewareHeader = req.headers.get("X-Custom-Header") || "none";
   const data = {
     message: "This is dynamic data",
     datetime: new Date().toISOString(),
-    middlewareHeader: `X-Custom-Header: ${middlewareHeader}`
+    middlewareHeader: `X-Custom-Header: ${middlewareHeader}`,
   };
 
   // Return the response
