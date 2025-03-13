@@ -11,6 +11,11 @@
       "types": "./src/instrumentation.ts",
       "default": "./dist/instrumentation.js"
     },
+    "./next-utils": {
+      "types": "./src/otel/next-otel-utils.d.ts",
+      "import": "./dist/otel/next-otel-utils.js",
+      "require": "./dist/otel/next-otel-utils.cjs"
+    },
     "./node": {
       "types": "./src/otel/instrumentation.vercel.node.ts",
       "default": "./dist/otel/instrumentation.vercel.node.js"
@@ -21,11 +26,13 @@
     }
   },
   "dependencies": {
-    "@vercel/otel": "latest",
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/exporter-logs-otlp-http": "latest",
+    "@opentelemetry/sdk-logs": "latest",
     "@opentelemetry/sdk-metrics": "latest",
     "@opentelemetry/sdk-trace-base": "latest",
-    "@opentelemetry/sdk-logs": "latest",
-    "@opentelemetry/exporter-logs-otlp-http": "latest"
+    "@vercel/otel": "latest",
+    "next": "15.3.0-canary.6"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
