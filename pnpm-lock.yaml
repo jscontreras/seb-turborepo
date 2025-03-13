@@ -139,9 +139,6 @@ importers:
       next:
         specifier: 15.2.2-canary.6
         version: 15.2.2-canary.6(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      next-utils:
-        specifier: link:@repo/otel-config/next-utils
-        version: link:@repo/otel-config/next-utils
       path:
         specifier: ^0.12.7
         version: 0.12.7
