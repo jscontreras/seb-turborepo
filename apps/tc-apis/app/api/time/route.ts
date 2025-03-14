@@ -24,6 +24,7 @@ export async function GET(req: NextRequest) {
         apiFnAttribute: "Hello World (api.tc-vercel.dev!!",
         spanText: "Some API Span Text",
       },
+      forceRename: true,
     },
   );
 }
