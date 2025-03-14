@@ -6,7 +6,7 @@ async function originalMiddleware(request: NextRequest) {
   const url = request.nextUrl;
 
   // How to override cache headers (This will break cache as it is private)
-  if (url.pathname.startsWith("/")) {
+  if (url.pathname === "/" || url.pathname.startsWith("/api")) {
     const response = NextResponse.next();
     response.headers.set("X-Custom-Header", "Header-Added-Via-Middleware");
     return response;
@@ -21,6 +21,12 @@ async function originalMiddleware(request: NextRequest) {
  * @returns
  */
 export async function middleware(request: NextRequest): Promise<Response> {
+  const pathname = request.nextUrl.pathname;
+  const extensionPattern = /\.[^\/]+$/;
+
+  if (extensionPattern.test(pathname)) {
+    return NextResponse.next();
+  }
   return middlewareTraceEnabler(
     `Middleware: ${request.nextUrl.pathname}`,
     async () => {
@@ -42,6 +48,5 @@ export const config = {
   matcher: [
     "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
     "/api/:path*",
-    "/",
   ],
 };
