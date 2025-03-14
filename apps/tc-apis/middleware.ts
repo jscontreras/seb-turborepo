@@ -32,6 +32,7 @@ export async function middleware(request: NextRequest): Promise<Response> {
         middleware: "Hello World (api.tc-vercel.dev!!",
         spanText: "Some Span Text",
       },
+      forceRename: true
     },
   );
 }
