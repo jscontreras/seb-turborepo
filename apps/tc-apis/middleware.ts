@@ -27,7 +27,10 @@ export async function middleware(request: NextRequest): Promise<Response> {
       return (await originalMiddleware(request)) || NextResponse.next();
     },
     true,
-    { middleware: "Hello World!!" },
+    {
+      middleware: "Hello World (api.tc-vercel.dev!!",
+      spanText: "Some Span Text"
+    },
   );
 }
 
