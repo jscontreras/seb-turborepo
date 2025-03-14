@@ -32,12 +32,16 @@ export async function middleware(request: NextRequest): Promise<Response> {
         middleware: "Hello World (api.tc-vercel.dev!!",
         spanText: "Some Span Text",
       },
-      forceRename: true
+      forceRename: true,
     },
   );
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/api/:path*", "/"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    "/api/:path*",
+    "/",
+  ],
 };
