@@ -6,7 +6,7 @@ async function originalMiddleware(request: NextRequest) {
   const url = request.nextUrl;
 
   // How to override cache headers (This will break cache as it is private)
-  if (url.pathname.startsWith("/api/")) {
+  if (url.pathname.startsWith("/")) {
     const response = NextResponse.next();
     response.headers.set("X-Custom-Header", "Header-Added-Via-Middleware");
     return response;
@@ -39,5 +39,5 @@ export async function middleware(request: NextRequest): Promise<Response> {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/api/:path*"],
+  matcher: ["/api/:path*", "/"],
 };
