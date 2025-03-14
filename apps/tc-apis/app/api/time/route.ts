@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic"; // This ensures the route is always dyna
 
 export async function GET(req: NextRequest) {
   return apiTraceEnabler(
-    `GETAPI: ${req.nextUrl.pathname}`,
+    `GET API: ${req.nextUrl.pathname}`,
     () => {
       // Simulate fetching some data
       const middlewareHeader = req.headers.get("X-Custom-Header") || "none";
