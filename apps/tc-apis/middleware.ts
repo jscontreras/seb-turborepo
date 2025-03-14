@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
-import { traceEnabler } from "@repo/otel-config/next-utils";
+import { middlewareTraceEnabler } from "@repo/otel-config/next-utils";
 
 async function originalMiddleware(request: NextRequest) {
   const url = request.nextUrl;
@@ -21,15 +21,17 @@ async function originalMiddleware(request: NextRequest) {
  * @returns
  */
 export async function middleware(request: NextRequest): Promise<Response> {
-  return traceEnabler(
+  return middlewareTraceEnabler(
     `Middleware: ${request.nextUrl.pathname}`,
     async () => {
       return (await originalMiddleware(request)) || NextResponse.next();
     },
-    true,
     {
-      middleware: "Hello World (api.tc-vercel.dev!!",
-      spanText: "Some Span Text"
+      sendLogs: true,
+      extraAttributes: {
+        middleware: "Hello World (api.tc-vercel.dev!!",
+        spanText: "Some Span Text",
+      },
     },
   );
 }

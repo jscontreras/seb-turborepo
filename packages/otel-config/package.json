@@ -32,7 +32,7 @@
     "@opentelemetry/sdk-metrics": "latest",
     "@opentelemetry/sdk-trace-base": "latest",
     "@vercel/otel": "latest",
-    "next": "15.3.0-canary.6"
+    "next": "15.3.0-canary.8"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
