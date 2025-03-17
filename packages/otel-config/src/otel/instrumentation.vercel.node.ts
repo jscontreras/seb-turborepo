@@ -64,7 +64,9 @@ registerOTel({
   instrumentationConfig: {
     fetch: {
       // Ignored URLs
-      ignoreUrls: [/^https:\/\/telemetry.nextjs.org/],
+      ignoreUrls: [/^https:\/\/telemetry.nextjs.org/, /(^|\.)tc-vercel\.dev$/],
+      // Propagation
+      propagateContextUrls: [/(^|\.)tc-vercel\.dev$/],
     },
   },
 });
