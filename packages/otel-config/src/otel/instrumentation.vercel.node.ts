@@ -63,7 +63,8 @@ registerOTel({
   logRecordProcessor: new SimpleLogRecordProcessor(otlpLogExporter),
   instrumentationConfig: {
     fetch: {
-      ignoreUrls: [/^https:\/\/telemetry.nextjs.org/],
+      // Ignored URLs
+      ignoreUrls: [/^https:\/\/telemetry.nextjs.org/, /(^|\.)tc-vercel\.dev$/],
     },
   },
 });
