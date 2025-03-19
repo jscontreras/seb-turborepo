@@ -1,22 +1,22 @@
 name: Vercel Preview Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  on:
-    push:
-      branches:
-        - experiment-*
-  jobs:
-    Deploy-Preview:
-      runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          project_id:
-            - prj_FLOv28UV6IQNzVCJbBdcQULWKTiJ
-      steps:
-        - uses: actions/checkout@v2
-        - name: Install Vercel CLI
-          run: npm install --global vercel@latest
-        - name: Deploy Project on Vercel
-          env:
-            VERCEL_PROJECT_ID: ${{ matrix.project_id }}
-          run: vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
+on:
+  push:
+    branches:
+      - experiment-*
+jobs:
+  Deploy-Preview:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project_id:
+          - prj_FLOv28UV6IQNzVCJbBdcQULWKTiJ
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Deploy Project on Vercel
+        env:
+          VERCEL_PROJECT_ID: ${{ matrix.project_id }}
+        run: vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
