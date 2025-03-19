@@ -16,7 +16,13 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
-      - name: Deploy Project on Vercel
+      - name: Link Vercel Project
         env:
           VERCEL_PROJECT_ID: ${{ matrix.project_id }}
+        # Connect to existing project
+        run: vercel link --yes --project=${{ matrix.project_id }} --token=${{ secrets.VERCEL_ORG_ID }} --scope=${{ secrets.VERCEL_ORG_ID }}
+      - name: Pull env vars
+        # Get env variables configured for project (production in this case)
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_ORG_ID }} --scope=${{ secrets.VERCEL_ORG_ID }}
+      - name: Deploy
         run: vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
