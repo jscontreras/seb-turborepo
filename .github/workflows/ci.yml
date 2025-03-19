@@ -20,9 +20,9 @@ jobs:
         env:
           VERCEL_PROJECT_ID: ${{ matrix.project_id }}
         # Connect to existing project
-        run: vercel link --yes --project=${{ matrix.project_id }} --token=${{ secrets.VERCEL_ORG_ID }} --scope=${{ secrets.VERCEL_ORG_ID }}
+        run: vercel link --yes --project=${{ matrix.project_id }} --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }}
       - name: Pull env vars
         # Get env variables configured for project (production in this case)
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_ORG_ID }} --scope=${{ secrets.VERCEL_ORG_ID }}
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }}
       - name: Deploy
         run: vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
