@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "vercel": "rm -rf ../../.vercel && vercel dev --cwd ../../",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",

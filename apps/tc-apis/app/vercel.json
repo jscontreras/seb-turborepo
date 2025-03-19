@@ -4,5 +4,12 @@
       "experiment-*": false,
       "*-dev": true
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/me",
+      "destination": "/about",
+      "permanent": false
+    }
+  ]
 }

@@ -1,0 +1,15 @@
+{
+  "git": {
+    "deploymentEnabled": {
+      "experiment-*": false,
+      "*-dev": true
+    }
+  },
+    "redirects": [
+      {
+        "source": "/me",
+        "destination": "/",
+        "permanent": false
+      }
+    ]
+}
