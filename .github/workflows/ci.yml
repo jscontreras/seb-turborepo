@@ -1,7 +1,7 @@
 name: Vercel Preview Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: seb-turborepo-tc-apis
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 on:
   push:
     branches:
@@ -15,15 +15,18 @@ jobs:
         run: npm install --global vercel
       - name: Get Version
         run: vercel --version
-      - name: Go to folder
-        run: cd apps/tc-apis
       - name: Testing command
-        run: vercel projects --token=${{ secrets.VERCEL_TOKEN }} --scope=${{secrets.VERCEL_ORG_ID}}
+        working-directory: ./apps/tc-apis
+        run: vercel projects --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }}
       - name: link
-        run: vercel link --project=seb-turborepo-tc-apis --token=${{ secrets.VERCEL_TOKEN }} --scope=success-tc-vtest314 --yes
+        working-directory: ./apps/tc-apis
+        run: vercel link --project=${{ secrets.VERCEL_PROJECT_ID }} --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }} --yes
       - name: Pull Vercel Environment Information
+        working-directory: ./apps/tc-apis
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Build Project Artifacts
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+      # - name: Build Project Artifacts
+      #   working-directory: ./apps/tc-apis
+      #   run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        working-directory: ./apps/tc-apis
+        run: vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
