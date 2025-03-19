@@ -13,10 +13,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install Vercel CLI
         run: npm install --global vercel
-      - name: Pull Vercel Environment Information
-        run: mkdir .vercel
-      - name: Setting permissions
-        run: chmod +rwx .vercel
+      - name: Get Version
+        run: vercel --version
       - name: Testing command
         run: vercel projects --token=${{ secrets.VERCEL_TOKEN }} --scope=${{secrets.VERCEL_ORG_ID}}
       - name: link
