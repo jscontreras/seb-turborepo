@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         project_id:
-          - prj_FLOv28UV6IQNzVCJbBdcQULWKTiJ
+          - seb-turborepo-tc-apis
     steps:
       - uses: actions/checkout@v2
       - name: Install Vercel CLI
