@@ -1,32 +1,86 @@
-name: Vercel Preview Deployment
+name: Vercel Preview Deployment via REST API
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
 on:
   push:
     branches:
       - experiment-*
+
 jobs:
   Deploy-Preview:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install Vercel CLI
-        run: npm install --global vercel
-      - name: Get Version
-        run: vercel --version
-      - name: Reading Projects
+
+      - name: Install dependencies
+        run: npm ci
         working-directory: ./apps/tc-apis
-        run: vercel projects --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }}
-      - name: link
+
+      - name: Build project
+        run: npm run build
         working-directory: ./apps/tc-apis
-        run: vercel link --project=${{ secrets.VERCEL_PROJECT_ID }} --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }} --yes --debug
-      - name: Pull Vercel Environment Information
-        working-directory: ./apps/tc-apis
-        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-      # - name: Build Project Artifacts
-      #   working-directory: ./apps/tc-apis
-      #   run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Deploy Project Artifacts to Vercel
-        working-directory: ./apps/tc-apis
-        run: vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Create deployment
+        id: create_deployment
+        run: |
+          RESPONSE=$(curl -X POST "https://api.vercel.com/v13/deployments" \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "name": "tc-apis",
+              "project": "'$VERCEL_PROJECT_ID'",
+              "target": "preview",
+              "gitSource": {
+                "type": "github",
+                "repo": "'$GITHUB_REPOSITORY'",
+                "ref": "'$GITHUB_REF_NAME'",
+                "sha": "'$GITHUB_SHA'"
+              },
+              "source": "git"
+            }')
+
+          DEPLOYMENT_ID=$(echo $RESPONSE | jq -r '.id')
+          DEPLOYMENT_URL=$(echo $RESPONSE | jq -r '.url')
+
+          echo "DEPLOYMENT_ID=$DEPLOYMENT_ID" >> $GITHUB_ENV
+          echo "DEPLOYMENT_URL=$DEPLOYMENT_URL" >> $GITHUB_ENV
+
+          echo "::set-output name=deployment_id::$DEPLOYMENT_ID"
+          echo "::set-output name=deployment_url::$DEPLOYMENT_URL"
+
+      - name: Check deployment status
+        run: |
+          while true; do
+            RESPONSE=$(curl -s "https://api.vercel.com/v13/deployments/$DEPLOYMENT_ID" \
+              -H "Authorization: Bearer $VERCEL_TOKEN")
+
+            STATE=$(echo $RESPONSE | jq -r '.readyState')
+
+            if [ "$STATE" = "READY" ]; then
+              echo "Deployment successful! URL: https://$DEPLOYMENT_URL"
+              break
+            elif [ "$STATE" = "ERROR" ]; then
+              echo "Deployment failed!"
+              exit 1
+            fi
+
+            echo "Deployment status: $STATE. Waiting..."
+            sleep 10
+          done
+
+      - name: Comment on PR (if PR)
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { issue: { number: issue_number }, repo: { owner, repo } } = context;
+            github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number,
+              body: `✅ Preview deployment is ready! URL: https://${process.env.DEPLOYMENT_URL}`
+            });
