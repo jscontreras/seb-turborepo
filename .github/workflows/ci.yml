@@ -11,14 +11,11 @@ jobs:
     strategy:
       matrix:
         project_id:
-          - seb-turborepo-tc-apis
+          - "seb-turborepo-tc-apis"
     steps:
-      - uses: actions/checkout@v2
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Link Vercel Project
-        env:
-          VERCEL_PROJECT_ID: ${{ matrix.project_id }}
         # Connect to existing project
         run: vercel link --yes --project=${{ matrix.project_id }} --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }}
       - name: Pull env vars
