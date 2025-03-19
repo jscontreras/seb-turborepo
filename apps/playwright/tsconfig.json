@@ -1,0 +1,20 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "module": "nodenext",
+  "target": "es2024",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+    },
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
