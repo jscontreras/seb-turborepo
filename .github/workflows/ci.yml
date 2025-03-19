@@ -20,7 +20,7 @@ jobs:
         run: vercel projects --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }}
       - name: link
         working-directory: ./apps/tc-apis
-        run: vercel link --project=${{ secrets.VERCEL_PROJECT_ID }} --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }} --yes
+        run: vercel link --project=${{ secrets.VERCEL_PROJECT_ID }} --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }} --yes --debug
       - name: Pull Vercel Environment Information
         working-directory: ./apps/tc-apis
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
