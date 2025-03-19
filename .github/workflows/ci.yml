@@ -16,7 +16,7 @@ jobs:
       - name: Pull Vercel Environment Information
         run: rm -rf .vercel
       - name: Testing command
-        run: vercel projects --yes --token=${{ secrets.VERCEL_TOKEN }} --scope=${{secrets.VERCEL_ORG_ID}}
+        run: vercel projects --token=${{ secrets.VERCEL_TOKEN }} --scope=${{secrets.VERCEL_ORG_ID}}
       - name: link
         run: vercel link --yes --token=${{ secrets.VERCEL_TOKEN }}
       - name: Pull Vercel Environment Information
