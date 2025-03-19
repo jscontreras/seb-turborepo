@@ -41,37 +41,3 @@ jobs:
 
           echo "::set-output name=deployment_id::$DEPLOYMENT_ID"
           echo "::set-output name=deployment_url::$DEPLOYMENT_URL"
-
-      - name: Check deployment status
-        run: |
-          while true; do
-            RESPONSE=$(curl -s "https://api.vercel.com/v13/deployments/$DEPLOYMENT_ID" \
-              -H "Authorization: Bearer $VERCEL_TOKEN")
-
-            STATE=$(echo $RESPONSE | jq -r '.readyState')
-
-            if [ "$STATE" = "READY" ]; then
-              echo "Deployment successful! URL: https://$DEPLOYMENT_URL"
-              break
-            elif [ "$STATE" = "ERROR" ]; then
-              echo "Deployment failed!"
-              exit 1
-            fi
-
-            echo "Deployment status: $STATE. Waiting..."
-            sleep 10
-          done
-
-      - name: Comment on PR (if PR)
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { issue: { number: issue_number }, repo: { owner, repo } } = context;
-            github.rest.issues.createComment({
-              owner,
-              repo,
-              issue_number,
-              body: `✅ Preview deployment is ready! URL: https://${process.env.DEPLOYMENT_URL}`
-            });
