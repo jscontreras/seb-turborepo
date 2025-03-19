@@ -1,6 +1,7 @@
 name: Vercel Preview Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: seb-turborepo-tc-apis
 on:
   push:
     branches:
@@ -8,21 +9,13 @@ on:
 jobs:
   Deploy-Preview:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        project_id:
-          - seb-turborepo-tc-apis
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-      - name: Link Vercel Project
-        env:
-          VERCEL_PROJECT_ID: ${{ matrix.project_id }}
-        # Connect to existing project
-        run: vercel link --yes --project=seb-turborepo-tc-apis --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }}
-      - name: Pull env vars
-        # Get env variables configured for project (production in this case)
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }}
-      - name: Deploy
-        run: vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
+        run: npm install --global vercel@canary
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
