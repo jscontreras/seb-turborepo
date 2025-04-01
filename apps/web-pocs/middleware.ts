@@ -6,7 +6,10 @@ export function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === "/get-geo") {
     try {
       // Access geo data directly from the request object
-      const geo = request.geo
+      const geo = {
+        country: request.headers.get("x-vercel-ip-country") || null,
+        city: request.headers.get("x-vercel-ip-city") || null,
+      }
 
       // Log the geo data for debugging
       console.log("Geo data from request:", geo)
