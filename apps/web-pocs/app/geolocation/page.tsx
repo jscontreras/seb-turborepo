@@ -1,6 +1,6 @@
-import { Suspense } from "react"
-import WorldMap from "./world-map"
-import GeoPanel from "./geo-panel"
+import { Suspense } from "react";
+import WorldMap from "./world-map";
+import GeoPanel from "./geo-panel";
 
 export default function GeolocationPage() {
   return (
@@ -11,12 +11,13 @@ export default function GeolocationPage() {
         <WorldMap />
       </div>
 
-      <div className="border rounded-lg shadow-sm p-6 bg-card max-w-xl mx-auto absolute bottom-0 left-0 right-0 inset-x-20">
-        <Suspense fallback={<div className="text-center py-4">Loading location data...</div>}>
-          <GeoPanel />
-        </Suspense>
-      </div>
+      <Suspense
+        fallback={
+          <div className="text-center py-4">Loading location data...</div>
+        }
+      >
+        <GeoPanel />
+      </Suspense>
     </div>
-  )
+  );
 }
-
