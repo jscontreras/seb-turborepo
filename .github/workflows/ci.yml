@@ -15,8 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Showing Resulting Branch
-        run: echo $GITHUB_REF_NAME | sed 's/^experiment/pipeline/'
-
+        run: |
+          echo $GITHUB_REF_NAME | sed 's/^experiment/pipeline/'
+          echo "repo": "'$GITHUB_REPOSITORY'",
+          echo "ref": "$(echo $GITHUB_REF_NAME | sed 's/^experiment/pipeline/')",
+          echo "sha": "'$GITHUB_SHA'"
       - name: Create deployment
         id: create_deployment
         run: |
