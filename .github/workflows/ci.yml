@@ -27,7 +27,7 @@ jobs:
               "gitSource": {
                 "type": "github",
                 "repo": "'$GITHUB_REPOSITORY'",
-                "ref": "'$GITHUB_REF_NAME'",
+                "ref": "$(echo $GITHUB_REF_NAME | sed 's/^experiment/pipeline/')",
                 "sha": "'$GITHUB_SHA'"
               },
               "source": "git"
@@ -41,3 +41,4 @@ jobs:
 
           echo "::set-output name=deployment_id::$DEPLOYMENT_ID"
           echo "::set-output name=deployment_url::$DEPLOYMENT_URL"
+          echo "::set-output name=deployment_branch::$(echo $GITHUB_REF_NAME | sed 's/^experiment/pipeline/')"
