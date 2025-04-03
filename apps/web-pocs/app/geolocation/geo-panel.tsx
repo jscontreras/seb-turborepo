@@ -82,7 +82,7 @@ export default function GeoPanel() {
 
   return (
     <div
-      className="border rounded-lg shadow-sm p-6 bg-card max-w-xl mx-auto absolute left-0 right-0 inset-x-20 inset-y-90 h-55 transition-opacity duration-1000 ease-in-out"
+      className="border rounded-lg shadow-sm p-6 bg-card max-w-xl mx-auto absolute left-0 right-0 inset-x-20 inset-y-90 h-57 transition-opacity duration-1000 ease-in-out"
       style={{ opacity: opacity }}
     >
       <div>
