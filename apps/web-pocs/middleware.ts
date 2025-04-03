@@ -4,6 +4,7 @@ import type { NextRequest } from "next/server";
 const defaultLocation = {
   country: "Country?",
   city: "City?",
+  zipcode: "Zipcode?",
 };
 export function middleware(request: NextRequest) {
   // Only run middleware on the /get-geo route
@@ -13,6 +14,7 @@ export function middleware(request: NextRequest) {
       const geo = {
         country: request.headers.get("x-vercel-ip-country") || null,
         city: request.headers.get("x-vercel-ip-city") || null,
+        zipcode: request.headers.get("x-vercel-ip-postal-code") || null,
       };
 
       // Log the geo data for debugging
@@ -28,6 +30,7 @@ export function middleware(request: NextRequest) {
       return NextResponse.json({
         country: geo.country,
         city: geo.city,
+        zipcode: geo.zipcode,
       });
     } catch (error) {
       console.error("Error getting geolocation:", error);

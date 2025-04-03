@@ -12,6 +12,7 @@ import { MapPin } from "lucide-react";
 interface GeoLocation {
   country: string;
   city: string;
+  zipcode?: string; // Add zipcode to the interface
 }
 
 export default function GeoPanel() {
@@ -48,8 +49,9 @@ export default function GeoPanel() {
         if (!data || Object.keys(data).length === 0) {
           console.log("Empty data received, using fallback");
           setLocation({
-            country: "Country?",
-            city: "City?",
+            country: "USA",
+            city: "Dallas",
+            zipcode: "75201", // Default zipcode for Dallas
           });
           setIsFallback(true);
         } else {
@@ -60,8 +62,9 @@ export default function GeoPanel() {
         setError("Could not retrieve location information");
         // Use fallback values
         setLocation({
-          country: "Default",
-          city: "Location",
+          country: "USA",
+          city: "Dallas",
+          zipcode: "75201", // Default zipcode for Dallas
         });
         setIsFallback(true);
       } finally {
@@ -79,7 +82,7 @@ export default function GeoPanel() {
 
   return (
     <div
-      className="border rounded-lg shadow-sm p-6 bg-card max-w-xl mx-auto absolute left-0 right-0 inset-x-20 inset-y-90 h-48 transition-opacity duration-1000 ease-in-out"
+      className="border rounded-lg shadow-sm p-6 bg-card max-w-xl mx-auto absolute left-0 right-0 inset-x-20 inset-y-90 h-55 transition-opacity duration-1000 ease-in-out"
       style={{ opacity: opacity }}
     >
       <div>
@@ -104,9 +107,14 @@ export default function GeoPanel() {
                     <p className="text-xl font-medium">
                       {location?.city || "Dallas"}
                     </p>
-                    <p className="text-muted-foreground">
-                      {location?.country || "USA"}
-                    </p>
+                    <div className="flex gap-2 text-muted-foreground flex-col">
+                      <span>{location?.country || "USA"}</span>
+                      {location?.zipcode && (
+                        <>
+                          <span>{location.zipcode}</span>
+                        </>
+                      )}
+                    </div>
                     {isFallback && (
                       <p className="text-xs text-muted-foreground mt-2">
                         (Using fallback location - Vercel Edge Network
