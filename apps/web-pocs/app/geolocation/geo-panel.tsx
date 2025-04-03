@@ -107,7 +107,7 @@ export default function GeoPanel() {
                     <p className="text-xl font-medium">
                       {location?.city || "Dallas"}
                     </p>
-                    <div className="flex gap-2 text-muted-foreground flex-col">
+                    <div className="flex text-muted-foreground flex-col">
                       <span>{location?.country || "USA"}</span>
                       {location?.zipcode && (
                         <>
