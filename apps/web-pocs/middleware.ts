@@ -28,9 +28,9 @@ export function middleware(request: NextRequest) {
 
       // Return the geolocation data
       return NextResponse.json({
-        country: geo.country,
-        city: geo.city,
-        zipcode: geo.zipcode,
+        country: geo.country ? decodeURIComponent(geo.country) : null,
+        city: geo.city ? decodeURIComponent(geo.city) : null,
+        zipcode: geo.zipcode ? decodeURIComponent(geo.zipcode) : null,
       });
     } catch (error) {
       console.error("Error getting geolocation:", error);
