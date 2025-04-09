@@ -5,11 +5,19 @@
       "*-dev": true
     }
   },
-    "redirects": [
-      {
-        "source": "/me",
-        "destination": "/",
-        "permanent": false
-      }
-    ]
+  "redirects": [
+    {
+      "source": "/me",
+      "destination": "/",
+      "permanent": false
+    }
+  ],
+  "functions": {
+    "app/api/**/*": {
+      "memory": 768
+    },
+    "app/index.*": {
+      "memory": 512
+    }
+  }
 }
