@@ -16,7 +16,7 @@
     "app/api/**/*": {
       "memory": 768
     },
-    "app/index.*": {
+    "app/**.*": {
       "memory": 512
     }
   }
