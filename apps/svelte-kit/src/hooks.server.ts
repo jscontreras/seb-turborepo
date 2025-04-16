@@ -17,7 +17,7 @@ export const handle = async ({ event, resolve }) => {
     city: event.request.headers.get("x-vercel-ip-city") || 'City?',
     zipcode: event.request.headers.get("x-vercel-ip-postal-code") || 'Zipcode?',
   };
-
+  console.log('<<< From hooks.server geo >>>', geo);
   event.locals['geo'] = geo;
 
   // Set the Content-Security-Policy header
