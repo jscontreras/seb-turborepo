@@ -1,5 +1,4 @@
 import { createHandle } from "@vercel/flags/sveltekit";
-import { geolocation } from '@vercel/functions';
 import { FLAGS_SECRET } from "$env/static/private";
 import * as flags from "$lib/flags";
 
@@ -11,10 +10,15 @@ export const handle = async ({ event, resolve }) => {
   // Use the feature flags handle to process the request
   const response = await featureFlagsHandle({ event, resolve });
 
-  const geo = geolocation(event.request);
 
   // Add to locals
-  (event.locals as any).geo = geo;
+  const geo = {
+    country: event.request.headers.get("x-vercel-ip-country") || 'Cuntry?',
+    city: event.request.headers.get("x-vercel-ip-city") || 'City?',
+    zipcode: event.request.headers.get("x-vercel-ip-postal-code") || 'Zipcode?',
+  };
+
+  event.locals['geo'] = geo;
 
   // Set the Content-Security-Policy header
   response.headers.set(
