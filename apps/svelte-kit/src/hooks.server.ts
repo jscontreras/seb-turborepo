@@ -10,9 +10,9 @@ export const handle = async ({ event, resolve }) => {
 
   // Add to locals
   const geo = {
-    country: event.request.headers.get("x-vercel-ip-country") || 'Country?',
-    city: event.request.headers.get("x-vercel-ip-city") || 'City?',
-    zipcode: event.request.headers.get("x-vercel-ip-postal-code") || 'Zipcode?',
+    country: decodeURIComponent(event.request.headers.get("x-vercel-ip-country") || 'Country?'),
+    city: decodeURIComponent(event.request.headers.get("x-vercel-ip-city") || 'City?'),
+    zipcode: decodeURIComponent(event.request.headers.get("x-vercel-ip-postal-code") || 'Zipcode?'),
   };
   event.locals.geo = geo;
 
