@@ -7,7 +7,7 @@
   "scripts": {
     "dev-2": "node --watch --experimental-strip-types index.ts",
     "test": "node --experimental-strip-types index.ts",
-    "dev": "node --experimental-strip-types isr.ts"
+    "dev": "node --experimental-strip-types dynamic.ts"
   },
   "keywords": [],
   "author": "",

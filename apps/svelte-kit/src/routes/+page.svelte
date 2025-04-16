@@ -1,5 +1,6 @@
 <script lang="ts">
   let { data } = $props();
+  const geo = data.geo ? data.geo : {country: 'Country?', city: 'City?'}
 </script>
 
 <h1 class:svelte={data.svelteColor}>SvelteKit + Vercel Feature Flags</h1>
@@ -33,6 +34,14 @@
   project on Vercel, you can use the Vercel toolbar to override the feature flag
   value.
 </p>
+<div class="container mx-auto p-4">
+  <h3 class="font-bold mb-4">Your Location via Geo Headers</h3>
+
+  <div class="bg-gray-100 p-4 rounded-lg">
+    <p><strong>Country:</strong> {geo.country}</p>
+    <p><strong>City:</strong> {geo.city}</p>
+  </div>
+</div>
 
 <style>
   h1 {
