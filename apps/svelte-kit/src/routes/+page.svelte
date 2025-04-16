@@ -1,6 +1,7 @@
 <script lang="ts">
   let { data } = $props();
-  const geo = data.geo ? data.geo : {country: 'Country?', city: 'City?'}
+  console.log('data', data)
+  const geo = data.geo ? data.geo : {country: 'Country?', city: 'City?', zipcode: 'Zipcode'}
 </script>
 
 <h1 class:svelte={data.svelteColor}>SvelteKit + Vercel Feature Flags</h1>
@@ -40,6 +41,7 @@
   <div class="bg-gray-100 p-4 rounded-lg">
     <p><strong>Country:</strong> {geo.country}</p>
     <p><strong>City:</strong> {geo.city}</p>
+    <p><strong>Zipcode:</strong> {geo.city}</p>
   </div>
 </div>
 
