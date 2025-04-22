@@ -59,7 +59,7 @@ export default function TextGenerator() {
 
       <div className="space-y-4">
         {messages.map((m) => {
-          console.log(m);
+          // console.log(m);
           return (
             <div key={m.id} className="p-4 border rounded">
               <p className="mb-2 font-semibold">
@@ -70,27 +70,20 @@ export default function TextGenerator() {
                 <p>{m.content}</p>
               ) : (
                 <div>
-                  {/* Show content if it exists */}
                   {m.content && <p className="mb-2">{m.content}</p>}
-
-                  {/* Show tool calls */}
-                  {m.parts && m.parts.length > 0 && (
-                    <div className="p-3 mb-2 bg-gray-100 rounded">
-                      <p className="font-medium text-gray-700">Part Details:</p>
-                      {m.parts.map(
-                        (
-                          part: {
-                            type:
-                              | "text"
-                              | "reasoning"
-                              | "tool-invocation"
-                              | "source"
-                              | "step-start";
-                            [key: string]: any;
-                          },
-                          index,
-                        ) => {
-                          switch (part.type) {
+                  {m.parts &&
+                    m.parts.length > 0 &&
+                    m.parts.some((part) => part.type === "tool-invocation") && (
+                      <div className="p-3 mb-2 bg-gray-100 rounded">
+                        {m.parts.some(
+                          (part) => part.type === "tool-invocation",
+                        ) && (
+                          <p className="font-medium text-gray-700">
+                            Part Details:
+                          </p>
+                        )}
+                        {m.parts.map((part, index) => {
+                          switch (part.type as string) {
                             case "step-start":
                               return null;
                             case "tool-invocation":
@@ -104,31 +97,35 @@ export default function TextGenerator() {
                                   </p>
                                   <p>
                                     <strong>Tool Name:</strong>{" "}
-                                    {part.toolInvocation.toolName}
+                                    {"toolInvocation" in part &&
+                                    part.type === "tool-invocation"
+                                      ? part.toolInvocation.toolName
+                                      : "Unknown Tool"}
                                   </p>
                                   <p>
                                     <strong>Arguments:</strong>{" "}
                                     {JSON.stringify(
-                                      part.toolInvocation.args,
+                                      "toolInvocation" in part &&
+                                        part.type === "tool-invocation"
+                                        ? part.toolInvocation.args
+                                        : {},
                                       null,
                                       2,
                                     )}
                                   </p>
                                   <p>
                                     <strong>Result:</strong>{" "}
-                                    {part.toolInvocation.result}
+                                    {"toolInvocation" in part &&
+                                    part.type === "tool-invocation"
+                                      ? "result" in part.toolInvocation
+                                        ? part.toolInvocation.result
+                                        : "Unknown Result"
+                                      : "Unknown Result"}
                                   </p>
                                 </div>
                               );
                             case "text":
-                              return (
-                                <div
-                                  key={index}
-                                  className="p-2 bg-gray-100 rounded"
-                                >
-                                  <p className="text-gray-700">{part.text}</p>
-                                </div>
-                              );
+                              return null;
                             default:
                               return (
                                 <div
@@ -141,10 +138,9 @@ export default function TextGenerator() {
                                 </div>
                               );
                           }
-                        },
-                      )}
-                    </div>
-                  )}
+                        })}
+                      </div>
+                    )}
                 </div>
               )}
             </div>
