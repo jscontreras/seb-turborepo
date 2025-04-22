@@ -13,13 +13,13 @@ type WriteheadArgs = {
  */
 export function createServerResponseAdapter(
   signal: AbortSignal,
-  fn: (re: ServerResponse) => Promise<void> | void
+  fn: (re: ServerResponse) => Promise<void> | void,
 ): Promise<Response> {
   let writeHeadResolver: (v: WriteheadArgs) => void;
   const writeHeadPromise = new Promise<WriteheadArgs>(
     async (resolve, reject) => {
       writeHeadResolver = resolve;
-    }
+    },
   );
 
   return new Promise(async (resolve, reject) => {
@@ -29,7 +29,7 @@ export function createServerResponseAdapter(
 
     const writeHead = (
       statusCode: number,
-      headers?: Record<string, string>
+      headers?: Record<string, string>,
     ) => {
       if (typeof headers === "string") {
         throw new Error("Status message of writeHead not supported");
@@ -46,7 +46,7 @@ export function createServerResponseAdapter(
 
     const write = (
       chunk: Buffer | string,
-      encoding?: BufferEncoding
+      encoding?: BufferEncoding,
     ): boolean => {
       if (encoding) {
         throw new Error("Encoding not supported");
@@ -115,7 +115,7 @@ export function createServerResponseAdapter(
       {
         status: head.statusCode,
         headers: head.headers,
-      }
+      },
     );
 
     resolve(response);

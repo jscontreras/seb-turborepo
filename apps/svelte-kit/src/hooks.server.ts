@@ -7,12 +7,17 @@ const featureFlagsHandle = createHandle({ secret: FLAGS_SECRET, flags });
 
 // Wrap the feature flags handle to add custom headers
 export const handle = async ({ event, resolve }) => {
-
   // Add to locals
   const geo = {
-    country: decodeURIComponent(event.request.headers.get("x-vercel-ip-country") || 'Country?'),
-    city: decodeURIComponent(event.request.headers.get("x-vercel-ip-city") || 'City?'),
-    zipcode: decodeURIComponent(event.request.headers.get("x-vercel-ip-postal-code") || 'Zipcode?'),
+    country: decodeURIComponent(
+      event.request.headers.get("x-vercel-ip-country") || "Country?",
+    ),
+    city: decodeURIComponent(
+      event.request.headers.get("x-vercel-ip-city") || "City?",
+    ),
+    zipcode: decodeURIComponent(
+      event.request.headers.get("x-vercel-ip-postal-code") || "Zipcode?",
+    ),
   };
   event.locals.geo = geo;
 

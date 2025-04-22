@@ -18,7 +18,7 @@ interface SerializedRequest {
 
 export function initializeMcpApiHandler(
   initializeServer: (server: McpServer) => void,
-  serverOptions: ServerOptions = {}
+  serverOptions: ServerOptions = {},
 ) {
   const redisUrl = process.env.REDIS_URL || process.env.KV_URL;
   if (!redisUrl) {
@@ -58,7 +58,7 @@ export function initializeMcpApiHandler(
               message: "Method not allowed.",
             },
             id: null,
-          })
+          }),
         );
         return;
       }
@@ -72,7 +72,7 @@ export function initializeMcpApiHandler(
               message: "Method not allowed.",
             },
             id: null,
-          })
+          }),
         );
         return;
       }
@@ -84,7 +84,7 @@ export function initializeMcpApiHandler(
             name: "mcp-typescript server on vercel",
             version: "0.1.0",
           },
-          serverOptions
+          serverOptions,
         );
 
         initializeServer(statelessServer);
@@ -119,7 +119,7 @@ export function initializeMcpApiHandler(
           name: "mcp-typescript server on vercel",
           version: "0.1.0",
         },
-        serverOptions
+        serverOptions,
       );
       initializeServer(server);
 
@@ -174,18 +174,18 @@ export function initializeMcpApiHandler(
           JSON.stringify({
             status,
             body,
-          })
+          }),
         );
 
         if (status >= 200 && status < 300) {
           logInContext(
             "log",
-            `Request ${sessionId}:${request.requestId} succeeded: ${body}`
+            `Request ${sessionId}:${request.requestId} succeeded: ${body}`,
           );
         } else {
           logInContext(
             "error",
-            `Message for ${sessionId}:${request.requestId} failed with status ${status}: ${body}`
+            `Message for ${sessionId}:${request.requestId} failed with status ${status}: ${body}`,
           );
         }
       };
@@ -204,9 +204,12 @@ export function initializeMcpApiHandler(
       let resolveTimeout: (value: unknown) => void;
       const waitPromise = new Promise((resolve) => {
         resolveTimeout = resolve;
-        timeout = setTimeout(() => {
-          resolve("max duration reached");
-        }, (maxDuration - 5) * 1000);
+        timeout = setTimeout(
+          () => {
+            resolve("max duration reached");
+          },
+          (maxDuration - 5) * 1000,
+        );
       });
 
       async function cleanup() {
@@ -218,7 +221,7 @@ export function initializeMcpApiHandler(
         res.end();
       }
       req.signal.addEventListener("abort", () =>
-        resolveTimeout("client hang up")
+        resolveTimeout("client hang up"),
       );
 
       await server.connect(transport);
@@ -262,14 +265,14 @@ export function initializeMcpApiHandler(
           };
           res.statusCode = response.status;
           res.end(response.body);
-        }
+        },
       );
 
       // Queue the request in Redis so that a subscriber can pick it up.
       // One queue per session.
       await redisPublisher.publish(
         `requests:${sessionId}`,
-        JSON.stringify(serializedRequest)
+        JSON.stringify(serializedRequest),
       );
       console.log(`Published requests:${sessionId}`, serializedRequest);
 
@@ -301,7 +304,7 @@ interface FakeIncomingMessageOptions {
 
 // Create a fake IncomingMessage
 function createFakeIncomingMessage(
-  options: FakeIncomingMessageOptions = {}
+  options: FakeIncomingMessageOptions = {},
 ): IncomingMessage {
   const {
     method = "GET",

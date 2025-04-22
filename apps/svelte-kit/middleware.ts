@@ -1,8 +1,8 @@
-import { next } from '@vercel/edge';
+import { next } from "@vercel/edge";
 
 // config with custom matcher
 export const config = {
-  matcher: '/',
+  matcher: "/",
 };
 
 export default function middleware(request: Request) {
@@ -11,6 +11,6 @@ export default function middleware(request: Request) {
     city: request.headers.get("x-vercel-ip-city") || null,
     zipcode: request.headers.get("x-vercel-ip-postal-code") || null,
   };
-  console.log('>>>>>MIDDLEWARE VERCEL', geo);
+  console.log(">>>>>MIDDLEWARE VERCEL", geo);
   return next();
 }

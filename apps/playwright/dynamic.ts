@@ -17,7 +17,6 @@ for (let trials = 0; trials < 10; trials++) {
     //   await switchElement.click();
     // }
     // await page.waitForTimeout(1000);
-
   }
 }
 browser.close();
