@@ -28,8 +28,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <nav className="bg-primary p-4 text-primary-foreground">
-          <div className="mx-auto flex max-w-2xl justify-between">
+        <nav className="p-4 bg-primary text-primary-foreground">
+          <div className="flex justify-between max-w-2xl mx-auto">
             <Link href="/" className="font-bold">
               AI Generator
             </Link>
@@ -38,7 +38,10 @@ export default function RootLayout({
                 Text
               </Link>
               <Link href="/image-chatbot" className="hover:underline">
-                Image
+                Generate Image
+              </Link>
+              <Link href="/vision" className="hover:underline">
+                Analyze Image
               </Link>
             </div>
           </div>
