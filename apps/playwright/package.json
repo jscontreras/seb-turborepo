@@ -5,9 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev-2": "node --watch --experimental-strip-types index.ts",
-    "test": "node --experimental-strip-types index.ts",
-    "dev": "node --experimental-strip-types dynamic.ts"
+    "dev": "node --experimental-strip-types dynamic.ts",
+    "test": "node --experimental-strip-types index.ts"
   },
   "keywords": [],
   "author": "",

@@ -1,0 +1,50 @@
+name: Vercel Preview Deployment via REST API
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+on:
+  push:
+    branches:
+      - experiment-*
+
+jobs:
+  Deploy-Preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Showing Resulting Branch
+        run: |
+          echo $GITHUB_REF_NAME | sed 's/^experiment/pipeline/'
+          echo "repo": "'$GITHUB_REPOSITORY'",
+          echo "ref": "$(echo $GITHUB_REF_NAME | sed 's/^experiment/pipeline/')",
+          echo "sha": "'$GITHUB_SHA'"
+      - name: Create deployment
+        id: create_deployment
+        run: |
+          RESPONSE=$(curl -X POST "https://api.vercel.com/v13/deployments" \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "name": "tc-apis",
+              "project": "'$VERCEL_PROJECT_ID'",
+              "target": "preview",
+              "gitSource": {
+                "type": "github",
+                "repo": "'$GITHUB_REPOSITORY'",
+                "ref": "$(echo $GITHUB_REF_NAME | sed 's/^experiment/pipeline/')",
+                "sha": "'$GITHUB_SHA'"
+              },
+              "source": "git"
+            }')
+
+          DEPLOYMENT_ID=$(echo $RESPONSE | jq -r '.id')
+          DEPLOYMENT_URL=$(echo $RESPONSE | jq -r '.url')
+
+          echo "DEPLOYMENT_ID=$DEPLOYMENT_ID" >> $GITHUB_ENV
+          echo "DEPLOYMENT_URL=$DEPLOYMENT_URL" >> $GITHUB_ENV
+
+          echo "::set-output name=deployment_id::$DEPLOYMENT_ID"
+          echo "::set-output name=deployment_url::$DEPLOYMENT_URL"
+          echo "::set-output name=deployment_branch::$(echo $GITHUB_REF_NAME | sed 's/^experiment/pipeline/')"
