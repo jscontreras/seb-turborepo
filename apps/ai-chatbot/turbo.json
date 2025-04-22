@@ -5,12 +5,16 @@
   "tasks": {
     "build": {
       "env": [
-        "OPENAI_API_KEY"
+        "OPENAI_API_KEY",
+        "OPENAI_API_KEY_PERSONAL",
+        "REDIS_URL"
       ]
     },
     "dev": {
       "env": [
-        "OPENAI_API_KEY"
+        "OPENAI_API_KEY",
+        "OPENAI_API_KEY_PERSONAL",
+        "REDIS_URL"
       ]
     }
   }

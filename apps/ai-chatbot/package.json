@@ -12,6 +12,7 @@
   "dependencies": {
     "@ai-sdk/openai": "^1.1.13",
     "@ai-sdk/react": "^1.1.17",
+    "@modelcontextprotocol/sdk": "^1.10.2",
     "@radix-ui/react-slot": "^1.1.2",
     "ai": "^4.1.44",
     "class-variance-authority": "^0.7.1",
@@ -24,6 +25,7 @@
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
+    "redis": "^4.7.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
