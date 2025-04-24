@@ -29,8 +29,8 @@ export async function POST(req: Request) {
     system: systemPrompt,
     messages,
     tools: {
-      'echo': echoTool,
-      'sum': sumTool,
+      echo: echoTool,
+      sum: sumTool,
     },
     maxSteps: 3, // Allow multiple steps for tool calling and response
   });
