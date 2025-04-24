@@ -1,23 +1,7 @@
+import { echoTool } from "@/lib/ai/tools/echo";
+import { sumTool } from "@/lib/ai/tools/sum";
 import { openai } from "@ai-sdk/openai";
-import { streamText, tool } from "ai";
-import { z } from "zod";
-
-// Echo function
-async function echo({ message }: { message: string }) {
-  const serverTime = new Date().toISOString();
-  return `${message} (server time: ${serverTime})`;
-}
-
-// Define the tool config
-const tools = {
-  echo: tool({
-    description: "Echo message with server timestamp",
-    parameters: z.object({
-      message: z.string().describe("The message word or sentence to echo"),
-    }),
-    execute: echo,
-  }),
-};
+import { streamText } from "ai";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -44,7 +28,10 @@ export async function POST(req: Request) {
     model: openai("gpt-4o"),
     system: systemPrompt,
     messages,
-    tools,
+    tools: {
+      'echo': echoTool,
+      'sum': sumTool,
+    },
     maxSteps: 3, // Allow multiple steps for tool calling and response
   });
 
