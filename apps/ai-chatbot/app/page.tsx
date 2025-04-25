@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState } from "react";
@@ -5,6 +6,15 @@ import { useChat } from "@ai-sdk/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+
+type Part = {
+  type: string;
+  toolInvocation?: {
+    toolName: string;
+    args: Record<string, unknown>;
+    result?: string;
+  };
+};
 
 export default function TextGenerator() {
   const [error, setError] = useState<string | null>(null);
@@ -36,7 +46,6 @@ export default function TextGenerator() {
   return (
     <div className="max-w-2xl p-4 mx-auto">
       <h1 className="mb-4 text-2xl font-bold">AI Text Generator</h1>
-
       <form onSubmit={handleTextPromptSubmit} className="mb-4">
         <Input
           type="text"
@@ -59,18 +68,18 @@ export default function TextGenerator() {
 
       <div className="space-y-4">
         {messages.map((m) => {
-          // console.log(m);
           return (
             <div key={m.id} className="p-4 border rounded">
               <p className="mb-2 font-semibold">
                 {m.role === "user" ? "You:" : "Assistant:"}
               </p>
-
               {m.role === "user" ? (
                 <p>{m.content}</p>
               ) : (
                 <div>
-                  {m.content && <p className="mb-2">{m.content}</p>}
+                  {m.content && (
+                    <p className="mb-2">{cleanMessages(m.content)}</p>
+                  )}
                   {m.parts &&
                     m.parts.length > 0 &&
                     m.parts.some((part) => part.type === "tool-invocation") && (
@@ -82,11 +91,36 @@ export default function TextGenerator() {
                             Part Details:
                           </p>
                         )}
-                        {m.parts.map((part, index) => {
-                          switch (part.type as string) {
+                        {m.parts.map((part: Part, index) => {
+                          switch (part.type) {
                             case "step-start":
                               return null;
                             case "tool-invocation":
+                              if (
+                                part.toolInvocation?.toolName ===
+                                  "createImage" &&
+                                typeof part.toolInvocation.result ===
+                                  "string" &&
+                                part.toolInvocation.result.startsWith("http")
+                              ) {
+                                return (
+                                  <div
+                                    key={index}
+                                    className="p-2 bg-blue-100 rounded"
+                                  >
+                                    <p className="font-medium text-blue-700">
+                                      Generated Image:
+                                    </p>
+                                    <img
+                                      src={part.toolInvocation.result}
+                                      alt="Generated content"
+                                      className="mt-2 rounded"
+                                      width={500}
+                                      height={500}
+                                    />
+                                  </div>
+                                );
+                              }
                               return (
                                 <div
                                   key={index}
@@ -97,30 +131,20 @@ export default function TextGenerator() {
                                   </p>
                                   <p>
                                     <strong>Tool Name:</strong>{" "}
-                                    {"toolInvocation" in part &&
-                                    part.type === "tool-invocation"
-                                      ? part.toolInvocation.toolName
-                                      : "Unknown Tool"}
+                                    {part.toolInvocation?.toolName ||
+                                      "Unknown Tool"}
                                   </p>
                                   <p>
                                     <strong>Arguments:</strong>{" "}
                                     {JSON.stringify(
-                                      "toolInvocation" in part &&
-                                        part.type === "tool-invocation"
-                                        ? part.toolInvocation.args
-                                        : {},
+                                      part.toolInvocation?.args || {},
                                       null,
                                       2,
                                     )}
                                   </p>
                                   <p>
                                     <strong>Result:</strong>{" "}
-                                    {"toolInvocation" in part &&
-                                    part.type === "tool-invocation"
-                                      ? "result" in part.toolInvocation
-                                        ? part.toolInvocation.result
-                                        : "Unknown Result"
-                                      : "Unknown Result"}
+                                    {part.toolInvocation?.result || "Unknown"}
                                   </p>
                                 </div>
                               );
@@ -149,4 +173,25 @@ export default function TextGenerator() {
       </div>
     </div>
   );
+}
+
+function cleanMessages(content: string): React.ReactNode {
+  // Replace any potentially harmful or unwanted HTML tags with safe text
+  const sanitizedContent = content.replace(/<[^>]*>?/gm, "");
+
+  // Remove URLs enclosed in parentheses
+  const contentWithoutUrls = sanitizedContent.replace(
+    /\(https?:\/\/[^\s)]+\)/g,
+    "",
+  );
+
+  // Convert newlines into <br /> tags for proper formatting
+  const formattedContent = contentWithoutUrls.split("\n").map((line, index) => (
+    <React.Fragment key={index}>
+      {line}
+      <br />
+    </React.Fragment>
+  ));
+
+  return formattedContent;
 }

@@ -1,3 +1,4 @@
+import { createImageTool } from "@/lib/ai/tools/createImage";
 import { echoTool } from "@/lib/ai/tools/echo";
 import { sumTool } from "@/lib/ai/tools/sum";
 import { openai } from "@ai-sdk/openai";
@@ -31,6 +32,7 @@ export async function POST(req: Request) {
     tools: {
       echo: echoTool,
       sum: sumTool,
+      createImage: createImageTool,
     },
     maxSteps: 3, // Allow multiple steps for tool calling and response
   });
