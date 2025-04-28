@@ -1,5 +1,6 @@
 import { createImageTool } from "@/lib/ai/tools/createImage";
 import { echoTool } from "@/lib/ai/tools/echo";
+import { modifyImageTool } from "@/lib/ai/tools/modifyImage";
 import { sumTool } from "@/lib/ai/tools/sum";
 import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
@@ -33,8 +34,9 @@ export async function POST(req: Request) {
       echo: echoTool,
       sum: sumTool,
       createImage: createImageTool,
+      modifyImage: modifyImageTool,
     },
-    maxSteps: 3, // Allow multiple steps for tool calling and response
+    maxSteps: 10, // Allow multiple steps for tool calling and response
   });
 
   return result.toDataStreamResponse();

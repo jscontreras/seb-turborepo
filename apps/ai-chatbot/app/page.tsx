@@ -63,14 +63,14 @@ export default function TextGenerator() {
 
   return (
     <div className="max-w-2xl p-4 mx-auto">
-      <h1 className="mb-4 text-2xl font-bold">AI Text Generator</h1>
+      <h1 className="mb-4 text-2xl font-bold">{'AI Generator (with tools)'}</h1>
       <form onSubmit={handleTextPromptSubmit} className="mb-4 space-y-4">
         <div className="flex items-center gap-2">
           <Input
             type="text"
             value={input}
             onChange={handleInputChange}
-            placeholder="Try saying 'echo hello world' or 'describe this image'..."
+            placeholder="Try saying 'echo hello world' or 'modify this image'..."
             className="flex-1"
           />
           <Button type="button" variant="outline" size="icon" onClick={() => fileInputRef.current?.click()}>
@@ -106,7 +106,7 @@ export default function TextGenerator() {
         )}
 
         <Button type="submit" disabled={isLoading} className="w-full">
-          {isLoading ? "Generating..." : "Generate Text"}
+          {isLoading ? "Generating..." : "Generate with AI"}
         </Button>
       </form>
 
@@ -156,9 +156,9 @@ export default function TextGenerator() {
                             return null
                           case "tool-invocation":
                             if (
-                              part.toolInvocation?.toolName === "createImage" &&
-                              typeof part.toolInvocation.result === "string" &&
-                              part.toolInvocation.result.startsWith("http")
+                              ["createImage", "modifyImage"].includes(part.toolInvocation?.toolName || '') &&
+                              typeof part.toolInvocation?.result === "string" &&
+                              part.toolInvocation?.result.startsWith("http")
                             ) {
                               return (
                                 <div key={index} className="p-2 bg-blue-100 rounded">
