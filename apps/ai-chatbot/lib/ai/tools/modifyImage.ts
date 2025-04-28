@@ -60,14 +60,16 @@ async function toolExec(
 
     // Call OpenAI API to edit the image
     const responseAi = await openai.images.edit({
-      model: "gpt-image-1",
+      model: "dall-e-2",
       image: imageFile,
       mask: maskFile,
       prompt,
       n: 1,
       size: "1024x1024",
     });
-    return responseAi.data[0].url;
+    if (responseAi.data && responseAi.data.length > 0) {
+      return responseAi.data[0].url;
+    }
   } catch (error) {
     console.error("Image generation error:", error);
     return null;

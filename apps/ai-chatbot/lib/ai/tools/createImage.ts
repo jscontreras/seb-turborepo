@@ -13,7 +13,10 @@ async function toolExec({ prompt }: { prompt: string }) {
       prompt,
       size: "1024x1024", // Specify smaller image resolution
     });
-    return result.data[0].url ? result.data[0].url : null;
+
+    if (result.data && result.data.length > 0) {
+      return result?.data[0]?.url;
+    }
   } catch (error) {
     console.error("Image generation error:", error);
     return null as string | null;
