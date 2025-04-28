@@ -1,5 +1,6 @@
 import { z } from "zod";
 import OpenAI from "openai";
+import { CustomTool } from "./tool";
 
 // Echo function
 async function toolExec({ prompt }: { prompt: string }) {
@@ -20,11 +21,7 @@ async function toolExec({ prompt }: { prompt: string }) {
 }
 
 // Define the tool config
-export const createImageTool: {
-  description: string;
-  parameters: z.ZodObject<{ prompt: z.ZodString }>;
-  execute: ({ prompt }: { prompt: string }) => Promise<string | null>;
-} = {
+export const createImageTool: CustomTool = {
   description: "Generate create an image based on prompt",
   parameters: z.object({
     prompt: z

@@ -3,7 +3,7 @@ import { echoTool } from "@/lib/ai/tools/echo";
 import { modifyImageTool } from "@/lib/ai/tools/modifyImage";
 import { sumTool } from "@/lib/ai/tools/sum";
 import { openai } from "@ai-sdk/openai";
-import { streamText } from "ai";
+import { streamText, Tool } from "ai";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -24,17 +24,28 @@ export async function POST(req: Request) {
   // If we're continuing after a tool call, add a system message to instruct the model
   const systemPrompt = shouldContinue
     ? "You received the result of the tool call. Now respond to the user with the information from the tool result."
-    : "You are a helpful assistant that can echo messages with a timestamp. Use the echo tool when asked to echo something.";
+    : "You are a helpful assistant that can use tools. Use the corresponding tool when asked to echo something.";
+
+  const providedTools = {
+    echo: echoTool,
+    sum: sumTool,
+    createImage: createImageTool,
+    modifyImage: modifyImageTool,
+  };
 
   const result = streamText({
     model: openai("gpt-4o"),
     system: systemPrompt,
     messages,
-    tools: {
-      echo: echoTool,
-      sum: sumTool,
-      createImage: createImageTool,
-      modifyImage: modifyImageTool,
+    tools: providedTools as Record<string, Tool>,
+
+    experimental_repairToolCall: async ({ toolCall }) => {
+      const tool =
+        providedTools[toolCall.toolName as keyof typeof providedTools];
+      const repairedArgs = tool.fixArgs
+        ? tool.fixArgs(toolCall)
+        : toolCall.args;
+      return { ...toolCall, args: JSON.stringify(repairedArgs) };
     },
     maxSteps: 10, // Allow multiple steps for tool calling and response
   });

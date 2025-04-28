@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CustomTool } from "./tool";
 
 // Echo function
 async function toolExec({ a, b }: { a: number; b: number }): Promise<number> {
@@ -6,11 +7,7 @@ async function toolExec({ a, b }: { a: number; b: number }): Promise<number> {
 }
 
 // Define the tool config
-export const sumTool: {
-  description: string;
-  parameters: z.ZodObject<{ a: z.ZodNumber; b: z.ZodNumber }>;
-  execute: ({ a, b }: { a: number; b: number }) => Promise<number>;
-} = {
+export const sumTool: CustomTool = {
   description: "Add two numbers together",
   parameters: z.object({
     a: z.number().describe("The first number to add"),
