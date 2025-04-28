@@ -35,7 +35,7 @@ export default function RootLayout({
             </Link>
             <div className="space-x-4">
               <Link href="/" className="hover:underline">
-                Text
+                Tools
               </Link>
               <Link href="/image-chatbot" className="hover:underline">
                 Generate Image

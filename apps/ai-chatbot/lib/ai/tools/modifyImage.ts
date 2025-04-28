@@ -2,10 +2,11 @@ import { z } from "zod";
 import OpenAI from "openai";
 import sharp from "sharp";
 import { CustomTool } from "./tool";
+import { put } from "@vercel/blob";
 
 async function toolExec(
   { prompt, url }: { prompt: string; url: string },
-  { messages }: { messages: Array<any> },
+  { messages, toolCallId }: { messages: Array<any>; toolCallId: string },
 ) {
   try {
     const lastMessage = messages.pop();
@@ -28,6 +29,7 @@ async function toolExec(
         `Failed to fetch image from URL: ${imageResponse.statusText}`,
       );
     }
+
     const imageBuffer = await imageResponse.arrayBuffer();
 
     // Process the image to ensure it meets DALL-E requirements
@@ -60,7 +62,8 @@ async function toolExec(
 
     // Call OpenAI API to edit the image
     const responseAi = await openai.images.edit({
-      model: "dall-e-2",
+      //model: "dall-e-2",
+      model: "gpt-image-1",
       image: imageFile,
       mask: maskFile,
       prompt,
@@ -68,7 +71,24 @@ async function toolExec(
       size: "1024x1024",
     });
     if (responseAi.data && responseAi.data.length > 0) {
-      return responseAi.data[0].url;
+      const base64Image = responseAi.data[0].b64_json;
+      if (base64Image) {
+        // Convert base64 to buffer
+        const imageBuffer = Buffer.from(base64Image, "base64");
+
+        // Generate a unique filename
+        const filename = `${toolCallId}.png`;
+
+        // Upload to Vercel Blob
+        const blob = await put(filename, imageBuffer, {
+          access: "public",
+          contentType: "image/png",
+        });
+
+        // Return the URL instead of base64
+        return blob.url;
+      }
+      return null;
     }
   } catch (error) {
     console.error("Image generation error:", error);
