@@ -3,17 +3,20 @@
     "//"
   ],
   "globalEnv": [
-    "FLAGS_SECRET"
+    "FLAGS_SECRET",
+    "BYPASS_TOKEN"
   ],
   "tasks": {
     "build": {
       "env": [
-        "FLAGS_SECRET"
+        "FLAGS_SECRET",
+        "BYPASS_TOKEN"
       ]
     },
     "dev": {
       "env": [
-        "FLAGS_SECRET"
+        "FLAGS_SECRET",
+        "BYPASS_TOKEN"
       ]
     },
     "vercel": {
