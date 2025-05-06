@@ -11,8 +11,8 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
   "devDependencies": {
-    "@sveltejs/adapter-vercel": "^5.7.0",
-    "@sveltejs/kit": "^2.20.7",
+    "@sveltejs/adapter-vercel": "^5.7.1",
+    "@sveltejs/kit": "^2.20.8",
     "@types/js-cookie": "^3.0.6",
     "@vercel/flags": "2.6.0",
     "@vercel/toolbar": "^0.1.36",
