@@ -1,6 +1,6 @@
 import { BYPASS_TOKEN } from '$env/static/private';
 
-const expirationInSeconds = 60;
+const expirationInSeconds = 30;
 
 export const config = {
   isr: {
