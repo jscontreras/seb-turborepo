@@ -1,0 +1,29 @@
+{
+  "extends": [
+    "//"
+  ],
+  "tasks": {
+    "build": {
+      "env": [
+        "BLOB_READ_WRITE_TOKEN",
+        "REDIS_URL"
+      ]
+    },
+    "dev": {
+      "env": [
+        "BLOB_READ_WRITE_TOKEN",
+        "REDIS_URL"
+      ]
+    },
+    "vercel": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": [
+        "^src"
+      ],
+      "outputs": [
+        "src/**"
+      ]
+    }
+  }
+}

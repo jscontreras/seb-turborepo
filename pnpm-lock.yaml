@@ -36,8 +36,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2(@types/react@19.0.10)(react@19.0.0)
       '@vercel/blob':
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^1.1.1
+        version: 1.1.1
       ai:
         specifier: ^4.3.9
         version: 4.3.9(react@19.0.0)(zod@3.24.2)
@@ -51,8 +51,8 @@ importers:
         specifier: ^0.475.0
         version: 0.475.0(react@19.0.0)
       next:
-        specifier: 15.4.0-canary.3
-        version: 15.4.0-canary.3(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: 15.4.0-canary.61
+        version: 15.4.0-canary.61(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       openai:
         specifier: ^4.96.0
         version: 4.96.0(zod@3.24.2)
@@ -126,10 +126,10 @@ importers:
     dependencies:
       '@sveltejs/vite-plugin-svelte':
         specifier: ^5.0.3
-        version: 5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
+        version: 5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
       '@vercel/edge':
-        specifier: ^1.2.1
-        version: 1.2.1
+        specifier: ^1.2.2
+        version: 1.2.2
       '@vercel/functions':
         specifier: ^1.6.0
         version: 1.6.0
@@ -139,19 +139,19 @@ importers:
     devDependencies:
       '@sveltejs/adapter-vercel':
         specifier: ^5.7.1
-        version: 5.7.1(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(rollup@4.35.0)
+        version: 5.7.1(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(rollup@4.35.0)
       '@sveltejs/kit':
         specifier: ^2.20.8
-        version: 2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
+        version: 2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
       '@types/js-cookie':
         specifier: ^3.0.6
         version: 3.0.6
       '@vercel/flags':
         specifier: 2.6.0
-        version: 2.6.0(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(next@15.2.2(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 2.6.0(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(next@15.2.2(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@vercel/toolbar':
-        specifier: ^0.1.36
-        version: 0.1.36(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(next@15.2.2(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
+        specifier: ^0.1.37
+        version: 0.1.37(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(next@15.2.2(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
       svelte:
         specifier: ^5.17.3
         version: 5.23.0
@@ -163,7 +163,7 @@ importers:
         version: 5.8.3
       vite:
         specifier: ^6.3.0
-        version: 6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)
+        version: 6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)
 
   apps/tc-apis:
     dependencies:
@@ -174,8 +174,8 @@ importers:
         specifier: 0.0.1-security
         version: 0.0.1-security
       next:
-        specifier: 15.4.0-canary.3
-        version: 15.4.0-canary.3(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: 15.4.0-canary.61
+        version: 15.4.0-canary.61(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       path:
         specifier: ^0.12.7
         version: 0.12.7
@@ -215,7 +215,7 @@ importers:
     dependencies:
       '@as-integrations/next':
         specifier: ^3.2.0
-        version: 3.2.0(@apollo/server@4.11.3(graphql@16.10.0))(next@15.4.0-canary.3(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
+        version: 3.2.0(@apollo/server@4.11.3(graphql@16.10.0))(next@15.4.0-canary.61(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@auth0/auth0-react':
         specifier: ^2.2.4
         version: 2.3.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -223,14 +223,14 @@ importers:
         specifier: ^0.2.2
         version: 0.2.2(@fortawesome/fontawesome-svg-core@6.7.2)(react@19.0.0)
       '@vercel/edge':
-        specifier: ^1.2.1
-        version: 1.2.1
+        specifier: ^1.2.2
+        version: 1.2.2
       '@vercel/functions':
         specifier: ^1.6.0
         version: 1.6.0
       '@vercel/node':
-        specifier: ^5.1.14
-        version: 5.1.14(rollup@4.35.0)
+        specifier: ^5.2.1
+        version: 5.2.1(rollup@4.35.0)
       globals:
         specifier: ^15.15.0
         version: 15.15.0
@@ -307,6 +307,12 @@ importers:
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@upstash/redis':
+        specifier: ^1.35.0
+        version: 1.35.0
+      '@vercel/blob':
+        specifier: ^1.1.1
+        version: 1.1.1
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -320,8 +326,8 @@ importers:
         specifier: ^0.475.0
         version: 0.475.0(react@19.0.0)
       next:
-        specifier: 15.4.0-canary.3
-        version: 15.4.0-canary.3(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: 15.4.0-canary.61
+        version: 15.4.0-canary.61(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       next-themes:
         specifier: ^0.4.4
         version: 0.4.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -410,22 +416,22 @@ importers:
         version: 1.9.0
       '@opentelemetry/exporter-logs-otlp-http':
         specifier: latest
-        version: 0.200.0(@opentelemetry/api@1.9.0)
+        version: 0.202.0(@opentelemetry/api@1.9.0)
       '@opentelemetry/sdk-logs':
         specifier: latest
-        version: 0.200.0(@opentelemetry/api@1.9.0)
+        version: 0.202.0(@opentelemetry/api@1.9.0)
       '@opentelemetry/sdk-metrics':
         specifier: latest
-        version: 2.0.0(@opentelemetry/api@1.9.0)
+        version: 2.0.1(@opentelemetry/api@1.9.0)
       '@opentelemetry/sdk-trace-base':
         specifier: latest
-        version: 2.0.0(@opentelemetry/api@1.9.0)
+        version: 2.0.1(@opentelemetry/api@1.9.0)
       '@vercel/otel':
-        specifier: ^1.11.0
-        version: 1.11.0(@opentelemetry/api@1.9.0)(@opentelemetry/resources@2.0.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-logs@0.200.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-metrics@2.0.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.0(@opentelemetry/api@1.9.0))
+        specifier: ^1.12.0
+        version: 1.12.0(@opentelemetry/api@1.9.0)(@opentelemetry/resources@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-logs@0.202.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-metrics@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.1(@opentelemetry/api@1.9.0))
       next:
-        specifier: 15.4.0-canary.3
-        version: 15.4.0-canary.3(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: 15.4.0-canary.61
+        version: 15.4.0-canary.61(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
     devDependencies:
       '@repo/typescript-config':
         specifier: workspace:*
@@ -1160,6 +1166,12 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
+  '@img/sharp-darwin-arm64@0.34.2':
+    resolution: {integrity: sha512-OfXHZPppddivUJnqyKoi5YVeHRkkNE2zUFT2gbpKxp/JZCFYEYubnMg+gOp6lWfasPrTS+KPosKqdI+ELYVDtg==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [arm64]
+    os: [darwin]
+
   '@img/sharp-darwin-x64@0.33.5':
     resolution: {integrity: sha512-fyHac4jIc1ANYGRDxtiqelIbdWkIuQaI84Mv45KvGRRxSAa7o7d1ZKAOBaYbnepLC1WqxfpimdeWfvqqSGwR2Q==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
@@ -1168,6 +1180,12 @@ packages:
 
   '@img/sharp-darwin-x64@0.34.1':
     resolution: {integrity: sha512-VfuYgG2r8BpYiOUN+BfYeFo69nP/MIwAtSJ7/Zpxc5QF3KS22z8Pvg3FkrSFJBPNQ7mmcUcYQFBmEQp7eu1F8Q==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [x64]
+    os: [darwin]
+
+  '@img/sharp-darwin-x64@0.34.2':
+    resolution: {integrity: sha512-dYvWqmjU9VxqXmjEtjmvHnGqF8GrVjM2Epj9rJ6BUIXvk8slvNDJbhGFvIoXzkDhrJC2jUxNLz/GUjjvSzfw+g==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [x64]
     os: [darwin]
@@ -1269,6 +1287,12 @@ packages:
     cpu: [arm64]
     os: [linux]
 
+  '@img/sharp-linux-arm64@0.34.2':
+    resolution: {integrity: sha512-D8n8wgWmPDakc83LORcfJepdOSN6MvWNzzz2ux0MnIbOqdieRZwVYY32zxVx+IFUT8er5KPcyU3XXsn+GzG/0Q==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [arm64]
+    os: [linux]
+
   '@img/sharp-linux-arm@0.33.5':
     resolution: {integrity: sha512-JTS1eldqZbJxjvKaAkxhZmBqPRGmxgu+qFKSInv8moZ2AmT5Yib3EQ1c6gp493HvrvV8QgdOXdyaIBrhvFhBMQ==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
@@ -1277,6 +1301,12 @@ packages:
 
   '@img/sharp-linux-arm@0.34.1':
     resolution: {integrity: sha512-anKiszvACti2sGy9CirTlNyk7BjjZPiML1jt2ZkTdcvpLU1YH6CXwRAZCA2UmRXnhiIftXQ7+Oh62Ji25W72jA==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [arm]
+    os: [linux]
+
+  '@img/sharp-linux-arm@0.34.2':
+    resolution: {integrity: sha512-0DZzkvuEOqQUP9mo2kjjKNok5AmnOr1jB2XYjkaoNRwpAYMDzRmAqUIa1nRi58S2WswqSfPOWLNOr0FDT3H5RQ==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [arm]
     os: [linux]
@@ -1293,6 +1323,12 @@ packages:
     cpu: [s390x]
     os: [linux]
 
+  '@img/sharp-linux-s390x@0.34.2':
+    resolution: {integrity: sha512-EGZ1xwhBI7dNISwxjChqBGELCWMGDvmxZXKjQRuqMrakhO8QoMgqCrdjnAqJq/CScxfRn+Bb7suXBElKQpPDiw==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [s390x]
+    os: [linux]
+
   '@img/sharp-linux-x64@0.33.5':
     resolution: {integrity: sha512-opC+Ok5pRNAzuvq1AG0ar+1owsu842/Ab+4qvU879ippJBHvyY5n2mxF1izXqkPYlGuP/M556uh53jRLJmzTWA==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
@@ -1301,6 +1337,12 @@ packages:
 
   '@img/sharp-linux-x64@0.34.1':
     resolution: {integrity: sha512-wExv7SH9nmoBW3Wr2gvQopX1k8q2g5V5Iag8Zk6AVENsjwd+3adjwxtp3Dcu2QhOXr8W9NusBU6XcQUohBZ5MA==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [x64]
+    os: [linux]
+
+  '@img/sharp-linux-x64@0.34.2':
+    resolution: {integrity: sha512-sD7J+h5nFLMMmOXYH4DD9UtSNBD05tWSSdWAcEyzqW8Cn5UxXvsHAxmxSesYUsTOBmUnjtxghKDl15EvfqLFbQ==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [x64]
     os: [linux]
@@ -1317,6 +1359,12 @@ packages:
     cpu: [arm64]
     os: [linux]
 
+  '@img/sharp-linuxmusl-arm64@0.34.2':
+    resolution: {integrity: sha512-NEE2vQ6wcxYav1/A22OOxoSOGiKnNmDzCYFOZ949xFmrWZOVII1Bp3NqVVpvj+3UeHMFyN5eP/V5hzViQ5CZNA==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [arm64]
+    os: [linux]
+
   '@img/sharp-linuxmusl-x64@0.33.5':
     resolution: {integrity: sha512-WT+d/cgqKkkKySYmqoZ8y3pxx7lx9vVejxW/W4DOFMYVSkErR+w7mf2u8m/y4+xHe7yY9DAXQMWQhpnMuFfScw==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
@@ -1325,6 +1373,12 @@ packages:
 
   '@img/sharp-linuxmusl-x64@0.34.1':
     resolution: {integrity: sha512-pax/kTR407vNb9qaSIiWVnQplPcGU8LRIJpDT5o8PdAx5aAA7AS3X9PS8Isw1/WfqgQorPotjrZL3Pqh6C5EBg==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [x64]
+    os: [linux]
+
+  '@img/sharp-linuxmusl-x64@0.34.2':
+    resolution: {integrity: sha512-DOYMrDm5E6/8bm/yQLCWyuDJwUnlevR8xtF8bs+gjZ7cyUNYXiSf/E8Kp0Ss5xasIaXSHzb888V1BE4i1hFhAA==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [x64]
     os: [linux]
@@ -1339,6 +1393,17 @@ packages:
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [wasm32]
 
+  '@img/sharp-wasm32@0.34.2':
+    resolution: {integrity: sha512-/VI4mdlJ9zkaq53MbIG6rZY+QRN3MLbR6usYlgITEzi4Rpx5S6LFKsycOQjkOGmqTNmkIdLjEvooFKwww6OpdQ==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [wasm32]
+
+  '@img/sharp-win32-arm64@0.34.2':
+    resolution: {integrity: sha512-cfP/r9FdS63VA5k0xiqaNaEoGxBg9k7uE+RQGzuK9fHt7jib4zAVVseR9LsE4gJcNWgT6APKMNnCcnyOtmSEUQ==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [arm64]
+    os: [win32]
+
   '@img/sharp-win32-ia32@0.33.5':
     resolution: {integrity: sha512-T36PblLaTwuVJ/zw/LaH0PdZkRz5rd3SmMHX8GSmR7vtNSP5Z6bQkExdSK7xGWyxLw4sUknBuugTelgw2faBbQ==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
@@ -1351,6 +1416,12 @@ packages:
     cpu: [ia32]
     os: [win32]
 
+  '@img/sharp-win32-ia32@0.34.2':
+    resolution: {integrity: sha512-QLjGGvAbj0X/FXl8n1WbtQ6iVBpWU7JO94u/P2M4a8CFYsvQi4GW2mRy/JqkRx0qpBzaOdKJKw8uc930EX2AHw==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [ia32]
+    os: [win32]
+
   '@img/sharp-win32-x64@0.33.5':
     resolution: {integrity: sha512-MpY/o8/8kj+EcnxwvrP4aTJSWw/aZ7JIGR4aBeZkZw5B7/Jn+tY9/VNwtcoGmdT7GfggGIU4kygOMSbYnOrAbg==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
@@ -1359,6 +1430,12 @@ packages:
 
   '@img/sharp-win32-x64@0.34.1':
     resolution: {integrity: sha512-hw1iIAHpNE8q3uMIRCgGOeDoz9KtFNarFLQclLxr/LK1VBkj8nby18RjFvr6aP7USRYAjTZW6yisnBWMX571Tw==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+    cpu: [x64]
+    os: [win32]
+
+  '@img/sharp-win32-x64@0.34.2':
+    resolution: {integrity: sha512-aUdT6zEYtDKCaxkofmmJDJYGCf0+pJg3eU9/oBuqvEeoB9dKI6ZLc/1iLJCTuJQDO4ptntAlkUmHgGjyuobZbw==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [x64]
     os: [win32]
@@ -1401,11 +1478,14 @@ packages:
     resolution: {integrity: sha512-rb6AMp2DR4SN+kc6L1ta2NCpApyA9WYNx3CrTSZvGxq9wH71bRur+zRqPfg0vQ9mjywR7qZdX2RGHOPq3ss+tA==}
     engines: {node: '>=18'}
 
+  '@next/env@15.1.6':
+    resolution: {integrity: sha512-d9AFQVPEYNr+aqokIiPLNK/MTyt3DWa/dpKveiAaVccUadFbhFEvY6FXYX2LJO2Hv7PHnLBu2oWwB4uBuHjr/w==}
+
   '@next/env@15.2.2':
     resolution: {integrity: sha512-yWgopCfA9XDR8ZH3taB5nRKtKJ1Q5fYsTOuYkzIIoS8TJ0UAUKAGF73JnGszbjk2ufAQDj6mDdgsJAFx5CLtYQ==}
 
-  '@next/env@15.4.0-canary.3':
-    resolution: {integrity: sha512-lu4pB2e3Z/d+B0rxEm9YuQMb57Hd96iJUBZgVlcRNemlIryr0GByu17kvN6nBk3JjbWL8h+MW90stpGzGdhbqg==}
+  '@next/env@15.4.0-canary.61':
+    resolution: {integrity: sha512-69POa6nDa+1/CgHUiDxBUXFQFB5EdlrshdXzCaDcsbVNYeZKoGnrKHweQCzfmKGXvRcM3dziuhucVIwv68hbVw==}
 
   '@next/eslint-plugin-next@15.2.2':
     resolution: {integrity: sha512-1+BzokFuFQIfLaRxUKf2u5In4xhPV7tUgKcK53ywvFl6+LXHWHpFkcV7VNeKlyQKUotwiq4fy/aDNF9EiUp4RQ==}
@@ -1416,8 +1496,8 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
-  '@next/swc-darwin-arm64@15.4.0-canary.3':
-    resolution: {integrity: sha512-w9u8IpwLb/JS7HzHLt24smP4FxIYMgciOtYNUCognO1xh1XZfqqjDIrRAXDuuYDPKrc1i2EvI24R5eDTz7EYMQ==}
+  '@next/swc-darwin-arm64@15.4.0-canary.61':
+    resolution: {integrity: sha512-rM5TWBNlC3pLISxQ2yZfWXqqKx/B9OjhQcfTWHFJsuEzJuxVEDn0AxexjE/0jo+mEm8Xgwdwo0QA1bcGaRxAxQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
@@ -1428,8 +1508,8 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@next/swc-darwin-x64@15.4.0-canary.3':
-    resolution: {integrity: sha512-5pL1hBRw8h1XeArzWYjCDERtRFIfrMAz1Nq9m1np8FrTuHclE7xitKKfOJqqmBbO9dWtnZIfA8lZl9bdlNEUZg==}
+  '@next/swc-darwin-x64@15.4.0-canary.61':
+    resolution: {integrity: sha512-R9WsMuXxpfhKpwcsYrDcpP+bsIPj8uPSSaZgNgxHQUovA1tCGVQO06ExddbGcnuvrs+J105/1NxuVafJlkJxjg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
@@ -1440,8 +1520,8 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@next/swc-linux-arm64-gnu@15.4.0-canary.3':
-    resolution: {integrity: sha512-vx6cU4jKoecF2QZw3CQqJrzb+D0WhNzHHoWUN8O+YKPnX0oG4wEtAQWSWisxKjNrU1U4TiraOql0nOQBUOKwaQ==}
+  '@next/swc-linux-arm64-gnu@15.4.0-canary.61':
+    resolution: {integrity: sha512-NcWW7Th1UCq9A+FKONHoUwoyJYbxDWu6MIG/SwjV0FMyEBtCwHU5YbN+hicj/B2KW2OBbA/dhhj30Pa468A0YQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -1452,8 +1532,8 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@next/swc-linux-arm64-musl@15.4.0-canary.3':
-    resolution: {integrity: sha512-7ig1sQHRRgTrj4QHt5l8OT1z2SJnEAHbnEY9SDP2HilwQIfgOAOxveFDBR+f/8AMdAKhCTSeMyrZsivpC0xTUA==}
+  '@next/swc-linux-arm64-musl@15.4.0-canary.61':
+    resolution: {integrity: sha512-E4Ha94KEWiQK+BNMG8C8qi17PAl476JbrpwzmwQVi6CI58lJuN5KMBxqlCaOeeF582muO2YmjU5TDfBA/EY1ug==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -1464,8 +1544,8 @@ packages:
     cpu: [x64]
     os: [linux]
 
-  '@next/swc-linux-x64-gnu@15.4.0-canary.3':
-    resolution: {integrity: sha512-fML6pzNX9i3DlrCOdE6A1TbVL0aIQkIDDCjrbn/f37hOn88god1OrVd/d4J4w1YqLKQWpmJPnUn6Bkn8qXqbRw==}
+  '@next/swc-linux-x64-gnu@15.4.0-canary.61':
+    resolution: {integrity: sha512-5Y3qFsEs0WHaL8n64iCWJpH92YSBVWDTdtbkA8YHobo5BuBDVimIMgrLbSzAVkHmd0GkMcoOEGXgN0+LwC8T5A==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -1476,8 +1556,8 @@ packages:
     cpu: [x64]
     os: [linux]
 
-  '@next/swc-linux-x64-musl@15.4.0-canary.3':
-    resolution: {integrity: sha512-87/JPkbr3fgvASdWW2qBVuaXwcjSxgy+CTllj2DgYB7e7BEzT7QJEdj0HJZljBjVbN5oT1FOKwhaVRgRWuwYLQ==}
+  '@next/swc-linux-x64-musl@15.4.0-canary.61':
+    resolution: {integrity: sha512-7e3htZt4fpwjcG/iNTRtFwaAiqw0QFPp+U0arBxVH/bikKMeTqbflKvfD4RnGWkSB8FQbSgAyGvLQWEE22WPhA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -1488,8 +1568,8 @@ packages:
     cpu: [arm64]
     os: [win32]
 
-  '@next/swc-win32-arm64-msvc@15.4.0-canary.3':
-    resolution: {integrity: sha512-cTZh72h3ZX8z0lhdVs5m38uyy83mW5r0jz6hKagysPT06uTdOAypK6CRqG5CJSN7RM0n7CkfcO6ExjDqhkDhRA==}
+  '@next/swc-win32-arm64-msvc@15.4.0-canary.61':
+    resolution: {integrity: sha512-ABj9Wpk/4XZAgJfflG2KrhDvusDO+r2I/0Byr1C2DXmY5wUhcFSJFXViAQX98PufO7t6Jg5flPC7uqBf4Hp0eQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
@@ -1500,8 +1580,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@next/swc-win32-x64-msvc@15.4.0-canary.3':
-    resolution: {integrity: sha512-8oZKOKRGad4EVZ94L5Sz2EP59khHIeKGKg+/z8r5mCbBtupLPTXmWjrXoi1R55hHRXJjbW2D5NwcPfJn/ltZ3Q==}
+  '@next/swc-win32-x64-msvc@15.4.0-canary.61':
+    resolution: {integrity: sha512-WWzzuq52/Mu7/zr5nm4V2r6U+wnra6BxNLh1d4ZoxGkAPGkVPSOMmE/dTcVPjsADszOJwJzjVDq/KAYEftqEyw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -1518,64 +1598,68 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@opentelemetry/api-logs@0.200.0':
-    resolution: {integrity: sha512-IKJBQxh91qJ+3ssRly5hYEJ8NDHu9oY/B1PXVSCWf7zytmYO9RNLB0Ox9XQ/fJ8m6gY6Q6NtBWlmXfaXt5Uc4Q==}
+  '@opentelemetry/api-logs@0.202.0':
+    resolution: {integrity: sha512-fTBjMqKCfotFWfLzaKyhjLvyEyq5vDKTTFfBmx21btv3gvy8Lq6N5Dh2OzqeuN4DjtpSvNT1uNVfg08eD2Rfxw==}
     engines: {node: '>=8.0.0'}
 
   '@opentelemetry/api@1.9.0':
     resolution: {integrity: sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg==}
     engines: {node: '>=8.0.0'}
 
-  '@opentelemetry/core@2.0.0':
-    resolution: {integrity: sha512-SLX36allrcnVaPYG3R78F/UZZsBsvbc7lMCLx37LyH5MJ1KAAZ2E3mW9OAD3zGz0G8q/BtoS5VUrjzDydhD6LQ==}
+  '@opentelemetry/core@2.0.1':
+    resolution: {integrity: sha512-MaZk9SJIDgo1peKevlbhP6+IwIiNPNmswNL4AF0WaQJLbHXjr9SrZMgS12+iqr9ToV4ZVosCcc0f8Rg67LXjxw==}
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': '>=1.0.0 <1.10.0'
 
-  '@opentelemetry/exporter-logs-otlp-http@0.200.0':
-    resolution: {integrity: sha512-KfWw49htbGGp9s8N4KI8EQ9XuqKJ0VG+yVYVYFiCYSjEV32qpQ5qZ9UZBzOZ6xRb+E16SXOSCT3RkqBVSABZ+g==}
+  '@opentelemetry/exporter-logs-otlp-http@0.202.0':
+    resolution: {integrity: sha512-mJWLkmoG+3r+SsYQC+sbWoy1rjowJhMhFvFULeIPTxSI+EZzKPya0+NZ3+vhhgx2UTybGQlye3FBtCH3o6Rejg==}
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': ^1.3.0
 
-  '@opentelemetry/otlp-exporter-base@0.200.0':
-    resolution: {integrity: sha512-IxJgA3FD7q4V6gGq4bnmQM5nTIyMDkoGFGrBrrDjB6onEiq1pafma55V+bHvGYLWvcqbBbRfezr1GED88lacEQ==}
+  '@opentelemetry/otlp-exporter-base@0.202.0':
+    resolution: {integrity: sha512-nMEOzel+pUFYuBJg2znGmHJWbmvMbdX5/RhoKNKowguMbURhz0fwik5tUKplLcUtl8wKPL1y9zPnPxeBn65N0Q==}
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': ^1.3.0
 
-  '@opentelemetry/otlp-transformer@0.200.0':
-    resolution: {integrity: sha512-+9YDZbYybOnv7sWzebWOeK6gKyt2XE7iarSyBFkwwnP559pEevKOUD8NyDHhRjCSp13ybh9iVXlMfcj/DwF/yw==}
+  '@opentelemetry/otlp-transformer@0.202.0':
+    resolution: {integrity: sha512-5XO77QFzs9WkexvJQL9ksxL8oVFb/dfi9NWQSq7Sv0Efr9x3N+nb1iklP1TeVgxqJ7m1xWiC/Uv3wupiQGevMw==}
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': ^1.3.0
 
-  '@opentelemetry/resources@2.0.0':
-    resolution: {integrity: sha512-rnZr6dML2z4IARI4zPGQV4arDikF/9OXZQzrC01dLmn0CZxU5U5OLd/m1T7YkGRj5UitjeoCtg/zorlgMQcdTg==}
+  '@opentelemetry/resources@2.0.1':
+    resolution: {integrity: sha512-dZOB3R6zvBwDKnHDTB4X1xtMArB/d324VsbiPkX/Yu0Q8T2xceRthoIVFhJdvgVM2QhGVUyX9tzwiNxGtoBJUw==}
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': '>=1.3.0 <1.10.0'
 
-  '@opentelemetry/sdk-logs@0.200.0':
-    resolution: {integrity: sha512-VZG870063NLfObmQQNtCVcdXXLzI3vOjjrRENmU37HYiPFa0ZXpXVDsTD02Nh3AT3xYJzQaWKl2X2lQ2l7TWJA==}
+  '@opentelemetry/sdk-logs@0.202.0':
+    resolution: {integrity: sha512-pv8QiQLQzk4X909YKm0lnW4hpuQg4zHwJ4XBd5bZiXcd9urvrJNoNVKnxGHPiDVX/GiLFvr5DMYsDBQbZCypRQ==}
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': '>=1.4.0 <1.10.0'
 
-  '@opentelemetry/sdk-metrics@2.0.0':
-    resolution: {integrity: sha512-Bvy8QDjO05umd0+j+gDeWcTaVa1/R2lDj/eOvjzpm8VQj1K1vVZJuyjThpV5/lSHyYW2JaHF2IQ7Z8twJFAhjA==}
+  '@opentelemetry/sdk-metrics@2.0.1':
+    resolution: {integrity: sha512-wf8OaJoSnujMAHWR3g+/hGvNcsC16rf9s1So4JlMiFaFHiE4HpIA3oUh+uWZQ7CNuK8gVW/pQSkgoa5HkkOl0g==}
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': '>=1.9.0 <1.10.0'
 
-  '@opentelemetry/sdk-trace-base@2.0.0':
-    resolution: {integrity: sha512-qQnYdX+ZCkonM7tA5iU4fSRsVxbFGml8jbxOgipRGMFHKaXKHQ30js03rTobYjKjIfnOsZSbHKWF0/0v0OQGfw==}
+  '@opentelemetry/sdk-trace-base@2.0.1':
+    resolution: {integrity: sha512-xYLlvk/xdScGx1aEqvxLwf6sXQLXCjk3/1SQT9X9AoN5rXRhkdvIFShuNNmtTEPRBqcsMbS4p/gJLNI2wXaDuQ==}
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': '>=1.3.0 <1.10.0'
 
   '@opentelemetry/semantic-conventions@1.30.0':
     resolution: {integrity: sha512-4VlGgo32k2EQ2wcCY3vEU28A0O13aOtHz3Xt2/2U5FAh9EfhD6t6DqL5Z6yAnRCntbTFDU4YfbpyzSlHNWycPw==}
+    engines: {node: '>=14'}
+
+  '@opentelemetry/semantic-conventions@1.34.0':
+    resolution: {integrity: sha512-aKcOkyrorBGlajjRdVoJWHTxfxO1vCNHLJVlSDaRHDIdjU+pX8IYQPvPDkYiujKLbRnWU+1TBwEt0QRgSm4SGA==}
     engines: {node: '>=14'}
 
   '@pkgjs/parseargs@0.11.0':
@@ -2000,11 +2084,14 @@ packages:
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
 
+  '@types/estree@1.0.7':
+    resolution: {integrity: sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ==}
+
   '@types/express-serve-static-core@4.19.6':
     resolution: {integrity: sha512-N4LZ2xG7DatVqhCZzOGb1Yi5lMbXSZcmdLDe9EzSndPV2HpWYWzRbaerl2n27irrm94EPpprqa8KpskPT085+A==}
 
-  '@types/express@4.17.21':
-    resolution: {integrity: sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==}
+  '@types/express@4.17.22':
+    resolution: {integrity: sha512-eZUmSnhRX9YRSkplpz0N+k6NljUUn5l3EWZIKZvYzhvMphEuNiyyy1viH/ejgt66JWgALwC/gtSUAeQKtSwW/w==}
 
   '@types/glob@7.2.0':
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
@@ -2051,11 +2138,11 @@ packages:
   '@types/node@22.13.10':
     resolution: {integrity: sha512-I6LPUvlRH+O6VRUqYOcMudhaIdUVWfsjnZavnsraHvpBwaEyMN29ry+0UVJhImYL16xsscu0aske3yA+uPOWfw==}
 
-  '@types/node@22.15.12':
-    resolution: {integrity: sha512-K0fpC/ZVeb8G9rm7bH7vI0KAec4XHEhBam616nVJCV51bKzJ6oA3luG4WdKoaztxe70QaNjS/xBmcDLmr4PiGw==}
+  '@types/node@22.15.29':
+    resolution: {integrity: sha512-LNdjOkUDlU1RZb8e1kOIUpN1qQUlzGkEtbVNo53vbrwDg5om6oduhm4SiUaPW5ASTXhAiP0jInWG8Qx9fVlOeQ==}
 
-  '@types/qs@6.9.18':
-    resolution: {integrity: sha512-kK7dgTYDyGqS+e2Q4aK9X3D7q234CIZ1Bv0q/7Z5IwRDoADNU81xXJK/YVyLbLTZCoIwUoDoffFeF+p/eIklAA==}
+  '@types/qs@6.14.0':
+    resolution: {integrity: sha512-eOunJqu0K1923aExK6y8p6fsihYEn/BYuQ4g0CxAAgFc4b/ZLN4CrsRZ55srTdqoiLzU2B2evC+apEIxprEzkQ==}
 
   '@types/range-parser@1.2.7':
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
@@ -2127,21 +2214,25 @@ packages:
     resolution: {integrity: sha512-AjOC3zfnxd6S4Eiy3jwktJPclqhFHNyd8L6Gycf9WUPoKZpgM5PjkxY1X7uSy61xVpiJDhhk7XT2NVsN3ALTWg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@vercel/blob@1.0.0':
-    resolution: {integrity: sha512-fe4fzpL0h/2gRhaCixygaconaMXVgPo06L5ZyTlz9FSVTXDu+MBOu06DqDZ3Ye1s84m1g2sJ9w8Z5SbKCfkQ0A==}
+  '@upstash/redis@1.35.0':
+    resolution: {integrity: sha512-WUm0Jz1xN4DBDGeJIi2Y0kVsolWRB2tsVds4SExaiLg4wBdHFMB+8IfZtBWr+BP0FvhuBr5G1/VLrJ9xzIWHsg==}
+
+  '@vercel/blob@1.1.1':
+    resolution: {integrity: sha512-heiJGj2qt5qTv6yiShH9f6KRAoZGj+lz61GQ+lBRL4lhvUmKI9A51KYlQTnsUd9ymdFlKHBlvmPeG+yGz2Qsbg==}
     engines: {node: '>=16.14'}
 
-  '@vercel/build-utils@10.5.1':
-    resolution: {integrity: sha512-BtqwEmU1AoITpd0KxYrdQOwyKZL8RKba+bWxI8mr3gXPQZWRAE9ok1zF0AXfvMGCstYPHBPNolZGDSfWmY2jqg==}
+  '@vercel/build-utils@10.6.0':
+    resolution: {integrity: sha512-ek8gagVbecvIX+RJyOnT9LSKVdKCT9JQZMI4LaEJeM1nPL2M10iByHw5+/MqXgTVlociwOWGJmXKJDC2pKe18Q==}
 
-  '@vercel/edge@1.2.1':
-    resolution: {integrity: sha512-1++yncEyIAi68D3UEOlytYb1IUcIulMWdoSzX2h9LuSeeyR7JtaIgR8DcTQ6+DmYOQn+5MCh6LY+UmK6QBByNA==}
+  '@vercel/edge@1.2.2':
+    resolution: {integrity: sha512-1+y+f6rk0Yc9ss9bRDgz/gdpLimwoRteKHhrcgHvEpjbP1nyT3ByqEMWm2BTcpIO5UtDmIFXc8zdq4LR190PDA==}
 
   '@vercel/error-utils@2.0.3':
     resolution: {integrity: sha512-CqC01WZxbLUxoiVdh9B/poPbNpY9U+tO1N9oWHwTl5YAZxcqXmmWJ8KNMFItJCUUWdY3J3xv8LvAuQv2KZ5YdQ==}
 
   '@vercel/flags@2.6.0':
     resolution: {integrity: sha512-GvLX0CK/OsIqq672OBvcCeu0k3tb3QdE0lRn1P5zulMQJIPTLlUDEH0y9TeAyC7TMWlpTTT5Bealqu0rmncyXQ==}
+    deprecated: This package has been renamed to flags. It offers the same functionality under a new name. Please follow the upgrade guide https://github.com/vercel/flags/blob/main/packages/flags/guides/upgrade-to-v4.md
     peerDependencies:
       '@sveltejs/kit': '*'
       next: '*'
@@ -2166,8 +2257,8 @@ packages:
       '@aws-sdk/credential-provider-web-identity':
         optional: true
 
-  '@vercel/microfrontends@1.1.0':
-    resolution: {integrity: sha512-w7SeCV10hsLh3xUB4M1xsqbBSo+ry5PPL9/pkX9St5ZDRUHGZT/UEQd4vhOcSgwObn/1gbcuV0Il/unXmPty9A==}
+  '@vercel/microfrontends@1.2.0':
+    resolution: {integrity: sha512-w+WcDU8pN3gkGEMMBx8xcAV/C3/0qxK0az0X7yBVtX8kRPAKucthRZRrI+QWjoTe652zpKhhBi/JOlipS2PzNg==}
     hasBin: true
     peerDependencies:
       '@sveltejs/kit': '>=1'
@@ -2193,21 +2284,16 @@ packages:
       vite:
         optional: true
 
-  '@vercel/nft@0.27.10':
-    resolution: {integrity: sha512-zbaF9Wp/NsZtKLE4uVmL3FyfFwlpDyuymQM1kPbeT0mVOHKDQQNjnnfslB3REg3oZprmNFJuh3pkHBk2qAaizg==}
-    engines: {node: '>=16'}
-    hasBin: true
-
   '@vercel/nft@0.29.2':
     resolution: {integrity: sha512-A/Si4mrTkQqJ6EXJKv5EYCDQ3NL6nJXxG8VGXePsaiQigsomHYQC9xSpX8qGk7AEZk4b1ssbYIqJ0ISQQ7bfcA==}
     engines: {node: '>=18'}
     hasBin: true
 
-  '@vercel/node@5.1.14':
-    resolution: {integrity: sha512-kLXAR4ZtNSXJw5ffIzKPDAVHD4/Dwxw/287ZCnQlqtOQzY3IH1E5QM3nxn0LGfTkYxXpQFFOOcXL7fZW7MjC6A==}
+  '@vercel/node@5.2.1':
+    resolution: {integrity: sha512-0+YV01grkqfHIHhmWeCXWmgeP6GsuzXtgWBri3+qESwfAZ6dOTBG4GJp9z2E7sEi+wP60S0/eNGRj8z77uk3JQ==}
 
-  '@vercel/otel@1.11.0':
-    resolution: {integrity: sha512-cS+Yq2qfkkGyoRKhdKd81J5pVPo7ulLnqeQsISITJVynRNuun8+1FfY+DHcPT2drj9Bl/7LpG0BosULrv7yyqg==}
+  '@vercel/otel@1.12.0':
+    resolution: {integrity: sha512-KiTlMvJf6tjxcJUlpU1u7o1YpTddhx+aLhJ6Obn9dExr3ykVp5Lzi4ACET029TCzJ63NBzcF641rGMZly6x4aw==}
     engines: {node: '>=18'}
     peerDependencies:
       '@opentelemetry/api': ^1.7.0
@@ -2218,11 +2304,11 @@ packages:
       '@opentelemetry/sdk-metrics': ^1.19.0
       '@opentelemetry/sdk-trace-base': ^1.19.0
 
-  '@vercel/static-config@3.0.0':
-    resolution: {integrity: sha512-2qtvcBJ1bGY0dYGYh3iM7yGKkk971FujLEDXzuW5wcZsPr1GSEjO/w2iSr3qve6nDDtBImsGoDEnus5FI4+fIw==}
+  '@vercel/static-config@3.1.1':
+    resolution: {integrity: sha512-IRtKnm9N1Uqd2ayIbLPjRtdwcl1GTWvqF1PuEVNm9O43kmoI+m9VpGlW8oga+5LQq1LmJ2Y67zHr7NbjrH1rrw==}
 
-  '@vercel/toolbar@0.1.36':
-    resolution: {integrity: sha512-hEY4dx2XkR6p7uWT1pvP9brVWGM8cY6Ga9WG7utAsmayie+wNRKN/oVSGAVWTp4A55S0bYZshYBKwoZ7ng9FxA==}
+  '@vercel/toolbar@0.1.37':
+    resolution: {integrity: sha512-upGpxs2922rURbgfFEE6Fhn0C4TpApJc4zlXPFpghHekbL8jVrbjMPQtL10lt0FWEte+RkpMHa0bzLVHAMcJcA==}
     peerDependencies:
       next: '>=11.0.0'
       react: '>=17'
@@ -2241,8 +2327,8 @@ packages:
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0 || ^6.0.0
 
-  abbrev@3.0.0:
-    resolution: {integrity: sha512-+/kfrslGQ7TNV2ecmQwMJj/B65g5KVq1/L3SGVZ3tCYGqlzFuFCGBZJtMP99wH3NpEUyAjn0zPdPUg0D+DwrOA==}
+  abbrev@3.0.1:
+    resolution: {integrity: sha512-AO2ac6pjRB3SJmGJo+v5/aK6Omggp6fsLrs6wN9bd35ulu4cCwaAU9+7ZhXjeqHVkaHThLuzH0nZr0YpCDhygg==}
     engines: {node: ^18.17.0 || >=20.5.0}
 
   abort-controller@3.0.0:
@@ -2506,11 +2592,8 @@ packages:
   caniuse-lite@1.0.30001703:
     resolution: {integrity: sha512-kRlAGTRWgPsOj7oARC9m1okJEXdL/8fekFVcxA8Hl7GH4r/sN4OJn/i6Flde373T50KS7Y37oFbMwlE8+F42kQ==}
 
-  caniuse-lite@1.0.30001715:
-    resolution: {integrity: sha512-7ptkFGMm2OAOgvZpwgA4yjQ5SQbrNVGdRjzH0pBdy1Fasvcr+KAeECmbCAECzTuDuoX0FCY8KzUxjf9+9kfZEw==}
-
-  caniuse-lite@1.0.30001717:
-    resolution: {integrity: sha512-auPpttCq6BDEG8ZAuHJIplGw6GODhjw+/11e7IjpnYCxZcW/ONgPs0KVBJ0d1bY3e2+7PRe5RCLyP+PfwVgkYw==}
+  caniuse-lite@1.0.30001720:
+    resolution: {integrity: sha512-Ec/2yV2nNPwb4DnTANEV99ZWwm3ZWfdlfkQbWSDDt+PsXEVYwlhPH8tdMaPunYTKKmz7AnHi2oNEi1GcmKCD8g==}
 
   chalk@2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
@@ -2629,8 +2712,8 @@ packages:
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
-  consola@3.4.0:
-    resolution: {integrity: sha512-EiPU8G6dQG0GFHNR8ljnZFki/8a+cQwEQ+7wpxdChl02Q8HXlwEZWD5lqAF8vC2sEC3Tehr8hy7vErz88LHyUA==}
+  consola@3.4.2:
+    resolution: {integrity: sha512-5IKcdX0nnYavi6G7TtOhwkYzyjfJlatbjMjuLSfE2kYT5pMDOilZ4OvMhi637CcDICTmz3wARPoyhqyX1Y+XvA==}
     engines: {node: ^14.18.0 || >=16.10.0}
 
   constant-case@2.0.0:
@@ -3911,8 +3994,8 @@ packages:
   long@4.0.0:
     resolution: {integrity: sha512-XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA==}
 
-  long@5.3.1:
-    resolution: {integrity: sha512-ka87Jz3gcx/I7Hal94xaN2tZEOPoUOEVftkQqZx2EeQRN7LGdfLlI3FvZ+7WDplm+vK2Urx9ULrvSowtdCieng==}
+  long@5.3.2:
+    resolution: {integrity: sha512-mNAgZ1GmyNhD7AuqnTG3/VQ26o760+ZYBPKjPvugO8+nLbYfX6TVpJPseBvopbdY+qpZ/lKUnmEc1LeZYS3QAA==}
 
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
@@ -4027,8 +4110,8 @@ packages:
     resolution: {integrity: sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==}
     engines: {node: '>=16 || 14 >=14.17'}
 
-  minizlib@3.0.1:
-    resolution: {integrity: sha512-umcy022ILvb5/3Djuu8LWeqUa8D68JaBzlttKeMWen48SjabqS3iY5w/vzeMzMUNhLDifyhbOwKDSznB1vvrwg==}
+  minizlib@3.0.2:
+    resolution: {integrity: sha512-oG62iEk+CYt5Xj2YqI5Xi9xWUeZhDI8jjQmC5oThVH5JGCTgIjr7ciJDzC7MBzYd//WvR1OTmP5Q38Q8ShQtVA==}
     engines: {node: '>= 18'}
 
   mkdirp@0.5.6:
@@ -4124,8 +4207,8 @@ packages:
       sass:
         optional: true
 
-  next@15.4.0-canary.3:
-    resolution: {integrity: sha512-OkwxAFNQeuE0vNL7tTwU+jm3nf3x3D5DHSmjRlFktsedGtxZiILZTq6UNExNaFBjttR+2Y6oGqRsFWXC4ob1Wg==}
+  next@15.4.0-canary.61:
+    resolution: {integrity: sha512-EMSeQxbnfy7iR1lFK9CQNMdff9FYlFhWwiY1WfhXk7nYBSwF2n7+VM5q1drxVMZrrJpFmXvlWQ/A7imGVgVS9g==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
     hasBin: true
     peerDependencies:
@@ -4478,8 +4561,8 @@ packages:
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
 
-  protobufjs@7.4.0:
-    resolution: {integrity: sha512-mRUWCc3KUU4w1jU8sGxICXH/gNS94DvI1gxqDvBzhj1JpcsimQkYiOJfwsPUykUI5ZaspFbSgmBLER8IrQ3tqw==}
+  protobufjs@7.5.3:
+    resolution: {integrity: sha512-sildjKwVqOI2kmFDiXQ6aEB0fjYTafpEvIBs8tOR8qI4spuL9OPROLVu2qZqi/xgCfsHIwVqlaF8JBjWFHnKbw==}
     engines: {node: '>=12.0.0'}
 
   proxy-addr@2.0.7:
@@ -4638,10 +4721,6 @@ packages:
     deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
-  rimraf@5.0.10:
-    resolution: {integrity: sha512-l0OE8wL34P4nJH/H2ffoaniAokM2qSmrtXHmlpvYr5AVVX8msAyW0l8NVJFDxlSK4u3Uh/f41cQheDVdnYijwQ==}
-    hasBin: true
-
   rollup@4.35.0:
     resolution: {integrity: sha512-kg6oI4g+vc41vePJyO6dHt/yl0Rz3Thv0kJeVQ3D1kS3E5XSuKbPc29G4IpT/Kv1KQwgHVcN+HtyS+HYLNSvQg==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
@@ -4707,6 +4786,11 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  semver@7.7.2:
+    resolution: {integrity: sha512-RF0Fw+rO5AMf9MAyaRXI4AV0Ulj5lMHqVxxdSgiVbixSCXoEmmX/jk0CuJw4+3SqroYO9VoUh+HcuJivvtJemA==}
+    engines: {node: '>=10'}
+    hasBin: true
+
   send@0.19.0:
     resolution: {integrity: sha512-dW41u5VfLXu8SJh5bwRmyYUbAoSB3c9uQh6L8h/KtsFREPWpbX1lrljJo186Jc4nmci/sGUZ9a0a0J2zgfq2hw==}
     engines: {node: '>= 0.8.0'}
@@ -4754,6 +4838,10 @@ packages:
 
   sharp@0.34.1:
     resolution: {integrity: sha512-1j0w61+eVxu7DawFJtnfYcvSv6qPFvfTaqzTQ2BLknVhHTwGS8sc63ZBF4rzkWMBVKybo4S5OBtDdZahh2A1xg==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+
+  sharp@0.34.2:
+    resolution: {integrity: sha512-lszvBmB9QURERtyKT2bNmsgxXK0ShJrL/fvqlonCo7e6xBF8nT8xU6pW+PMIbLsz0RxQk3rgH9kd8UmvOzlMJg==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
 
   shebang-command@2.0.0:
@@ -5164,6 +5252,9 @@ packages:
     resolution: {integrity: sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw==}
     engines: {node: '>= 0.4'}
 
+  uncrypto@0.1.3:
+    resolution: {integrity: sha512-Ql87qFHB3s/De2ClA9e0gsnS6zXG27SkTiSJwjCc9MebbfapQfuPzumMIUMi38ezPZVNFcHI9sUIepeQfw8J8Q==}
+
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
@@ -5510,7 +5601,7 @@ snapshots:
       '@apollo/utils.usagereporting': 2.1.0(graphql@16.10.0)
       '@apollo/utils.withrequired': 2.0.1
       '@graphql-tools/schema': 9.0.19(graphql@16.10.0)
-      '@types/express': 4.17.21
+      '@types/express': 4.17.22
       '@types/express-serve-static-core': 4.19.6
       '@types/node-fetch': 2.6.12
       async-retry: 1.3.3
@@ -5581,10 +5672,10 @@ snapshots:
 
   '@apollo/utils.withrequired@2.0.1': {}
 
-  '@as-integrations/next@3.2.0(@apollo/server@4.11.3(graphql@16.10.0))(next@15.4.0-canary.3(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
+  '@as-integrations/next@3.2.0(@apollo/server@4.11.3(graphql@16.10.0))(next@15.4.0-canary.61(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
     dependencies:
       '@apollo/server': 4.11.3(graphql@16.10.0)
-      next: 15.4.0-canary.3(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      next: 15.4.0-canary.61(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
   '@auth0/auth0-react@2.3.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -5989,12 +6080,22 @@ snapshots:
       '@img/sharp-libvips-darwin-arm64': 1.1.0
     optional: true
 
+  '@img/sharp-darwin-arm64@0.34.2':
+    optionalDependencies:
+      '@img/sharp-libvips-darwin-arm64': 1.1.0
+    optional: true
+
   '@img/sharp-darwin-x64@0.33.5':
     optionalDependencies:
       '@img/sharp-libvips-darwin-x64': 1.0.4
     optional: true
 
   '@img/sharp-darwin-x64@0.34.1':
+    optionalDependencies:
+      '@img/sharp-libvips-darwin-x64': 1.1.0
+    optional: true
+
+  '@img/sharp-darwin-x64@0.34.2':
     optionalDependencies:
       '@img/sharp-libvips-darwin-x64': 1.1.0
     optional: true
@@ -6060,12 +6161,22 @@ snapshots:
       '@img/sharp-libvips-linux-arm64': 1.1.0
     optional: true
 
+  '@img/sharp-linux-arm64@0.34.2':
+    optionalDependencies:
+      '@img/sharp-libvips-linux-arm64': 1.1.0
+    optional: true
+
   '@img/sharp-linux-arm@0.33.5':
     optionalDependencies:
       '@img/sharp-libvips-linux-arm': 1.0.5
     optional: true
 
   '@img/sharp-linux-arm@0.34.1':
+    optionalDependencies:
+      '@img/sharp-libvips-linux-arm': 1.1.0
+    optional: true
+
+  '@img/sharp-linux-arm@0.34.2':
     optionalDependencies:
       '@img/sharp-libvips-linux-arm': 1.1.0
     optional: true
@@ -6080,12 +6191,22 @@ snapshots:
       '@img/sharp-libvips-linux-s390x': 1.1.0
     optional: true
 
+  '@img/sharp-linux-s390x@0.34.2':
+    optionalDependencies:
+      '@img/sharp-libvips-linux-s390x': 1.1.0
+    optional: true
+
   '@img/sharp-linux-x64@0.33.5':
     optionalDependencies:
       '@img/sharp-libvips-linux-x64': 1.0.4
     optional: true
 
   '@img/sharp-linux-x64@0.34.1':
+    optionalDependencies:
+      '@img/sharp-libvips-linux-x64': 1.1.0
+    optional: true
+
+  '@img/sharp-linux-x64@0.34.2':
     optionalDependencies:
       '@img/sharp-libvips-linux-x64': 1.1.0
     optional: true
@@ -6100,12 +6221,22 @@ snapshots:
       '@img/sharp-libvips-linuxmusl-arm64': 1.1.0
     optional: true
 
+  '@img/sharp-linuxmusl-arm64@0.34.2':
+    optionalDependencies:
+      '@img/sharp-libvips-linuxmusl-arm64': 1.1.0
+    optional: true
+
   '@img/sharp-linuxmusl-x64@0.33.5':
     optionalDependencies:
       '@img/sharp-libvips-linuxmusl-x64': 1.0.4
     optional: true
 
   '@img/sharp-linuxmusl-x64@0.34.1':
+    optionalDependencies:
+      '@img/sharp-libvips-linuxmusl-x64': 1.1.0
+    optional: true
+
+  '@img/sharp-linuxmusl-x64@0.34.2':
     optionalDependencies:
       '@img/sharp-libvips-linuxmusl-x64': 1.1.0
     optional: true
@@ -6120,16 +6251,30 @@ snapshots:
       '@emnapi/runtime': 1.4.3
     optional: true
 
+  '@img/sharp-wasm32@0.34.2':
+    dependencies:
+      '@emnapi/runtime': 1.4.3
+    optional: true
+
+  '@img/sharp-win32-arm64@0.34.2':
+    optional: true
+
   '@img/sharp-win32-ia32@0.33.5':
     optional: true
 
   '@img/sharp-win32-ia32@0.34.1':
     optional: true
 
+  '@img/sharp-win32-ia32@0.34.2':
+    optional: true
+
   '@img/sharp-win32-x64@0.33.5':
     optional: true
 
   '@img/sharp-win32-x64@0.34.1':
+    optional: true
+
+  '@img/sharp-win32-x64@0.34.2':
     optional: true
 
   '@isaacs/cliui@8.0.2':
@@ -6169,12 +6314,12 @@ snapshots:
 
   '@mapbox/node-pre-gyp@2.0.0':
     dependencies:
-      consola: 3.4.0
+      consola: 3.4.2
       detect-libc: 2.0.4
       https-proxy-agent: 7.0.6
       node-fetch: 2.6.9
       nopt: 8.1.0
-      semver: 7.7.1
+      semver: 7.7.2
       tar: 7.4.3
     transitivePeerDependencies:
       - encoding
@@ -6195,10 +6340,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@next/env@15.1.6': {}
+
   '@next/env@15.2.2':
     optional: true
 
-  '@next/env@15.4.0-canary.3': {}
+  '@next/env@15.4.0-canary.61': {}
 
   '@next/eslint-plugin-next@15.2.2':
     dependencies:
@@ -6207,49 +6354,49 @@ snapshots:
   '@next/swc-darwin-arm64@15.2.2':
     optional: true
 
-  '@next/swc-darwin-arm64@15.4.0-canary.3':
+  '@next/swc-darwin-arm64@15.4.0-canary.61':
     optional: true
 
   '@next/swc-darwin-x64@15.2.2':
     optional: true
 
-  '@next/swc-darwin-x64@15.4.0-canary.3':
+  '@next/swc-darwin-x64@15.4.0-canary.61':
     optional: true
 
   '@next/swc-linux-arm64-gnu@15.2.2':
     optional: true
 
-  '@next/swc-linux-arm64-gnu@15.4.0-canary.3':
+  '@next/swc-linux-arm64-gnu@15.4.0-canary.61':
     optional: true
 
   '@next/swc-linux-arm64-musl@15.2.2':
     optional: true
 
-  '@next/swc-linux-arm64-musl@15.4.0-canary.3':
+  '@next/swc-linux-arm64-musl@15.4.0-canary.61':
     optional: true
 
   '@next/swc-linux-x64-gnu@15.2.2':
     optional: true
 
-  '@next/swc-linux-x64-gnu@15.4.0-canary.3':
+  '@next/swc-linux-x64-gnu@15.4.0-canary.61':
     optional: true
 
   '@next/swc-linux-x64-musl@15.2.2':
     optional: true
 
-  '@next/swc-linux-x64-musl@15.4.0-canary.3':
+  '@next/swc-linux-x64-musl@15.4.0-canary.61':
     optional: true
 
   '@next/swc-win32-arm64-msvc@15.2.2':
     optional: true
 
-  '@next/swc-win32-arm64-msvc@15.4.0-canary.3':
+  '@next/swc-win32-arm64-msvc@15.4.0-canary.61':
     optional: true
 
   '@next/swc-win32-x64-msvc@15.2.2':
     optional: true
 
-  '@next/swc-win32-x64-msvc@15.4.0-canary.3':
+  '@next/swc-win32-x64-msvc@15.4.0-canary.61':
     optional: true
 
   '@nodelib/fs.scandir@2.1.5':
@@ -6264,70 +6411,72 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
 
-  '@opentelemetry/api-logs@0.200.0':
+  '@opentelemetry/api-logs@0.202.0':
     dependencies:
       '@opentelemetry/api': 1.9.0
 
   '@opentelemetry/api@1.9.0': {}
 
-  '@opentelemetry/core@2.0.0(@opentelemetry/api@1.9.0)':
+  '@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0)':
     dependencies:
       '@opentelemetry/api': 1.9.0
-      '@opentelemetry/semantic-conventions': 1.30.0
+      '@opentelemetry/semantic-conventions': 1.34.0
 
-  '@opentelemetry/exporter-logs-otlp-http@0.200.0(@opentelemetry/api@1.9.0)':
+  '@opentelemetry/exporter-logs-otlp-http@0.202.0(@opentelemetry/api@1.9.0)':
     dependencies:
       '@opentelemetry/api': 1.9.0
-      '@opentelemetry/api-logs': 0.200.0
-      '@opentelemetry/core': 2.0.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/otlp-exporter-base': 0.200.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/otlp-transformer': 0.200.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/sdk-logs': 0.200.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/api-logs': 0.202.0
+      '@opentelemetry/core': 2.0.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/otlp-exporter-base': 0.202.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/otlp-transformer': 0.202.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-logs': 0.202.0(@opentelemetry/api@1.9.0)
 
-  '@opentelemetry/otlp-exporter-base@0.200.0(@opentelemetry/api@1.9.0)':
+  '@opentelemetry/otlp-exporter-base@0.202.0(@opentelemetry/api@1.9.0)':
     dependencies:
       '@opentelemetry/api': 1.9.0
-      '@opentelemetry/core': 2.0.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/otlp-transformer': 0.200.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/core': 2.0.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/otlp-transformer': 0.202.0(@opentelemetry/api@1.9.0)
 
-  '@opentelemetry/otlp-transformer@0.200.0(@opentelemetry/api@1.9.0)':
+  '@opentelemetry/otlp-transformer@0.202.0(@opentelemetry/api@1.9.0)':
     dependencies:
       '@opentelemetry/api': 1.9.0
-      '@opentelemetry/api-logs': 0.200.0
-      '@opentelemetry/core': 2.0.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/resources': 2.0.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/sdk-logs': 0.200.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/sdk-metrics': 2.0.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/sdk-trace-base': 2.0.0(@opentelemetry/api@1.9.0)
-      protobufjs: 7.4.0
+      '@opentelemetry/api-logs': 0.202.0
+      '@opentelemetry/core': 2.0.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/resources': 2.0.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-logs': 0.202.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-metrics': 2.0.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-trace-base': 2.0.1(@opentelemetry/api@1.9.0)
+      protobufjs: 7.5.3
 
-  '@opentelemetry/resources@2.0.0(@opentelemetry/api@1.9.0)':
+  '@opentelemetry/resources@2.0.1(@opentelemetry/api@1.9.0)':
     dependencies:
       '@opentelemetry/api': 1.9.0
-      '@opentelemetry/core': 2.0.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/semantic-conventions': 1.30.0
+      '@opentelemetry/core': 2.0.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/semantic-conventions': 1.34.0
 
-  '@opentelemetry/sdk-logs@0.200.0(@opentelemetry/api@1.9.0)':
+  '@opentelemetry/sdk-logs@0.202.0(@opentelemetry/api@1.9.0)':
     dependencies:
       '@opentelemetry/api': 1.9.0
-      '@opentelemetry/api-logs': 0.200.0
-      '@opentelemetry/core': 2.0.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/resources': 2.0.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/api-logs': 0.202.0
+      '@opentelemetry/core': 2.0.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/resources': 2.0.1(@opentelemetry/api@1.9.0)
 
-  '@opentelemetry/sdk-metrics@2.0.0(@opentelemetry/api@1.9.0)':
+  '@opentelemetry/sdk-metrics@2.0.1(@opentelemetry/api@1.9.0)':
     dependencies:
       '@opentelemetry/api': 1.9.0
-      '@opentelemetry/core': 2.0.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/resources': 2.0.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/core': 2.0.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/resources': 2.0.1(@opentelemetry/api@1.9.0)
 
-  '@opentelemetry/sdk-trace-base@2.0.0(@opentelemetry/api@1.9.0)':
+  '@opentelemetry/sdk-trace-base@2.0.1(@opentelemetry/api@1.9.0)':
     dependencies:
       '@opentelemetry/api': 1.9.0
-      '@opentelemetry/core': 2.0.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/resources': 2.0.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/core': 2.0.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/resources': 2.0.1(@opentelemetry/api@1.9.0)
       '@opentelemetry/semantic-conventions': 1.30.0
 
   '@opentelemetry/semantic-conventions@1.30.0': {}
+
+  '@opentelemetry/semantic-conventions@1.34.0': {}
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
@@ -6402,7 +6551,7 @@ snapshots:
 
   '@rollup/pluginutils@5.1.4(rollup@4.35.0)':
     dependencies:
-      '@types/estree': 1.0.6
+      '@types/estree': 1.0.7
       estree-walker: 2.0.2
       picomatch: 4.0.2
     optionalDependencies:
@@ -6469,9 +6618,9 @@ snapshots:
     dependencies:
       acorn: 8.14.1
 
-  '@sveltejs/adapter-vercel@5.7.1(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(rollup@4.35.0)':
+  '@sveltejs/adapter-vercel@5.7.1(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(rollup@4.35.0)':
     dependencies:
-      '@sveltejs/kit': 2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
+      '@sveltejs/kit': 2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
       '@vercel/nft': 0.29.2(rollup@4.35.0)
       esbuild: 0.25.4
     transitivePeerDependencies:
@@ -6479,9 +6628,9 @@ snapshots:
       - rollup
       - supports-color
 
-  '@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))':
+  '@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))':
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
+      '@sveltejs/vite-plugin-svelte': 5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
       '@types/cookie': 0.6.0
       cookie: 0.6.0
       devalue: 5.1.1
@@ -6494,31 +6643,32 @@ snapshots:
       set-cookie-parser: 2.7.1
       sirv: 3.0.1
       svelte: 5.23.0
-      vite: 6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)
+      vite: 6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)
 
-  '@sveltejs/vite-plugin-svelte-inspector@4.0.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))':
+  '@sveltejs/vite-plugin-svelte-inspector@4.0.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))':
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
+      '@sveltejs/vite-plugin-svelte': 5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
       debug: 4.4.0
       svelte: 5.23.0
-      vite: 6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)
+      vite: 6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)
     transitivePeerDependencies:
       - supports-color
 
-  '@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))':
+  '@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))':
     dependencies:
-      '@sveltejs/vite-plugin-svelte-inspector': 4.0.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
+      '@sveltejs/vite-plugin-svelte-inspector': 4.0.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
       debug: 4.4.0
       deepmerge: 4.3.1
       kleur: 4.1.5
       magic-string: 0.30.17
       svelte: 5.23.0
-      vite: 6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)
-      vitefu: 1.0.6(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
+      vite: 6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)
+      vitefu: 1.0.6(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
     transitivePeerDependencies:
       - supports-color
 
-  '@swc/counter@0.1.3': {}
+  '@swc/counter@0.1.3':
+    optional: true
 
   '@swc/helpers@0.5.15':
     dependencies:
@@ -6727,11 +6877,11 @@ snapshots:
   '@types/body-parser@1.19.5':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 22.15.12
+      '@types/node': 22.15.29
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 22.15.12
+      '@types/node': 22.15.29
 
   '@types/cookie@0.6.0': {}
 
@@ -6739,18 +6889,20 @@ snapshots:
 
   '@types/estree@1.0.6': {}
 
+  '@types/estree@1.0.7': {}
+
   '@types/express-serve-static-core@4.19.6':
     dependencies:
-      '@types/node': 22.15.12
-      '@types/qs': 6.9.18
+      '@types/node': 22.15.29
+      '@types/qs': 6.14.0
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
 
-  '@types/express@4.17.21':
+  '@types/express@4.17.22':
     dependencies:
       '@types/body-parser': 1.19.5
       '@types/express-serve-static-core': 4.19.6
-      '@types/qs': 6.9.18
+      '@types/qs': 6.14.0
       '@types/serve-static': 1.15.7
 
   '@types/glob@7.2.0':
@@ -6801,11 +6953,11 @@ snapshots:
     dependencies:
       undici-types: 6.20.0
 
-  '@types/node@22.15.12':
+  '@types/node@22.15.29':
     dependencies:
       undici-types: 6.21.0
 
-  '@types/qs@6.9.18': {}
+  '@types/qs@6.14.0': {}
 
   '@types/range-parser@1.2.7': {}
 
@@ -6820,12 +6972,12 @@ snapshots:
   '@types/send@0.17.4':
     dependencies:
       '@types/mime': 1.3.5
-      '@types/node': 22.15.12
+      '@types/node': 22.15.29
 
   '@types/serve-static@1.15.7':
     dependencies:
       '@types/http-errors': 2.0.4
-      '@types/node': 22.15.12
+      '@types/node': 22.15.29
       '@types/send': 0.17.4
 
   '@types/through@0.0.33':
@@ -6976,7 +7128,11 @@ snapshots:
       '@typescript-eslint/types': 8.26.1
       eslint-visitor-keys: 4.2.0
 
-  '@vercel/blob@1.0.0':
+  '@upstash/redis@1.35.0':
+    dependencies:
+      uncrypto: 0.1.3
+
+  '@vercel/blob@1.1.1':
     dependencies:
       async-retry: 1.3.3
       is-buffer: 2.0.5
@@ -6984,25 +7140,26 @@ snapshots:
       throttleit: 2.1.0
       undici: 5.28.4
 
-  '@vercel/build-utils@10.5.1': {}
+  '@vercel/build-utils@10.6.0': {}
 
-  '@vercel/edge@1.2.1': {}
+  '@vercel/edge@1.2.2': {}
 
   '@vercel/error-utils@2.0.3': {}
 
-  '@vercel/flags@2.6.0(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(next@15.2.2(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@vercel/flags@2.6.0(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(next@15.2.2(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       jose: 5.2.1
     optionalDependencies:
-      '@sveltejs/kit': 2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
+      '@sveltejs/kit': 2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
       next: 15.2.2(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
   '@vercel/functions@1.6.0': {}
 
-  '@vercel/microfrontends@1.1.0(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(next@15.2.2(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))':
+  '@vercel/microfrontends@1.2.0(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(next@15.2.2(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))':
     dependencies:
+      '@next/env': 15.1.6
       ajv: 8.17.1
       commander: 12.1.0
       cookie: 0.4.0
@@ -7012,32 +7169,13 @@ snapshots:
       nanoid: 3.3.11
       path-to-regexp: 6.2.1
     optionalDependencies:
-      '@sveltejs/kit': 2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
+      '@sveltejs/kit': 2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
       next: 15.2.2(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
-      vite: 6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)
+      vite: 6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)
     transitivePeerDependencies:
       - debug
-
-  '@vercel/nft@0.27.10(rollup@4.35.0)':
-    dependencies:
-      '@mapbox/node-pre-gyp': 2.0.0
-      '@rollup/pluginutils': 5.1.4(rollup@4.35.0)
-      acorn: 8.14.1
-      acorn-import-attributes: 1.9.5(acorn@8.14.1)
-      async-sema: 3.1.1
-      bindings: 1.5.0
-      estree-walker: 2.0.2
-      glob: 7.2.3
-      graceful-fs: 4.2.11
-      node-gyp-build: 4.8.4
-      picomatch: 4.0.2
-      resolve-from: 5.0.0
-    transitivePeerDependencies:
-      - encoding
-      - rollup
-      - supports-color
 
   '@vercel/nft@0.29.2(rollup@4.35.0)':
     dependencies:
@@ -7058,16 +7196,16 @@ snapshots:
       - rollup
       - supports-color
 
-  '@vercel/node@5.1.14(rollup@4.35.0)':
+  '@vercel/node@5.2.1(rollup@4.35.0)':
     dependencies:
       '@edge-runtime/node-utils': 2.3.0
       '@edge-runtime/primitives': 4.1.0
       '@edge-runtime/vm': 3.2.0
       '@types/node': 16.18.11
-      '@vercel/build-utils': 10.5.1
+      '@vercel/build-utils': 10.6.0
       '@vercel/error-utils': 2.0.3
-      '@vercel/nft': 0.27.10(rollup@4.35.0)
-      '@vercel/static-config': 3.0.0
+      '@vercel/nft': 0.29.2(rollup@4.35.0)
+      '@vercel/static-config': 3.1.1
       async-listen: 3.0.0
       cjs-module-lexer: 1.2.3
       edge-runtime: 2.5.9
@@ -7088,24 +7226,24 @@ snapshots:
       - rollup
       - supports-color
 
-  '@vercel/otel@1.11.0(@opentelemetry/api@1.9.0)(@opentelemetry/resources@2.0.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-logs@0.200.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-metrics@2.0.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.0(@opentelemetry/api@1.9.0))':
+  '@vercel/otel@1.12.0(@opentelemetry/api@1.9.0)(@opentelemetry/resources@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-logs@0.202.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-metrics@2.0.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.0.1(@opentelemetry/api@1.9.0))':
     dependencies:
       '@opentelemetry/api': 1.9.0
-      '@opentelemetry/resources': 2.0.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/sdk-logs': 0.200.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/sdk-metrics': 2.0.0(@opentelemetry/api@1.9.0)
-      '@opentelemetry/sdk-trace-base': 2.0.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/resources': 2.0.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-logs': 0.202.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-metrics': 2.0.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-trace-base': 2.0.1(@opentelemetry/api@1.9.0)
 
-  '@vercel/static-config@3.0.0':
+  '@vercel/static-config@3.1.1':
     dependencies:
       ajv: 8.6.3
       json-schema-to-ts: 1.6.4
       ts-morph: 12.0.0
 
-  '@vercel/toolbar@0.1.36(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(next@15.2.2(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))':
+  '@vercel/toolbar@0.1.37(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(next@15.2.2(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))':
     dependencies:
       '@tinyhttp/app': 1.3.0
-      '@vercel/microfrontends': 1.1.0(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(next@15.2.2(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
+      '@vercel/microfrontends': 1.2.0(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(next@15.2.2(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
       chokidar: 3.6.0
       execa: 5.1.1
       fast-glob: 3.3.3
@@ -7116,7 +7254,7 @@ snapshots:
     optionalDependencies:
       next: 15.2.2(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react: 19.0.0
-      vite: 6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)
+      vite: 6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)
     transitivePeerDependencies:
       - '@sveltejs/kit'
       - '@vercel/analytics'
@@ -7135,7 +7273,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  abbrev@3.0.0: {}
+  abbrev@3.0.1: {}
 
   abort-controller@3.0.0:
     dependencies:
@@ -7412,6 +7550,7 @@ snapshots:
   busboy@1.6.0:
     dependencies:
       streamsearch: 1.1.0
+    optional: true
 
   bytes@3.1.2: {}
 
@@ -7443,10 +7582,7 @@ snapshots:
 
   caniuse-lite@1.0.30001703: {}
 
-  caniuse-lite@1.0.30001715: {}
-
-  caniuse-lite@1.0.30001717:
-    optional: true
+  caniuse-lite@1.0.30001720: {}
 
   chalk@2.4.2:
     dependencies:
@@ -7569,7 +7705,7 @@ snapshots:
 
   concat-map@0.0.1: {}
 
-  consola@3.4.0: {}
+  consola@3.4.2: {}
 
   constant-case@2.0.0:
     dependencies:
@@ -8971,7 +9107,7 @@ snapshots:
 
   long@4.0.0: {}
 
-  long@5.3.1: {}
+  long@5.3.2: {}
 
   loose-envify@1.4.0:
     dependencies:
@@ -9056,10 +9192,9 @@ snapshots:
 
   minipass@7.1.2: {}
 
-  minizlib@3.0.1:
+  minizlib@3.0.2:
     dependencies:
       minipass: 7.1.2
-      rimraf: 5.0.10
 
   mkdirp@0.5.6:
     dependencies:
@@ -9112,7 +9247,7 @@ snapshots:
       '@swc/counter': 0.1.3
       '@swc/helpers': 0.5.15
       busboy: 1.6.0
-      caniuse-lite: 1.0.30001717
+      caniuse-lite: 1.0.30001720
       postcss: 8.4.31
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
@@ -9134,29 +9269,27 @@ snapshots:
       - babel-plugin-macros
     optional: true
 
-  next@15.4.0-canary.3(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  next@15.4.0-canary.61(@babel/core@7.26.10)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
-      '@next/env': 15.4.0-canary.3
-      '@swc/counter': 0.1.3
+      '@next/env': 15.4.0-canary.61
       '@swc/helpers': 0.5.15
-      busboy: 1.6.0
-      caniuse-lite: 1.0.30001715
+      caniuse-lite: 1.0.30001720
       postcss: 8.4.31
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
       styled-jsx: 5.1.6(@babel/core@7.26.10)(react@19.0.0)
     optionalDependencies:
-      '@next/swc-darwin-arm64': 15.4.0-canary.3
-      '@next/swc-darwin-x64': 15.4.0-canary.3
-      '@next/swc-linux-arm64-gnu': 15.4.0-canary.3
-      '@next/swc-linux-arm64-musl': 15.4.0-canary.3
-      '@next/swc-linux-x64-gnu': 15.4.0-canary.3
-      '@next/swc-linux-x64-musl': 15.4.0-canary.3
-      '@next/swc-win32-arm64-msvc': 15.4.0-canary.3
-      '@next/swc-win32-x64-msvc': 15.4.0-canary.3
+      '@next/swc-darwin-arm64': 15.4.0-canary.61
+      '@next/swc-darwin-x64': 15.4.0-canary.61
+      '@next/swc-linux-arm64-gnu': 15.4.0-canary.61
+      '@next/swc-linux-arm64-musl': 15.4.0-canary.61
+      '@next/swc-linux-x64-gnu': 15.4.0-canary.61
+      '@next/swc-linux-x64-musl': 15.4.0-canary.61
+      '@next/swc-win32-arm64-msvc': 15.4.0-canary.61
+      '@next/swc-win32-x64-msvc': 15.4.0-canary.61
       '@opentelemetry/api': 1.9.0
       '@playwright/test': 1.51.1
-      sharp: 0.34.1
+      sharp: 0.34.2
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
@@ -9197,7 +9330,7 @@ snapshots:
 
   nopt@8.1.0:
     dependencies:
-      abbrev: 3.0.0
+      abbrev: 3.0.1
 
   normalize-path@3.0.0: {}
 
@@ -9465,7 +9598,7 @@ snapshots:
 
   postcss@8.4.31:
     dependencies:
-      nanoid: 3.3.9
+      nanoid: 3.3.11
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
@@ -9491,7 +9624,7 @@ snapshots:
       object-assign: 4.1.1
       react-is: 16.13.1
 
-  protobufjs@7.4.0:
+  protobufjs@7.5.3:
     dependencies:
       '@protobufjs/aspromise': 1.1.2
       '@protobufjs/base64': 1.1.2
@@ -9503,8 +9636,8 @@ snapshots:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 22.13.10
-      long: 5.3.1
+      '@types/node': 22.15.29
+      long: 5.3.2
 
   proxy-addr@2.0.7:
     dependencies:
@@ -9679,10 +9812,6 @@ snapshots:
     dependencies:
       glob: 7.2.3
 
-  rimraf@5.0.10:
-    dependencies:
-      glob: 10.4.5
-
   rollup@4.35.0:
     dependencies:
       '@types/estree': 1.0.6
@@ -9768,6 +9897,8 @@ snapshots:
   semver@7.6.2: {}
 
   semver@7.7.1: {}
+
+  semver@7.7.2: {}
 
   send@0.19.0:
     dependencies:
@@ -9861,7 +9992,7 @@ snapshots:
     dependencies:
       color: 4.2.3
       detect-libc: 2.0.4
-      semver: 7.7.1
+      semver: 7.7.2
     optionalDependencies:
       '@img/sharp-darwin-arm64': 0.33.5
       '@img/sharp-darwin-x64': 0.33.5
@@ -9910,6 +10041,35 @@ snapshots:
       '@img/sharp-wasm32': 0.34.1
       '@img/sharp-win32-ia32': 0.34.1
       '@img/sharp-win32-x64': 0.34.1
+
+  sharp@0.34.2:
+    dependencies:
+      color: 4.2.3
+      detect-libc: 2.0.4
+      semver: 7.7.2
+    optionalDependencies:
+      '@img/sharp-darwin-arm64': 0.34.2
+      '@img/sharp-darwin-x64': 0.34.2
+      '@img/sharp-libvips-darwin-arm64': 1.1.0
+      '@img/sharp-libvips-darwin-x64': 1.1.0
+      '@img/sharp-libvips-linux-arm': 1.1.0
+      '@img/sharp-libvips-linux-arm64': 1.1.0
+      '@img/sharp-libvips-linux-ppc64': 1.1.0
+      '@img/sharp-libvips-linux-s390x': 1.1.0
+      '@img/sharp-libvips-linux-x64': 1.1.0
+      '@img/sharp-libvips-linuxmusl-arm64': 1.1.0
+      '@img/sharp-libvips-linuxmusl-x64': 1.1.0
+      '@img/sharp-linux-arm': 0.34.2
+      '@img/sharp-linux-arm64': 0.34.2
+      '@img/sharp-linux-s390x': 0.34.2
+      '@img/sharp-linux-x64': 0.34.2
+      '@img/sharp-linuxmusl-arm64': 0.34.2
+      '@img/sharp-linuxmusl-x64': 0.34.2
+      '@img/sharp-wasm32': 0.34.2
+      '@img/sharp-win32-arm64': 0.34.2
+      '@img/sharp-win32-ia32': 0.34.2
+      '@img/sharp-win32-x64': 0.34.2
+    optional: true
 
   shebang-command@2.0.0:
     dependencies:
@@ -9990,7 +10150,8 @@ snapshots:
 
   statuses@2.0.1: {}
 
-  streamsearch@1.1.0: {}
+  streamsearch@1.1.0:
+    optional: true
 
   string-width@4.2.3:
     dependencies:
@@ -10206,7 +10367,7 @@ snapshots:
       '@isaacs/fs-minipass': 4.0.1
       chownr: 3.0.0
       minipass: 7.1.2
-      minizlib: 3.0.1
+      minizlib: 3.0.2
       mkdirp: 3.0.1
       yallist: 5.0.0
 
@@ -10450,6 +10611,8 @@ snapshots:
       has-symbols: 1.1.0
       which-boxed-primitive: 1.1.1
 
+  uncrypto@0.1.3: {}
+
   undici-types@5.26.5: {}
 
   undici-types@6.19.8: {}
@@ -10521,7 +10684,7 @@ snapshots:
       lightningcss: 1.29.2
       yaml: 2.7.0
 
-  vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0):
+  vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0):
     dependencies:
       esbuild: 0.25.1
       fdir: 6.4.3(picomatch@4.0.2)
@@ -10530,15 +10693,15 @@ snapshots:
       rollup: 4.35.0
       tinyglobby: 0.2.13
     optionalDependencies:
-      '@types/node': 22.15.12
+      '@types/node': 22.15.29
       fsevents: 2.3.3
       jiti: 2.4.2
       lightningcss: 1.29.2
       yaml: 2.7.0
 
-  vitefu@1.0.6(vite@6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)):
+  vitefu@1.0.6(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)):
     optionalDependencies:
-      vite: 6.3.2(@types/node@22.15.12)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)
+      vite: 6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)
 
   wcwidth@1.0.1:
     dependencies:
