@@ -1,328 +1,191 @@
-if (!process.env.REDIS_URL) {
-  console.warn("REDIS_URL environment variable is not set - using localStorage fallback")
-}
+import { createClient } from 'redis'
 
-// Parse Redis URL to extract connection details
-function parseRedisUrl(url: string) {
-  try {
-    const parsed = new URL(url)
-    return {
-      host: parsed.hostname,
-      port: Number.parseInt(parsed.port) || 6379,
-      password: parsed.password || undefined,
-      username: parsed.username || undefined,
-      protocol: parsed.protocol.replace(":", ""),
-    }
-  } catch (error) {
-    throw new Error(`Invalid REDIS_URL format: ${error}`)
-  }
-}
-
-// Persistent storage fallback using a simple key-value store
-class PersistentStorage {
-  private storage = new Map<string, any>()
-  private lists = new Map<string, string[]>()
-  private storageKey = "audio_library_data"
+// Redis client using the standard redis package
+class RedisClient {
+  private client: ReturnType<typeof createClient> | null = null
+  private isConnected = false
+  private connectionPromise: Promise<void> | null = null
 
   constructor() {
-    this.loadFromStorage()
+    this.initializeClient()
   }
 
-  private loadFromStorage() {
+  private initializeClient() {
+    if (!process.env.REDIS_URL) {
+      console.error("REDIS_URL environment variable is not set")
+      return
+    }
+
     try {
-      // In server environment, we'll use a simple file-based approach
-      // In client environment, this won't be called
-      if (typeof window === "undefined") {
-        // Server-side: use in-memory with persistence simulation
-        const stored = global.audioLibraryData
-        if (stored) {
-          this.storage = new Map(stored.storage || [])
-          this.lists = new Map(stored.lists || [])
+      console.log("Initializing Redis client with URL:", process.env.REDIS_URL.replace(/\/\/.*@/, "//***@"))
+
+      this.client = createClient({
+        url: process.env.REDIS_URL,
+        socket: {
+          reconnectStrategy: (retries) => {
+            console.log(`Redis reconnection attempt ${retries}`)
+            return Math.min(retries * 50, 1000)
+          }
         }
-      }
-    } catch (error) {
-      console.warn("Failed to load from storage:", error)
-    }
-  }
-
-  private saveToStorage() {
-    try {
-      if (typeof window === "undefined") {
-        // Server-side: store in global for persistence across requests
-        global.audioLibraryData = {
-          storage: Array.from(this.storage.entries()),
-          lists: Array.from(this.lists.entries()),
-          timestamp: Date.now(),
-        }
-      }
-    } catch (error) {
-      console.warn("Failed to save to storage:", error)
-    }
-  }
-
-  async hset(key: string, data: Record<string, any>) {
-    if (!this.storage.has(key)) {
-      this.storage.set(key, {})
-    }
-    const hash = this.storage.get(key)
-    Object.assign(hash, data)
-    this.saveToStorage()
-    return 1
-  }
-
-  async hgetall(key: string) {
-    return this.storage.get(key) || {}
-  }
-
-  async del(key: string) {
-    const existed = this.storage.has(key) || this.lists.has(key)
-    this.storage.delete(key)
-    this.lists.delete(key)
-    this.saveToStorage()
-    return existed ? 1 : 0
-  }
-
-  async lpush(key: string, value: string) {
-    if (!this.lists.has(key)) {
-      this.lists.set(key, [])
-    }
-    const list = this.lists.get(key)!
-    list.unshift(value)
-    this.saveToStorage()
-    return list.length
-  }
-
-  async lrange(key: string, start: number, stop: number) {
-    const targetList = this.lists.get(key) || []
-    return targetList.slice(start, stop === -1 ? undefined : stop + 1)
-  }
-
-  async lrem(key: string, count: number, value: string) {
-    const listToModify = this.lists.get(key) || []
-    const index = listToModify.indexOf(value)
-    if (index > -1) {
-      listToModify.splice(index, 1)
-      this.saveToStorage()
-    }
-    return 1
-  }
-
-  async exists(key: string) {
-    return this.storage.has(key) || this.lists.has(key) ? 1 : 0
-  }
-
-  async keys(pattern: string) {
-    const allKeys = [...this.storage.keys(), ...this.lists.keys()]
-    if (pattern === "*") return allKeys
-    const regex = new RegExp(pattern.replace("*", ".*"))
-    return allKeys.filter((k) => regex.test(k))
-  }
-
-  async ping() {
-    return "PONG"
-  }
-}
-
-// HTTP-based Redis client for Upstash/Redis Cloud
-class HttpRedisClient {
-  private baseUrl: string
-  private token: string
-
-  constructor(url: string) {
-    // Extract token from URL if it's an Upstash URL
-    if (url.includes("@")) {
-      const parts = url.split("@")
-      this.token = parts[0].split("//")[1]
-      this.baseUrl = `https://${parts[1]}`
-    } else {
-      this.baseUrl = url
-      this.token = ""
-    }
-  }
-
-  private async executeCommand(command: string[]): Promise<any> {
-    try {
-      const response = await fetch(`${this.baseUrl}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(this.token && { Authorization: `Bearer ${this.token}` }),
-        },
-        body: JSON.stringify(command),
       })
 
-      if (!response.ok) {
-        throw new Error(`Redis HTTP command failed: ${response.statusText}`)
-      }
+      // Handle connection events
+      this.client.on('connect', () => {
+        console.log('✅ Redis client connected')
+      })
 
-      const result = await response.json()
-      return result.result
+      this.client.on('ready', () => {
+        console.log('✅ Redis client ready')
+        this.isConnected = true
+      })
+
+      this.client.on('error', (err) => {
+        console.error('❌ Redis client error:', err)
+        this.isConnected = false
+      })
+
+      this.client.on('end', () => {
+        console.log('Redis client disconnected')
+        this.isConnected = false
+      })
+
     } catch (error) {
-      console.error("Redis HTTP command error:", error)
+      console.error("Failed to initialize Redis client:", error)
+    }
+  }
+
+  private async ensureConnection(): Promise<void> {
+    if (!this.client) {
+      throw new Error("Redis client not initialized")
+    }
+
+    if (this.isConnected) {
+      return
+    }
+
+    if (this.connectionPromise) {
+      return this.connectionPromise
+    }
+
+    this.connectionPromise = this.client.connect().then(() => {
+      console.log("✅ Redis connected successfully")
+      this.isConnected = true
+      this.connectionPromise = null
+    }).catch((error) => {
+      console.error("❌ Redis connection failed:", error)
+      this.connectionPromise = null
       throw error
-    }
+    })
+
+    return this.connectionPromise
   }
 
-  async hset(key: string, data: Record<string, any>) {
-    const args = Object.entries(data).flat().map(String)
-    return this.executeCommand(["HSET", key, ...args])
-  }
-
-  async hgetall(key: string) {
-    const result = await this.executeCommand(["HGETALL", key])
-    // Convert array result to object
-    if (Array.isArray(result)) {
-      const obj: Record<string, string> = {}
-      for (let i = 0; i < result.length; i += 2) {
-        obj[result[i]] = result[i + 1]
-      }
-      return obj
-    }
-    return result || {}
-  }
-
-  async del(key: string) {
-    return this.executeCommand(["DEL", key])
-  }
-
-  async lpush(key: string, value: string) {
-    return this.executeCommand(["LPUSH", key, value])
-  }
-
-  async lrange(key: string, start: number, stop: number) {
-    return this.executeCommand(["LRANGE", key, start.toString(), stop.toString()])
-  }
-
-  async lrem(key: string, count: number, value: string) {
-    return this.executeCommand(["LREM", key, count.toString(), value])
-  }
-
-  async exists(key: string) {
-    return this.executeCommand(["EXISTS", key])
-  }
-
-  async keys(pattern: string) {
-    return this.executeCommand(["KEYS", pattern])
-  }
-
-  async ping() {
-    return this.executeCommand(["PING"])
-  }
-}
-
-// Main Redis client with fallback
-class RedisClient {
-  private client: HttpRedisClient | PersistentStorage
-  private isRedisAvailable = false
-
-  constructor() {
-    if (process.env.REDIS_URL) {
-      const redisConfig = parseRedisUrl(process.env.REDIS_URL)
-
-      if (redisConfig.protocol === "https" || redisConfig.protocol === "http") {
-        // HTTP-based Redis (Upstash, Redis Cloud with HTTP API)
-        this.client = new HttpRedisClient(process.env.REDIS_URL)
-        this.isRedisAvailable = true
-        console.log("Using HTTP Redis client")
-      } else {
-        // Standard Redis protocol - use persistent fallback
-        console.warn("Standard Redis protocol detected. Using persistent storage fallback.")
-        this.client = new PersistentStorage()
-      }
-    } else {
-      // No Redis URL - use persistent fallback
-      console.warn("No REDIS_URL provided. Using persistent storage fallback.")
-      this.client = new PersistentStorage()
-    }
-  }
-
-  async testConnection() {
+  async testConnection(): Promise<boolean> {
     try {
-      const result = await this.client.ping()
-      this.isRedisAvailable = result === "PONG"
-      return this.isRedisAvailable
+      await this.ensureConnection()
+      const result = await this.client!.ping()
+      console.log("Redis ping result:", result)
+      return result === 'PONG'
     } catch (error) {
       console.error("Redis connection test failed:", error)
-      this.isRedisAvailable = false
       return false
     }
   }
 
-  async hset(key: string, data: Record<string, any>) {
+  async hset(key: string, data: Record<string, any>): Promise<number> {
     try {
-      return await this.client.hset(key, data)
+      await this.ensureConnection()
+      console.log("Redis HSET:", key, Object.keys(data))
+      return await this.client!.hSet(key, data)
     } catch (error) {
       console.error("Redis HSET error:", error)
       throw error
     }
   }
 
-  async hgetall(key: string) {
+  async hgetall(key: string): Promise<Record<string, string>> {
     try {
-      return await this.client.hgetall(key)
+      await this.ensureConnection()
+      const result = await this.client!.hGetAll(key)
+      console.log("Redis HGETALL:", key, "->", Object.keys(result).length, "fields")
+      return result
     } catch (error) {
       console.error("Redis HGETALL error:", error)
       return {}
     }
   }
 
-  async del(key: string) {
+  async del(key: string): Promise<number> {
     try {
-      return await this.client.del(key)
+      await this.ensureConnection()
+      console.log("Redis DEL:", key)
+      return await this.client!.del(key)
     } catch (error) {
       console.error("Redis DEL error:", error)
       return 0
     }
   }
 
-  async lpush(key: string, value: string) {
+  async lpush(key: string, value: string): Promise<number> {
     try {
-      return await this.client.lpush(key, value)
+      await this.ensureConnection()
+      console.log("Redis LPUSH:", key, value)
+      return await this.client!.lPush(key, value)
     } catch (error) {
       console.error("Redis LPUSH error:", error)
       throw error
     }
   }
 
-  async lrange(key: string, start: number, stop: number) {
+  async lrange(key: string, start: number, stop: number): Promise<string[]> {
     try {
-      return await this.client.lrange(key, start, stop)
+      await this.ensureConnection()
+      const result = await this.client!.lRange(key, start, stop)
+      console.log("Redis LRANGE:", key, "->", result.length, "items")
+      return result
     } catch (error) {
       console.error("Redis LRANGE error:", error)
       return []
     }
   }
 
-  async lrem(key: string, count: number, value: string) {
+  async lrem(key: string, count: number, value: string): Promise<number> {
     try {
-      return await this.client.lrem(key, count, value)
+      await this.ensureConnection()
+      console.log("Redis LREM:", key, count, value)
+      return await this.client!.lRem(key, count, value)
     } catch (error) {
       console.error("Redis LREM error:", error)
       return 0
     }
   }
 
-  async exists(key: string) {
+  async exists(key: string): Promise<number> {
     try {
-      return await this.client.exists(key)
+      await this.ensureConnection()
+      return await this.client!.exists(key)
     } catch (error) {
       console.error("Redis EXISTS error:", error)
       return 0
     }
   }
 
-  async keys(pattern: string) {
+  async keys(pattern: string): Promise<string[]> {
     try {
-      return await this.client.keys(pattern)
+      await this.ensureConnection()
+      const result = await this.client!.keys(pattern)
+      console.log("Redis KEYS:", pattern, "->", result.length, "keys")
+      return result
     } catch (error) {
       console.error("Redis KEYS error:", error)
       return []
     }
   }
 
-  async ping() {
+  async ping(): Promise<string> {
     try {
-      return await this.client.ping()
+      await this.ensureConnection()
+      return await this.client!.ping()
     } catch (error) {
       console.error("Redis PING error:", error)
       throw error
@@ -331,8 +194,17 @@ class RedisClient {
 
   getConnectionStatus() {
     return {
-      isRedisAvailable: this.isRedisAvailable,
-      clientType: this.client instanceof HttpRedisClient ? "HTTP Redis" : "Persistent Storage",
+      isConnected: this.isConnected,
+      clientInitialized: !!this.client,
+      redisUrl: process.env.REDIS_URL ? "Set" : "Not set",
+      clientType: "Standard Redis Client",
+    }
+  }
+
+  async disconnect(): Promise<void> {
+    if (this.client && this.isConnected) {
+      await this.client.disconnect()
+      this.isConnected = false
     }
   }
 }
@@ -345,14 +217,3 @@ export const REDIS_KEYS = {
   AUDIO_LIST: "audio:list",
   AUDIO_SEARCH: "audio:search:",
 } as const
-
-// Global type declaration for Node.js global
-declare global {
-  var audioLibraryData:
-    | {
-        storage: [string, any][]
-        lists: [string, string[]][]
-        timestamp: number
-      }
-    | undefined
-}

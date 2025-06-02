@@ -132,14 +132,6 @@ export default function AudioLibraryPage() {
         ; (e.target as HTMLFormElement).reset()
       await loadAudios()
       await loadStats()
-
-      // Test the URL immediately after upload
-      const testResult = await testBlobUrl(result.downloadUrl)
-      if (testResult.success) {
-        alert(`Audio file uploaded successfully! URL is accessible.`)
-      } else {
-        alert(`Audio file uploaded but URL test failed: ${testResult.error || testResult.statusText}`)
-      }
     } catch (error) {
       console.error("Upload failed:", error)
       alert(`Failed to upload audio file: ${error instanceof Error ? error.message : "Unknown error"}`)
@@ -205,10 +197,18 @@ export default function AudioLibraryPage() {
     setTestingUrls((prev) => new Set(prev).add(audioId))
     try {
       const result = await testBlobUrl(url)
-      if (result.success) {
+      if (result.success && "status" in result) {
         alert(`URL is accessible! Status: ${result.status}`)
       } else {
-        alert(`URL test failed: ${result.error || `${result.status} ${result.statusText}`}`)
+        alert(
+          `URL test failed: ${
+            "error" in result
+              ? result.error
+              : "status" in result
+                ? `${result.status} ${result.statusText}`
+                : "Unknown error"
+          }`
+        )
       }
       console.log("Full test result:", result)
     } catch (error) {
@@ -238,10 +238,10 @@ export default function AudioLibraryPage() {
     try {
       const result = await syncBlobUrls()
       if (result.success) {
-        alert(result.message)
+        alert("message" in result ? result.message : "Sync completed successfully.")
         await loadAudios() // Reload to show updated URLs
       } else {
-        alert(`Sync failed: ${result.error}`)
+        alert(`Sync failed: ${"error" in result ? result.error : "message" in result ? result.message : "Unknown error"}`)
       }
     } catch (error) {
       console.error("Sync failed:", error)

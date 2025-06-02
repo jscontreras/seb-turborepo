@@ -32,21 +32,20 @@ export async function uploadAudio(formData: FormData) {
   try {
     console.log("Starting upload for file:", file.name, "Size:", file.size, "Type:", file.type)
 
-    // Test Redis connection
+    // Test Redis connection first
+    const connectionTest = await redis.testConnection()
     const connectionStatus = redis.getConnectionStatus()
     console.log("Redis connection status:", connectionStatus)
+
+    if (!connectionTest) {
+      console.error("❌ Redis connection failed - data will not persist!")
+      throw new Error("Database connection failed. Please check your Redis configuration.")
+    }
 
     // Upload to Vercel Blob with the original filename
     const blob = await put(file.name, file, {
       access: "public",
       addRandomSuffix: true,
-    })
-
-    console.log("Blob upload successful:", {
-      url: blob.url,
-      downloadUrl: blob.downloadUrl,
-      pathname: blob.pathname,
-      size: blob.size,
     })
 
     // Use the exact URLs returned by Vercel
@@ -55,37 +54,40 @@ export async function uploadAudio(formData: FormData) {
       filename: file.name,
       title: title.trim(),
       url: blob.url,
-      downloadUrl: blob.downloadUrl || blob.url,
+      downloadUrl: blob.downloadUrl.replace('?download=1', '') || blob.url.replace('?download=1', ''),
       uploadDate,
       size: file.size,
     }
 
-    // Store metadata in Redis with retry logic
-    try {
-      await redis.hset(`${REDIS_KEYS.AUDIO_PREFIX}${id}`, {
-        id: audioMetadata.id,
-        filename: audioMetadata.filename,
-        title: audioMetadata.title,
-        url: audioMetadata.url,
-        downloadUrl: audioMetadata.downloadUrl,
-        uploadDate: audioMetadata.uploadDate,
-        size: audioMetadata.size.toString(),
-        blobPathname: blob.pathname,
-        blobSize: blob.size?.toString() || "0",
-      })
+    // Store metadata in Redis
+    console.log("Storing metadata in Redis...")
+    await redis.hset(`${REDIS_KEYS.AUDIO_PREFIX}${id}`, {
+      id: audioMetadata.id,
+      filename: audioMetadata.filename,
+      title: audioMetadata.title,
+      url: audioMetadata.url,
+      downloadUrl: audioMetadata.downloadUrl,
+      uploadDate: audioMetadata.uploadDate,
+      size: audioMetadata.size.toString(),
+      blobPathname: blob.pathname,
+    })
 
-      // Add to the list of audio IDs (for ordering)
-      await redis.lpush(REDIS_KEYS.AUDIO_LIST, id)
+    // Add to the list of audio IDs (for ordering)
+    await redis.lpush(REDIS_KEYS.AUDIO_LIST, id)
 
-      console.log("Audio metadata stored successfully in Redis")
-    } catch (redisError) {
-      console.error("Redis storage failed:", redisError)
-      throw new Error("Failed to store audio metadata")
+    console.log("✅ Audio metadata stored successfully in Redis")
+
+    // Verify the data was actually stored
+    const verification = await redis.hgetall(`${REDIS_KEYS.AUDIO_PREFIX}${id}`)
+    console.log("✅ Verification - data stored:", Object.keys(verification).length > 0)
+
+    if (Object.keys(verification).length === 0) {
+      throw new Error("Failed to verify data storage in Redis")
     }
 
     return audioMetadata
   } catch (error) {
-    console.error("Error uploading audio:", error)
+    console.error("❌ Error uploading audio:", error)
     throw new Error(`Failed to upload audio file: ${error instanceof Error ? error.message : "Unknown error"}`)
   }
 }
@@ -105,7 +107,7 @@ export async function deleteAudio(id: string) {
     if (audioData.url) {
       try {
         await del(audioData.url as string)
-        console.log("Blob deleted successfully")
+        console.log("✅ Blob deleted successfully")
       } catch (error) {
         console.error("Error deleting blob:", error)
         // Continue with Redis cleanup even if blob deletion fails
@@ -118,10 +120,10 @@ export async function deleteAudio(id: string) {
     // Remove from the list
     await redis.lrem(REDIS_KEYS.AUDIO_LIST, 0, id)
 
-    console.log("Audio deleted successfully:", id)
+    console.log("✅ Audio deleted successfully:", id)
     return { success: true }
   } catch (error) {
-    console.error("Error deleting audio:", error)
+    console.error("❌ Error deleting audio:", error)
     throw new Error("Failed to delete audio file")
   }
 }
@@ -135,14 +137,15 @@ export async function getAllAudios(): Promise<AudioMetadata[]> {
     console.log("Redis connection status:", connectionStatus)
 
     // Test connection
-    await redis.ping()
+    const pingResult = await redis.ping()
+    console.log("Redis ping result:", pingResult)
 
     // Get all audio IDs from the list
     const audioIds = await redis.lrange(REDIS_KEYS.AUDIO_LIST, 0, -1)
     console.log("Found audio IDs:", audioIds)
 
     if (!audioIds || audioIds.length === 0) {
-      console.log("No audio files found")
+      console.log("No audio files found in Redis")
       return []
     }
 
@@ -172,6 +175,8 @@ export async function getAllAudios(): Promise<AudioMetadata[]> {
           } else {
             console.warn(`Audio ${id} has no valid URL, skipping`)
           }
+        } else {
+          console.warn(`No data found for audio ${id}`)
         }
       } catch (error) {
         console.error(`Error fetching audio ${id}:`, error)
@@ -179,7 +184,7 @@ export async function getAllAudios(): Promise<AudioMetadata[]> {
       }
     }
 
-    console.log("Processed audios:", audios.length)
+    console.log("✅ Processed audios:", audios.length)
 
     // Sort by upload date (newest first)
     return audios.sort((a, b) => {
@@ -190,8 +195,8 @@ export async function getAllAudios(): Promise<AudioMetadata[]> {
       }
     })
   } catch (error) {
-    console.error("Error getting all audios:", error)
-    return []
+    console.error("❌ Error getting all audios:", error)
+    throw new Error(`Failed to load audio files: ${error instanceof Error ? error.message : "Unknown error"}`)
   }
 }
 
@@ -310,12 +315,20 @@ export async function testBlobUrl(url: string) {
 export async function getRedisConnectionInfo() {
   try {
     const connectionStatus = redis.getConnectionStatus()
+
+    // Test the connection
     const pingResult = await redis.ping()
+    const connectionTest = await redis.testConnection()
+
+    // Get some basic stats
+    const audioIds = await redis.lrange(REDIS_KEYS.AUDIO_LIST, 0, -1)
 
     return {
       ...connectionStatus,
       pingResult,
+      connectionTest,
       redisUrl: process.env.REDIS_URL ? "Set" : "Not set",
+      audioCount: audioIds.length,
       timestamp: new Date().toISOString(),
     }
   } catch (error) {
@@ -363,15 +376,21 @@ export async function debugBlobStorage() {
 
     // Compare URLs between blobs and Redis
     const urlComparison = redisData.map((redis) => {
+      const redisUrl = (redis as any).url;
+      const redisDownloadUrl = (redis as any).downloadUrl;
+      const redisBlobPathname = (redis as any).blobPathname;
+
       const matchingBlob = blobs.find(
         (blob) =>
-          blob.url === redis.url || blob.downloadUrl === redis.downloadUrl || blob.pathname === redis.blobPathname,
+          blob.url === redisUrl ||
+          blob.downloadUrl === redisDownloadUrl ||
+          blob.pathname === redisBlobPathname,
       )
 
       return {
         redisId: redis.id,
-        redisUrl: redis.url,
-        redisDownloadUrl: redis.downloadUrl,
+        redisUrl: redisUrl,
+        redisDownloadUrl: redisDownloadUrl,
         blobExists: !!matchingBlob,
         matchingBlobUrl: matchingBlob?.url,
         matchingBlobDownloadUrl: matchingBlob?.downloadUrl,
