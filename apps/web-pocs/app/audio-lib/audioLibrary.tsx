@@ -1,12 +1,17 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { Button } from "@repo/ui/components/button"
-import { Input } from "@repo/ui/components/input"
-import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/components/card"
-import { Badge } from "@/components/ui/badge"
+import { useState, useEffect } from "react";
+import { Button } from "@repo/ui/components/button";
+import { Input } from "@repo/ui/components/input";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@repo/ui/components/card";
+import { Badge } from "@/components/ui/badge";
 import {
   Upload,
   Search,
@@ -22,7 +27,7 @@ import {
   AlertCircle,
   Bug,
   RefreshCw,
-} from "lucide-react"
+} from "lucide-react";
 import {
   uploadAudio,
   deleteAudio,
@@ -33,178 +38,183 @@ import {
   testBlobUrl,
   debugBlobStorage,
   syncBlobUrls,
-} from "./actions"
-import { Metadata } from "next"
+} from "./actions";
+import { Metadata } from "next";
 
 interface AudioFile {
-  id: string
-  filename: string
-  title: string
-  url: string
-  downloadUrl: string
-  uploadDate: string
-  size: number
+  id: string;
+  filename: string;
+  title: string;
+  url: string;
+  downloadUrl: string;
+  uploadDate: string;
+  size: number;
 }
 
 interface AudioStats {
-  totalFiles: number
-  totalSize: number
+  totalFiles: number;
+  totalSize: number;
 }
 
 export const metadata: Metadata = {
-  title: 'Audio Media Library',
-  description: 'Audio Library Redis + Vercel Blob'
-}
+  title: "Audio Media Library",
+  description: "Audio Library Redis + Vercel Blob",
+};
 
 export function AudioLibrary() {
-  const [audios, setAudios] = useState<AudioFile[]>([])
-  const [searchQuery, setSearchQuery] = useState("")
-  const [isUploading, setIsUploading] = useState(false)
-  const [title, setTitle] = useState("")
-  const [isLoading, setIsLoading] = useState(true)
-  const [editingId, setEditingId] = useState<string | null>(null)
-  const [editTitle, setEditTitle] = useState("")
-  const [stats, setStats] = useState<AudioStats>({ totalFiles: 0, totalSize: 0 })
-  const [testingUrls, setTestingUrls] = useState<Set<string>>(new Set())
-  const [debugInfo, setDebugInfo] = useState<any>(null)
-  const [isSyncing, setIsSyncing] = useState(false)
+  const [audios, setAudios] = useState<AudioFile[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const [title, setTitle] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [stats, setStats] = useState<AudioStats>({
+    totalFiles: 0,
+    totalSize: 0,
+  });
+  const [testingUrls, setTestingUrls] = useState<Set<string>>(new Set());
+  const [debugInfo, setDebugInfo] = useState<any>(null);
+  const [isSyncing, setIsSyncing] = useState(false);
 
   useEffect(() => {
-    loadAudios()
-    loadStats()
-  }, [])
+    loadAudios();
+    loadStats();
+  }, []);
 
   useEffect(() => {
     const delayedSearch = setTimeout(() => {
       if (searchQuery.trim()) {
-        handleSearch()
+        handleSearch();
       } else {
-        loadAudios()
+        loadAudios();
       }
-    }, 300)
+    }, 300);
 
-    return () => clearTimeout(delayedSearch)
-  }, [searchQuery])
+    return () => clearTimeout(delayedSearch);
+  }, [searchQuery]);
 
   const loadAudios = async () => {
     try {
-      setIsLoading(true)
-      const audioList = await getAllAudios()
-      setAudios(audioList)
+      setIsLoading(true);
+      const audioList = await getAllAudios();
+      setAudios(audioList);
     } catch (error) {
-      console.error("Failed to load audio files:", error)
-      alert("Failed to load audio files")
+      console.error("Failed to load audio files:", error);
+      alert("Failed to load audio files");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const loadStats = async () => {
     try {
-      const audioStats = await getAudioStats()
-      setStats(audioStats)
+      const audioStats = await getAudioStats();
+      setStats(audioStats);
     } catch (error) {
-      console.error("Failed to load stats:", error)
+      console.error("Failed to load stats:", error);
     }
-  }
+  };
 
   const handleSearch = async () => {
     try {
-      setIsLoading(true)
-      const results = await searchAudios(searchQuery)
-      setAudios(results)
+      setIsLoading(true);
+      const results = await searchAudios(searchQuery);
+      setAudios(results);
     } catch (error) {
-      console.error("Search failed:", error)
-      alert("Search failed")
+      console.error("Search failed:", error);
+      alert("Search failed");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleUpload = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const file = formData.get("audio") as File
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const file = formData.get("audio") as File;
 
     if (!file || !title.trim()) {
-      alert("Please select a file and enter a title")
-      return
+      alert("Please select a file and enter a title");
+      return;
     }
 
-    setIsUploading(true)
+    setIsUploading(true);
     try {
-      const result = await uploadAudio(formData)
-      setTitle("")
-        ; (e.target as HTMLFormElement).reset()
-      await loadAudios()
-      await loadStats()
+      const result = await uploadAudio(formData);
+      setTitle("");
+      (e.target as HTMLFormElement).reset();
+      await loadAudios();
+      await loadStats();
     } catch (error) {
-      console.error("Upload failed:", error)
-      alert(`Failed to upload audio file: ${error instanceof Error ? error.message : "Unknown error"}`)
+      console.error("Upload failed:", error);
+      alert(
+        `Failed to upload audio file: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
     } finally {
-      setIsUploading(false)
+      setIsUploading(false);
     }
-  }
+  };
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this audio file?")) {
-      return
+      return;
     }
 
     try {
-      await deleteAudio(id)
-      await loadAudios()
-      await loadStats()
-      alert("Audio file deleted successfully")
+      await deleteAudio(id);
+      await loadAudios();
+      await loadStats();
+      alert("Audio file deleted successfully");
     } catch (error) {
-      console.error("Delete failed:", error)
-      alert("Failed to delete audio file")
+      console.error("Delete failed:", error);
+      alert("Failed to delete audio file");
     }
-  }
+  };
 
   const handleEditTitle = (audio: AudioFile) => {
-    setEditingId(audio.id)
-    setEditTitle(audio.title)
-  }
+    setEditingId(audio.id);
+    setEditTitle(audio.title);
+  };
 
   const handleSaveTitle = async (id: string) => {
     if (!editTitle.trim()) {
-      alert("Title cannot be empty")
-      return
+      alert("Title cannot be empty");
+      return;
     }
 
     try {
-      await updateAudioTitle(id, editTitle)
-      setEditingId(null)
-      setEditTitle("")
-      await loadAudios()
-      alert("Title updated successfully")
+      await updateAudioTitle(id, editTitle);
+      setEditingId(null);
+      setEditTitle("");
+      await loadAudios();
+      alert("Title updated successfully");
     } catch (error) {
-      console.error("Update failed:", error)
-      alert("Failed to update title")
+      console.error("Update failed:", error);
+      alert("Failed to update title");
     }
-  }
+  };
 
   const handleCancelEdit = () => {
-    setEditingId(null)
-    setEditTitle("")
-  }
+    setEditingId(null);
+    setEditTitle("");
+  };
 
   const copyToClipboard = async (url: string) => {
     try {
-      await navigator.clipboard.writeText(url)
-      alert("Download URL copied to clipboard")
+      await navigator.clipboard.writeText(url);
+      alert("Download URL copied to clipboard");
     } catch (error) {
-      alert("Failed to copy URL")
+      alert("Failed to copy URL");
     }
-  }
+  };
 
   const testUrl = async (url: string, audioId: string) => {
-    setTestingUrls((prev) => new Set(prev).add(audioId))
+    setTestingUrls((prev) => new Set(prev).add(audioId));
     try {
-      const result = await testBlobUrl(url)
+      const result = await testBlobUrl(url);
       if (result.success && "status" in result) {
-        alert(`URL is accessible! Status: ${result.status}`)
+        alert(`URL is accessible! Status: ${result.status}`);
       } else {
         alert(
           `URL test failed: ${
@@ -213,65 +223,71 @@ export function AudioLibrary() {
               : "status" in result
                 ? `${result.status} ${result.statusText}`
                 : "Unknown error"
-          }`
-        )
+          }`,
+        );
       }
-      console.log("Full test result:", result)
+      console.log("Full test result:", result);
     } catch (error) {
-      alert("URL test failed")
-      console.error("Test error:", error)
+      alert("URL test failed");
+      console.error("Test error:", error);
     } finally {
       setTestingUrls((prev) => {
-        const newSet = new Set(prev)
-        newSet.delete(audioId)
-        return newSet
-      })
+        const newSet = new Set(prev);
+        newSet.delete(audioId);
+        return newSet;
+      });
     }
-  }
+  };
 
   const handleDebug = async () => {
     try {
-      const debug = await debugBlobStorage()
-      setDebugInfo(debug)
-      console.log("Debug info:", debug)
+      const debug = await debugBlobStorage();
+      setDebugInfo(debug);
+      console.log("Debug info:", debug);
     } catch (error) {
-      console.error("Debug failed:", error)
+      console.error("Debug failed:", error);
     }
-  }
+  };
 
   const handleSync = async () => {
-    setIsSyncing(true)
+    setIsSyncing(true);
     try {
-      const result = await syncBlobUrls()
+      const result = await syncBlobUrls();
       if (result.success) {
-        alert("message" in result ? result.message : "Sync completed successfully.")
-        await loadAudios() // Reload to show updated URLs
+        alert(
+          "message" in result ? result.message : "Sync completed successfully.",
+        );
+        await loadAudios(); // Reload to show updated URLs
       } else {
-        alert(`Sync failed: ${"error" in result ? result.error : "message" in result ? result.message : "Unknown error"}`)
+        alert(
+          `Sync failed: ${"error" in result ? result.error : "message" in result ? result.message : "Unknown error"}`,
+        );
       }
     } catch (error) {
-      console.error("Sync failed:", error)
-      alert("Sync failed")
+      console.error("Sync failed:", error);
+      alert("Sync failed");
     } finally {
-      setIsSyncing(false)
+      setIsSyncing(false);
     }
-  }
+  };
 
   const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return "0 Bytes"
-    const k = 1024
-    const sizes = ["Bytes", "KB", "MB", "GB"]
-    const i = Math.floor(Math.log(bytes) / Math.log(k))
-    return Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
-  }
+    if (bytes === 0) return "0 Bytes";
+    const k = 1024;
+    const sizes = ["Bytes", "KB", "MB", "GB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return (
+      Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
+    );
+  };
 
   const formatDate = (dateString: string) => {
-    if (!dateString) return "Unknown Date"
+    if (!dateString) return "Unknown Date";
 
     try {
-      const date = new Date(dateString)
+      const date = new Date(dateString);
       if (isNaN(date.getTime())) {
-        return "Unknown Date"
+        return "Unknown Date";
       }
 
       return date.toLocaleDateString("en-US", {
@@ -280,11 +296,11 @@ export function AudioLibrary() {
         day: "numeric",
         hour: "2-digit",
         minute: "2-digit",
-      })
+      });
     } catch (error) {
-      return "Unknown Date"
+      return "Unknown Date";
     }
-  }
+  };
 
   return (
     <div className="min-h-screen">
@@ -294,10 +310,17 @@ export function AudioLibrary() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="mb-2 text-4xl font-bold">Audio Library</h1>
-              <p className="text-muted-foreground">Upload, manage, and share your audio files</p>
+              <p className="text-muted-foreground">
+                Upload, manage, and share your audio files
+              </p>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" onClick={handleSync} disabled={isSyncing} className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                onClick={handleSync}
+                disabled={isSyncing}
+                className="flex items-center gap-2"
+              >
                 {isSyncing ? (
                   <div className="w-4 h-4 border-b border-current rounded-full animate-spin"></div>
                 ) : (
@@ -305,7 +328,11 @@ export function AudioLibrary() {
                 )}
                 Sync URLs
               </Button>
-              <Button variant="outline" onClick={handleDebug} className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                onClick={handleDebug}
+                className="flex items-center gap-2"
+              >
                 <Bug className="w-4 h-4" />
                 Debug
               </Button>
@@ -313,7 +340,9 @@ export function AudioLibrary() {
           </div>
           <div className="flex gap-4 mt-4">
             <Badge variant="secondary">{stats.totalFiles} files</Badge>
-            <Badge variant="outline">{formatFileSize(stats.totalSize)} total</Badge>
+            <Badge variant="outline">
+              {formatFileSize(stats.totalSize)} total
+            </Badge>
           </div>
         </div>
 
@@ -321,7 +350,9 @@ export function AudioLibrary() {
         {debugInfo && (
           <Card className="mb-8 border-yellow-200 bg-yellow-50">
             <CardHeader>
-              <CardTitle className="text-yellow-800">Debug Information</CardTitle>
+              <CardTitle className="text-yellow-800">
+                Debug Information
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -336,7 +367,9 @@ export function AudioLibrary() {
                   )}
                 </div>
                 <details>
-                  <summary className="font-semibold cursor-pointer">Full Debug Data</summary>
+                  <summary className="font-semibold cursor-pointer">
+                    Full Debug Data
+                  </summary>
                   <pre className="p-2 mt-2 overflow-auto text-xs bg-white border rounded max-h-40">
                     {JSON.stringify(debugInfo, null, 2)}
                   </pre>
@@ -388,6 +421,16 @@ export function AudioLibrary() {
                     accept="audio/*"
                     required
                     className="flex w-full h-10 px-3 py-2 text-sm border rounded-md border-input bg-background ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file && !title) {
+                        const nameWithoutExt = file.name.replace(
+                          /\.[^/.]+$/,
+                          "",
+                        );
+                        setTitle(nameWithoutExt);
+                      }
+                    }}
                   />
                 </div>
               </div>
@@ -444,14 +487,19 @@ export function AudioLibrary() {
               <CardContent className="py-12 text-center">
                 <Music className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
                 <p className="text-muted-foreground">
-                  {searchQuery ? "No audio files found matching your search." : "No audio files uploaded yet."}
+                  {searchQuery
+                    ? "No audio files found matching your search."
+                    : "No audio files uploaded yet."}
                 </p>
               </CardContent>
             </Card>
           ) : (
             <div className="grid gap-4">
               {audios.map((audio) => (
-                <Card key={audio.id} className="transition-colors hover:border-gray-300">
+                <Card
+                  key={audio.id}
+                  className="transition-colors hover:border-gray-300"
+                >
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between">
                       <div className="flex-1 min-w-0">
@@ -465,23 +513,33 @@ export function AudioLibrary() {
                                 className="flex-1"
                                 onKeyDown={(e) => {
                                   if (e.key === "Enter") {
-                                    handleSaveTitle(audio.id)
+                                    handleSaveTitle(audio.id);
                                   } else if (e.key === "Escape") {
-                                    handleCancelEdit()
+                                    handleCancelEdit();
                                   }
                                 }}
                                 autoFocus
                               />
-                              <Button size="sm" variant="outline" onClick={() => handleSaveTitle(audio.id)}>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleSaveTitle(audio.id)}
+                              >
                                 <Check className="w-3 h-3" />
                               </Button>
-                              <Button size="sm" variant="outline" onClick={handleCancelEdit}>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={handleCancelEdit}
+                              >
                                 <X className="w-3 h-3" />
                               </Button>
                             </div>
                           ) : (
                             <div className="flex items-center flex-1 gap-2">
-                              <h3 className="text-lg font-semibold truncate">{audio.title}</h3>
+                              <h3 className="text-lg font-semibold truncate">
+                                {audio.title}
+                              </h3>
                               <Button
                                 size="sm"
                                 variant="ghost"
@@ -510,12 +568,16 @@ export function AudioLibrary() {
 
                         <div className="p-3 mt-4 rounded-lg bg-muted">
                           <div className="flex items-center justify-between">
-                            <span className="text-xs text-muted-foreground">Download URL:</span>
+                            <span className="text-xs text-muted-foreground">
+                              Download URL:
+                            </span>
                             <div className="flex gap-2">
                               <Button
                                 size="sm"
                                 variant="outline"
-                                onClick={() => copyToClipboard(audio.downloadUrl)}
+                                onClick={() =>
+                                  copyToClipboard(audio.downloadUrl)
+                                }
                                 className="h-8 px-3"
                                 disabled={!audio.downloadUrl}
                               >
@@ -525,9 +587,14 @@ export function AudioLibrary() {
                               <Button
                                 size="sm"
                                 variant="outline"
-                                onClick={() => testUrl(audio.downloadUrl, audio.id)}
+                                onClick={() =>
+                                  testUrl(audio.downloadUrl, audio.id)
+                                }
                                 className="h-8 px-3"
-                                disabled={!audio.downloadUrl || testingUrls.has(audio.id)}
+                                disabled={
+                                  !audio.downloadUrl ||
+                                  testingUrls.has(audio.id)
+                                }
                               >
                                 {testingUrls.has(audio.id) ? (
                                   <div className="w-3 h-3 mr-1 border-b border-current rounded-full animate-spin"></div>
@@ -539,7 +606,9 @@ export function AudioLibrary() {
                               <Button
                                 size="sm"
                                 variant="outline"
-                                onClick={() => window.open(audio.downloadUrl, "_blank")}
+                                onClick={() =>
+                                  window.open(audio.downloadUrl, "_blank")
+                                }
                                 className="h-8 px-3"
                                 disabled={!audio.downloadUrl}
                               >
@@ -577,5 +646,5 @@ export function AudioLibrary() {
         </div>
       </div>
     </div>
-  )
+  );
 }
