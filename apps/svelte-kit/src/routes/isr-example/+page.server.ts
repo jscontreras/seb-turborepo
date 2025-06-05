@@ -1,14 +1,14 @@
-import { BYPASS_TOKEN } from '$env/static/private';
+import { BYPASS_TOKEN } from "$env/static/private";
 
 const expirationInSeconds = 30;
 
 export const config = {
-  runtime: 'nodejs22.x',
+  runtime: "nodejs22.x",
   isr: {
     expiration: 60,
-    bypassToken: process.env.BYPASS_TOKEN,
-    allowQuery: ['search', 'filter', 'sort']
-  }
+    bypassToken: BYPASS_TOKEN,
+    allowQuery: ["search", "filter", "sort"],
+  },
 };
 
 export const load = async ({ url }) => {
@@ -18,7 +18,6 @@ export const load = async ({ url }) => {
   return {
     now,
     revalidate: 10,
-    queryParams
+    queryParams,
   };
 };
-

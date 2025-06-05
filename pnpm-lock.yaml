@@ -146,6 +146,9 @@ importers:
       '@types/js-cookie':
         specifier: ^3.0.6
         version: 3.0.6
+      '@types/node':
+        specifier: ^22.15.29
+        version: 22.15.29
       '@vercel/flags':
         specifier: 2.6.0
         version: 2.6.0(@sveltejs/kit@2.20.8(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(svelte@5.23.0)(vite@6.3.2(@types/node@22.15.29)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)))(next@15.2.2(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -6911,7 +6914,7 @@ snapshots:
   '@types/glob@7.2.0':
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 22.13.10
+      '@types/node': 22.15.29
 
   '@types/http-errors@2.0.4': {}
 
@@ -6939,7 +6942,7 @@ snapshots:
 
   '@types/node-fetch@2.6.12':
     dependencies:
-      '@types/node': 22.13.10
+      '@types/node': 22.15.29
       form-data: 4.0.2
 
   '@types/node@16.18.11': {}
@@ -6985,7 +6988,7 @@ snapshots:
 
   '@types/through@0.0.33':
     dependencies:
-      '@types/node': 22.13.10
+      '@types/node': 22.15.29
 
   '@types/tinycolor2@1.4.6': {}
 
