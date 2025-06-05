@@ -1,10 +1,13 @@
 <script lang="ts">
+  import QueryParams from '$lib/components/QueryParams.svelte';
   let { data } = $props();
   console.log('data', data)
   const geo = data.geo ? data.geo : {country: 'Country?', city: 'City?', zipcode: 'Zipcode'}
 </script>
 
 <h1 class:svelte={data.svelteColor}>SvelteKit + Vercel Feature Flags</h1>
+
+<QueryParams queryParams={data.queryParams} />
 
 <p>
   SvelteKit offers seamless integration with the <a
