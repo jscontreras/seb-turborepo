@@ -20,6 +20,7 @@ export const handle = async ({ event, resolve }) => {
     ),
   };
   event.locals.geo = geo;
+  console.log(">>>>HOOKS_SERVER_SVELTEKIT", geo);
 
   // Use the feature flags handle to process the request
   const response = await featureFlagsHandle({ event, resolve });
