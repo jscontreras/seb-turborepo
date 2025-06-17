@@ -127,7 +127,9 @@ export function AudioLibrary() {
         }
         setIsLoading(false);
       }
-      setPreviousQuery(searchQuery);
+      if (searchQuery !== previousQuery) {
+        setPreviousQuery(searchQuery);
+      }
     } catch (error) {
       console.error("Search failed:", error);
       alert("Search failed");
