@@ -88,7 +88,9 @@ export function AudioLibrary() {
       if (searchQuery.trim()) {
         handleSearch();
       } else {
-        loadAudios();
+        if (!isLoading) {
+          loadAudios();
+        }
       }
     }, 800);
 
@@ -480,7 +482,9 @@ export function AudioLibrary() {
         {/* Audio List */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-semibold">Audio Files</h2>
+            <h2 className="text-2xl font-semibold">
+              Audio Files {searchQuery.length ? ` (${searchQuery})` : ""}
+            </h2>
             <Badge variant="secondary">{audios.length} files</Badge>
           </div>
 
