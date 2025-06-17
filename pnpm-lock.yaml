@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      turbo-ignore:
+        specifier: ^2.5.4
+        version: 2.5.4
     devDependencies:
       prettier:
         specifier: ^3.5.3
@@ -4289,6 +4293,7 @@ packages:
   node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
     engines: {node: '>=10.5.0'}
+    deprecated: Use your platform's native DOMException instead
 
   node-fetch@2.6.9:
     resolution: {integrity: sha512-DJm/CJkZkRjKKj4Zi4BsKVZh3ValV5IR5s7LVZnW+6YMh0W1BfNA8XSs6DLMGYlId5F3KnA70uu2qepcR08Qqg==}
@@ -5207,6 +5212,10 @@ packages:
     resolution: {integrity: sha512-2+Nx6LAyuXw2MdXb7pxqle3MYignLvS7OwtsP9SgtSBaMlnNlxl9BovzqdYAgkUW3AsYiQMJ/wBRb7d+xemM5A==}
     cpu: [arm64]
     os: [darwin]
+
+  turbo-ignore@2.5.4:
+    resolution: {integrity: sha512-40Dpk/V9FZ1K9xYPacuAqvXvImBI9KqjldpQvgRpTZ9QFzW+DD1cSYJNZnDjU8gymJ79Tus3Ow4MDNI6dAKbyQ==}
+    hasBin: true
 
   turbo-linux-64@2.5.4:
     resolution: {integrity: sha512-5May2kjWbc8w4XxswGAl74GZ5eM4Gr6IiroqdLhXeXyfvWEdm2mFYCSWOzz0/z5cAgqyGidF1jt1qzUR8hTmOA==}
@@ -10602,6 +10611,10 @@ snapshots:
 
   turbo-darwin-arm64@2.5.4:
     optional: true
+
+  turbo-ignore@2.5.4:
+    dependencies:
+      json5: 2.2.3
 
   turbo-linux-64@2.5.4:
     optional: true
