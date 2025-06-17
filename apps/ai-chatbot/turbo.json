@@ -13,6 +13,8 @@
       "outputs": [
         ".next/**",
         "!.next/cache/**",
+        ".svelte-kit/**",
+        "dist/**",
         ".vercel/**"
       ]
     },

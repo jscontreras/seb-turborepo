@@ -13,6 +13,9 @@
         "AUTH0_SCOPE"
       ],
       "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        ".svelte-kit/**",
         "dist/**",
         ".vercel/**"
       ]
