@@ -22,7 +22,6 @@
     "lucide-react": "^0.475.0",
     "next": "15.4.0-canary.61",
     "openai": "^4.96.0",
-    "openai-edge": "^1.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "redis": "^4.7.0",
