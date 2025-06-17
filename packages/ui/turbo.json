@@ -4,12 +4,6 @@
   ],
   "tasks": {
     "build": {
-      "env": [
-        "NEW_RELIC_LICENSE_KEY",
-        "NEW_RELIC_APP_NAME",
-        "NEW_RELIC_USER_KEY",
-        "TELEMETRY_CUSTOM_PRODUCER"
-      ],
       "inputs": [
         "src/**",
         "package.json",
@@ -21,20 +15,17 @@
       ]
     },
     "dev": {
-      "env": [
-        "NEW_RELIC_LICENSE_KEY",
-        "NEW_RELIC_APP_NAME",
-        "NEW_RELIC_USER_KEY",
-        "TELEMETRY_CUSTOM_PRODUCER"
-      ],
       "inputs": [
         "src/**",
         "package.json",
+        "postcss.config.js",
+        "tailwind.config.js",
+        "components.json",
         "tsconfig.json",
         "../../package-lock.json"
       ],
       "outputs": [
-        "dist/**"
+        "src/**"
       ]
     }
   }
