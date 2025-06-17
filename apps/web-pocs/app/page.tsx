@@ -10,7 +10,7 @@ export default function Home() {
       <p className="text-xl text-center text-muted-foreground">
         Check out the installed Next.js version on the about page
       </p>
-      <Button asChild size="lg">
+      <Button asChild size="lg" className="p-4">
         <Link href="/about">View Next.js Version</Link>
       </Button>
     </div>
