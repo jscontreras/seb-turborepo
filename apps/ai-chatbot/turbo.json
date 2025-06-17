@@ -9,6 +9,11 @@
         "OPENAI_API_KEY_PERSONAL",
         "REDIS_URL",
         "BLOB_READ_WRITE_TOKEN"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        ".vercel/**"
       ]
     },
     "dev": {

@@ -11,6 +11,11 @@
       "env": [
         "FLAGS_SECRET",
         "BYPASS_TOKEN"
+      ],
+      "outputs": [
+        ".svelte-kit/**",
+        "dist/**",
+        ".vercel/**"
       ]
     },
     "dev": {

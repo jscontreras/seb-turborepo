@@ -11,6 +11,11 @@
         "TELEMETRY_CUSTOM_PRODUCER",
         "WEBHOOK_SECRET",
         "SALUTE"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        ".vercel/**"
       ]
     },
     "dev": {
