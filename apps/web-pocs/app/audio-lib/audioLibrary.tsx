@@ -64,6 +64,7 @@ export const metadata: Metadata = {
 export function AudioLibrary() {
   const [audios, setAudios] = useState<AudioFile[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [previousQuery, setPreviousQuery] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [title, setTitle] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -89,7 +90,7 @@ export function AudioLibrary() {
       } else {
         loadAudios();
       }
-    }, 300);
+    }, 800);
 
     return () => clearTimeout(delayedSearch);
   }, [searchQuery]);
@@ -118,9 +119,15 @@ export function AudioLibrary() {
 
   const handleSearch = async () => {
     try {
-      setIsLoading(true);
-      const results = await searchAudios(searchQuery);
-      setAudios(results);
+      if (!isLoading) {
+        setIsLoading(true);
+        if (searchQuery !== previousQuery) {
+          const results = await searchAudios(searchQuery);
+          setAudios(results);
+        }
+        setIsLoading(false);
+      }
+      setPreviousQuery(searchQuery);
     } catch (error) {
       console.error("Search failed:", error);
       alert("Search failed");
@@ -135,7 +142,7 @@ export function AudioLibrary() {
     const file = formData.get("audio") as File;
 
     if (!file || !title.trim()) {
-      alert("Please select a file and enter a title");
+      alert("Please select a file and enter a `title");
       return;
     }
 

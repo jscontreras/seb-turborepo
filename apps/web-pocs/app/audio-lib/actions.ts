@@ -158,7 +158,6 @@ export async function getAllAudios(): Promise<AudioMetadata[]> {
 
     // Get all audio IDs from the list
     const audioIds = await redis.lrange(REDIS_KEYS.AUDIO_LIST, 0, -1);
-    console.log("Found audio IDs:", audioIds);
 
     if (!audioIds || audioIds.length === 0) {
       console.log("No audio files found in Redis");
@@ -173,7 +172,6 @@ export async function getAllAudios(): Promise<AudioMetadata[]> {
         const audioData = await redis.hgetall(
           `${REDIS_KEYS.AUDIO_PREFIX}${id}`,
         );
-        console.log(`Audio data for ${id}:`, audioData);
 
         if (audioData && Object.keys(audioData).length > 0) {
           // Ensure all required fields are present and valid

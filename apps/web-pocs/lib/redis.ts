@@ -112,13 +112,6 @@ class RedisClient {
     try {
       await this.ensureConnection();
       const result = await this.client!.hGetAll(key);
-      console.log(
-        "Redis HGETALL:",
-        key,
-        "->",
-        Object.keys(result).length,
-        "fields",
-      );
       return result;
     } catch (error) {
       console.error("Redis HGETALL error:", error);
