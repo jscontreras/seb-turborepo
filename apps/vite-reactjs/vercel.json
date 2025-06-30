@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "functions": {
+    "api/edge/**": {
+      "memory": 1204,
+      "maxDuration": 30
+    },
+    "api/nodejs/**": {
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  }
+}
