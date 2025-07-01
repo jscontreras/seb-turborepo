@@ -10,7 +10,8 @@
         "NEW_RELIC_USER_KEY",
         "TELEMETRY_CUSTOM_PRODUCER",
         "WEBHOOK_SECRET",
-        "SALUTE"
+        "SALUTE",
+        "AI_GATEWAY_API_KEY"
       ],
       "outputs": [
         ".next/**",
@@ -27,7 +28,8 @@
         "NEW_RELIC_USER_KEY",
         "WEBHOOK_SECRET",
         "TELEMETRY_CUSTOM_PRODUCER",
-        "SALUTE"
+        "SALUTE",
+        "AI_GATEWAY_API_KEY"
       ]
     }
   }
