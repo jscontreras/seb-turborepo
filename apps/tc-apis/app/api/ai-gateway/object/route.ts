@@ -13,13 +13,13 @@ export async function POST(request: Request) {
   try {
     const modelArgs = await request.json();
     const stringSchema = modelArgs.schema ? modelArgs.schema : mySchema;
-    const zodSchema = JSONSchemaToZod.convert(stringSchema);
+    const schema = JSONSchemaToZod.convert(stringSchema);
     const defaultParams = {
-      model: "gpt-4-turbo",
-      schema: zodSchema,
-      prompt: "Generate a response to the user's message.",
+      model: "xai/grok-3",
     };
-    const params = { ...defaultParams, ...modelArgs };
+
+    const params = { ...defaultParams, ...modelArgs, schema };
+    console.log(params);
     const result = await generateObject(params);
     return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
