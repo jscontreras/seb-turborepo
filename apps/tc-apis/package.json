@@ -11,6 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dmitryrechkin/json-schema-to-zod": "^1.0.1",
     "@repo/otel-config": "workspace:*",
     "ai": "5.0.0-beta.5",
     "fs": "0.0.1-security",

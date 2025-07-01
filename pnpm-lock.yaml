@@ -171,6 +171,9 @@ importers:
 
   apps/tc-apis:
     dependencies:
+      '@dmitryrechkin/json-schema-to-zod':
+        specifier: ^1.0.1
+        version: 1.0.1
       '@repo/otel-config':
         specifier: workspace:*
         version: link:../../packages/otel-config
@@ -775,6 +778,9 @@ packages:
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
+
+  '@dmitryrechkin/json-schema-to-zod@1.0.1':
+    resolution: {integrity: sha512-cG9gC4NMu/7JZqmRZy6uIb+l+kxek2GFQ0/qrhw7xeFK2l5B9yF9FVuujoqFPLRGDHNFYqtBWht7hY4KB0ngrA==}
 
   '@edge-runtime/format@2.2.1':
     resolution: {integrity: sha512-JQTRVuiusQLNNLe2W9tnzBlV/GvSVcozLl4XZHk5swnRZ/v6jp8TqR8P7sqmJsQqblDZ3EztcWmLDbhRje/+8g==}
@@ -5956,6 +5962,10 @@ snapshots:
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
+
+  '@dmitryrechkin/json-schema-to-zod@1.0.1':
+    dependencies:
+      zod: 3.25.67
 
   '@edge-runtime/format@2.2.1': {}
 

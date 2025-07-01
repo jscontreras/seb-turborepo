@@ -3,11 +3,11 @@ import { generateText } from "ai";
 export async function POST(request: Request) {
   try {
     const modelArgs = await request.json();
-    const result = await generateText(modelArgs);
     const defaultParams = {
       model: "xai/grok-3",
     };
-    const params = { ...defaultParams, modelArgs };
+    const params = { ...defaultParams, ...modelArgs };
+    const result = await generateText(params);
     return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
     });
