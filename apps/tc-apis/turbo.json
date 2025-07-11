@@ -11,7 +11,11 @@
         "TELEMETRY_CUSTOM_PRODUCER",
         "WEBHOOK_SECRET",
         "SALUTE",
-        "AI_GATEWAY_API_KEY"
+        "AI_GATEWAY_API_KEY",
+        "CRON_SECRET",
+        "BLOB_READ_WRITE_TOKEN",
+        "BROWSERBASE_API_KEY",
+        "BROWSERBASE_PROJECT_ID"
       ],
       "outputs": [
         ".next/**",
@@ -29,7 +33,11 @@
         "WEBHOOK_SECRET",
         "TELEMETRY_CUSTOM_PRODUCER",
         "SALUTE",
-        "AI_GATEWAY_API_KEY"
+        "AI_GATEWAY_API_KEY",
+        "CRON_SECRET",
+        "BLOB_READ_WRITE_TOKEN",
+        "BROWSERBASE_API_KEY",
+        "BROWSERBASE_PROJECT_ID"
       ]
     }
   }

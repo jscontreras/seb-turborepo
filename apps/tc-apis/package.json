@@ -12,11 +12,13 @@
   },
   "dependencies": {
     "@dmitryrechkin/json-schema-to-zod": "^1.0.1",
+    "@repo/ai-sdk": "workspace:*",
     "@repo/otel-config": "workspace:*",
     "ai": "5.0.0-beta.5",
     "fs": "0.0.1-security",
     "next": "15.4.0-canary.61",
     "path": "^0.12.7",
+    "playwright-core": "^1.54.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "zod": "^3.25.49"

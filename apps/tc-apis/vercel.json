@@ -1,4 +1,5 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "git": {
     "deploymentEnabled": {
       "experiment-*": false,
@@ -19,5 +20,11 @@
     "app/**.*": {
       "memory": 512
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/changelog-rag-update",
+      "schedule": "0 0 * * *"
+    }
+  ]
 }

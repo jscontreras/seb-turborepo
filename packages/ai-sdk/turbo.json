@@ -1,0 +1,29 @@
+{
+  "extends": [
+    "//"
+  ],
+  "tasks": {
+    "build": {
+      "inputs": [
+        "src/**",
+        "package.json",
+        "tsconfig.json",
+        "../../package-lock.json"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
+    },
+    "dev": {
+      "inputs": [
+        "src/**",
+        "package.json",
+        "tsconfig.json",
+        "../../package-lock.json"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
+    }
+  }
+}
