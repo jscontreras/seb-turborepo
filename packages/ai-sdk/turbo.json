@@ -4,6 +4,11 @@
   ],
   "tasks": {
     "build": {
+      "env": [
+        "BLOB_READ_WRITE_TOKEN",
+        "BROWSERBASE_API_KEY",
+        "BROWSERBASE_PROJECT_ID"
+      ],
       "inputs": [
         "src/**",
         "package.json",
@@ -15,6 +20,11 @@
       ]
     },
     "dev": {
+      "env": [
+        "BLOB_READ_WRITE_TOKEN",
+        "BROWSERBASE_API_KEY",
+        "BROWSERBASE_PROJECT_ID"
+      ],
       "inputs": [
         "src/**",
         "package.json",
