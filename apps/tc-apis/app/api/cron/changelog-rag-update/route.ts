@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { updateVercelChangelog } from "@repo/ai-sdk/changelog";
+import { updateVercelChangelog } from "@repo/ai-sdk/rags/changelog";
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
   const isDevelopment = process.env.NODE_ENV === "development";

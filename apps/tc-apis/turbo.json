@@ -4,6 +4,7 @@
   ],
   "tasks": {
     "build": {
+      "dependsOn": ["^build"],
       "env": [
         "NEW_RELIC_LICENSE_KEY",
         "NEW_RELIC_APP_NAME",
