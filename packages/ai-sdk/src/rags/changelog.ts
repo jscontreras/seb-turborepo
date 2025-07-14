@@ -44,15 +44,15 @@ async function getVercelChangelog(size: number = 10) {
   // get all the article nodes
   let articleNodes = await page.$$("article");
   while (articleNodes.length < size) {
-    const latestArticleNode = articleNodes[articleNodes.length - 1];
-    if (!latestArticleNode) {
+    const firstArticleNode = articleNodes[0];
+    if (!firstArticleNode) {
       throw new Error("No latest article node found");
     }
-    const latestLink = await latestArticleNode.$eval("a", (node) => node.href);
-    const isLatestInBlob = currentArticles.some(
-      (currentArticle) => currentArticle.link === latestLink,
+    const firstArticleLink = await firstArticleNode.$eval("a", (node) => node.href);
+    const isFirstArticleInBlob = currentArticles.some(
+      (currentArticle) => currentArticle.link === firstArticleLink,
     );
-    if (isLatestInBlob) {
+    if (isFirstArticleInBlob) {
       console.log(
         "Latest article is already stored in the blob, stopping the loop",
       );
@@ -146,7 +146,7 @@ async function updateVercelChangelog(size: number = 10) {
 
   // sort the merged articles by timestamp from newest to oldest
   mergedArticles.sort((a, b) => b.timestamp - a.timestamp);
-  const maxUpdates = 300;
+  const maxUpdates = 150;
   const limitedArticles = mergedArticles.slice(0, maxUpdates);
   const blob = await put(
     "changelog/vercel-changelog.json",

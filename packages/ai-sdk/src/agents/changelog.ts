@@ -1,6 +1,7 @@
 import { generateText } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { getVercelChangelogFromBlob } from "../rags/changelog";
+
 type RefinedArticle = {
   title: string;
   content: string;
@@ -24,7 +25,7 @@ async function getRefinedArticles() {
   return articlesRag;
 }
 
-async function askChangelogAI(prompt: string) {
+async function askChangelogAI(prompt: string, model: string = "o4-mini") {
   const changelogInstructions = `You are an agent that answers questions about Vercel's changelog articles .
   Here are the articles you can refer to as a JSON array:
   \`\`\`json
@@ -35,9 +36,11 @@ async function askChangelogAI(prompt: string) {
   Include the release date of the article.`;
   // First step: Generate marketing copy
   const { text } = await generateText({
-    model: openai("o4-mini"),
+    model: openai(model),
     system: changelogInstructions,
     prompt: prompt,
   });
   return text;
 }
+
+export { askChangelogAI, getRefinedArticles };
