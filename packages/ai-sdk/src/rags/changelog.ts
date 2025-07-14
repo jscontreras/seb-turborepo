@@ -48,7 +48,10 @@ async function getVercelChangelog(size: number = 10) {
     if (!firstArticleNode) {
       throw new Error("No latest article node found");
     }
-    const firstArticleLink = await firstArticleNode.$eval("a", (node) => node.href);
+    const firstArticleLink = await firstArticleNode.$eval(
+      "a",
+      (node) => node.href,
+    );
     const isFirstArticleInBlob = currentArticles.some(
       (currentArticle) => currentArticle.link === firstArticleLink,
     );

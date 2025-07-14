@@ -146,7 +146,6 @@ export async function POST(request: Request) {
 These changes should fix the issue with image generation not fetching the chat API correctly. Here's a summary of the modifications:
 
 1. In `page.tsx`:
-
    - Updated the import for `useChat` to use `ai/react` instead of `@ai-sdk/react`.
    - Modified the rendering logic to handle the `function_call` property of the assistant's message, which contains the generated image data.
    - Added error handling and improved the user experience by clearing the input after submission.

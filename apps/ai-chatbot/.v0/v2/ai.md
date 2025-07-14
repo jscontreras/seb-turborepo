@@ -155,7 +155,6 @@ export default function ImageGenerator() {
 In these updates, I've made the following changes:
 
 1. In the API route (`app/api/chat/route.ts`):
-
    - Imported necessary functions from the Vercel AI SDK.
    - Set up the OpenAI configuration using the provided `OPENAI_API_KEY`.
    - Updated the POST function to use the Vercel AI SDK for streaming responses.

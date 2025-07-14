@@ -12,7 +12,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 export default function Page() {
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({
-      api: "/api/chat",
+      api: "/api/changelog",
     }),
   });
   const [input, setInput] = useState("");
@@ -82,8 +82,10 @@ export default function Page() {
     setAttachments([]);
   };
   return (
-    <div className="max-w-4xl p-4 mx-auto">
-      <h1 className="mb-4 text-2xl font-bold">{"AI Generator (with tools)"}</h1>
+    <div className="max-w-4xl p-4 mx-auto changelog-bot">
+      <h1 className="mb-4 text-2xl font-bold">
+        {"AI Bot (Vercel Changelog RAG)"}
+      </h1>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -99,7 +101,7 @@ export default function Page() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={status !== "ready"}
-            placeholder="Try saying 'echo hello world' or 'modify this image'..."
+            placeholder="Try saying 'latest performance improvements launched by Vercel'..."
             className="flex-1 w-full p-2 border-2 border-gray-300 rounded-md"
             type="text"
           />
