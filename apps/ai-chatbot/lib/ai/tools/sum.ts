@@ -9,7 +9,7 @@ async function toolExec({ a, b }: { a: number; b: number }): Promise<number> {
 // Define the tool config
 export const sumTool: CustomTool = {
   description: "Add two numbers together",
-  parameters: z.object({
+  inputSchema: z.object({
     a: z.number().describe("The first number to add"),
     b: z.number().describe("The second number to add"),
   }),

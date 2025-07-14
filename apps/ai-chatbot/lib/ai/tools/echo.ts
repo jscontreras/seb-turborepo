@@ -10,8 +10,12 @@ async function toolExec({ message }: { message: string }): Promise<string> {
 // Define the tool config
 export const echoTool: CustomTool = {
   description: "Echo message with server timestamp",
-  parameters: z.object({
-    message: z.string().describe("The message word or sentence to echo"),
+  inputSchema: z.object({
+    message: z
+      .string()
+      .describe(
+        "The message word or sentence to echo. The user needs to explicitly ask for this tool using the word 'echo'",
+      ),
   }),
   execute: toolExec,
 };

@@ -26,7 +26,7 @@ async function toolExec({ prompt }: { prompt: string }) {
 // Define the tool config
 export const createImageTool: CustomTool = {
   description: "Generate create an image based on prompt",
-  parameters: z.object({
+  inputSchema: z.object({
     prompt: z
       .string()
       .describe("The prompt or description of the image to generate"),

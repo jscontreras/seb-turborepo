@@ -99,7 +99,7 @@ async function toolExec(
 
 export const modifyImageTool: CustomTool = {
   description: "Modify an image based on a prompt text and base64 image",
-  parameters: z.object({
+  inputSchema: z.object({
     prompt: z
       .string()
       .describe("The prompt that describes the image modification"),

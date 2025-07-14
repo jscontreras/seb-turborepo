@@ -38,10 +38,7 @@ export default function RootLayout({
                 Tools
               </Link>
               <Link href="/image-chatbot" className="hover:underline">
-                Generate Image
-              </Link>
-              <Link href="/vision" className="hover:underline">
-                Analyze Image
+                Changelog
               </Link>
             </div>
           </div>
