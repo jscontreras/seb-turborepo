@@ -91,7 +91,7 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@22.16.3)(typescript@5.8.3)))
       zod:
-        specifier: ^3.25.49
+        specifier: ^3.25.76
         version: 3.25.76
     devDependencies:
       '@repo/eslint-config':
@@ -448,7 +448,7 @@ importers:
         specifier: ^7.2.0
         version: 7.2.0
       zod:
-        specifier: ^3.25.49
+        specifier: ^3.25.76
         version: 3.25.76
     devDependencies:
       '@repo/typescript-config':
