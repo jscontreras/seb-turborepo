@@ -27,6 +27,10 @@
       "types": "./src/agents/changelog.d.ts",
       "default": "./dist/agents/changelog.js"
     },
+    "./agents/rangeDetector": {
+      "types": "./src/agents/rangeDetector.d.ts",
+      "default": "./dist/agents/rangeDetector.js"
+    },
     "./rags/changelog": {
       "types": "./src/rags/changelog.d.ts",
       "default": "./dist/rags/changelog.js"

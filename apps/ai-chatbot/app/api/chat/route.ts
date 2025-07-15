@@ -19,7 +19,8 @@ export async function POST(req: Request) {
   };
 
   const result = streamText({
-    model: openai("gpt-4o-mini"),
+    model: openai("gpt-4.1-nano"),
+    maxOutputTokens: 32000,
     messages: convertToModelMessages(messages),
     tools: providedTools as Record<string, Tool>,
   });

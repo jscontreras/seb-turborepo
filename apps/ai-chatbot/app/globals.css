@@ -34,6 +34,7 @@ body {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
+
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -66,6 +67,7 @@ body {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -76,37 +78,56 @@ body {
     text-decoration: underline;
     color: #150c79;
   }
-  h3 > a {
+
+  h3>a {
     text-decoration: underline;
     color: black;
   }
+
   code {
     background-color: #f0f0f0;
     padding: 2px 4px;
   }
+
   h3 {
     font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
   }
+
   h4 {
     font-size: 1rem;
     font-weight: 500;
   }
-  p > strong {
+
+  p>strong {
     padding: 6px 4px;
     color: hsl(269, 72%, 28%);
   }
+
   p {
     padding-bottom: 10px;
   }
-  ul, ol {
+
+  ul,
+  ol {
     list-style-type: disc;
     padding-left: 20px;
     padding-bottom: 10px;
     margin-top: 10px;
   }
+
   li {
     margin-bottom: 10px;
+  }
+
+  pre {
+    background: #f0f0f0;
+    padding: 20px;
+    overflow-x: scroll;
+  }
+
+  img {
+    display: none;
   }
 }

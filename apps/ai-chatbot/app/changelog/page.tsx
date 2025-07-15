@@ -209,9 +209,9 @@ export default function Page() {
               switch (part.type) {
                 case "text":
                   return (
-                    <span key={index} className={`block`}>
+                    <div key={index} className={`block`}>
                       <ReactMarkdown>{part.text}</ReactMarkdown>
-                    </span>
+                    </div>
                   );
                 case "tool-echo":
                   return (
