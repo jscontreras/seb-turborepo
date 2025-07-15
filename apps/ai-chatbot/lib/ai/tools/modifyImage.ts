@@ -69,7 +69,7 @@ async function toolExec(
       prompt,
       n: 1,
       size: "1024x1024",
-      quality: "high",
+      quality: "low",
     });
     if (responseAi.data && responseAi.data.length > 0) {
       const base64Image = responseAi.data[0].b64_json;

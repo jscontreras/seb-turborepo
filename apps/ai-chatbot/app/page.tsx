@@ -221,10 +221,10 @@ export default function Page() {
                     </span>
                   );
                 case "tool-createImage":
-                  console.log(part.state, message);
+                  console.log(part.state, message, 'tool-createImage');
                   return (
                     <span key={index}>
-                      <span style={{ color: "red" }}>(Generating Imagee)</span>
+                      <span style={{ color: "red" }}>(Generating Image)</span>
                       <img
                         src={part.output + "" || "/placeholder.svg"}
                         alt="Generated content"
@@ -235,17 +235,19 @@ export default function Page() {
                     </span>
                   );
                 case "tool-modifyImage":
-                  console.log(part.state, message);
+                  console.log(part.state, message, 'tool-modifyImage');
                   return (
                     <span key={index}>
-                      <span style={{ color: "red" }}>(Modifying Image)</span>
-                      <img
-                        src={part.output + "" || "/placeholder.svg"}
-                        alt="Generated content"
-                        className="mt-2 rounded"
-                        width={500}
-                        height={500}
-                      />
+                      {part.output ?
+                        <>
+                          <span style={{ color: "red" }}>(Modifying Image)</span>
+                          <img
+                            src={part.output + "" || "/placeholder.svg"}
+                            alt="Generated content"
+                            className="mt-2 rounded"
+                            width={500}
+                            height={500}
+                          /></> : <span style={{ color: "red" }}>(....)</span>}
                     </span>
                   );
                 default:
