@@ -2,6 +2,7 @@ import { put } from "@vercel/blob";
 import TurndownService from "turndown";
 import Browserbase from "@browserbasehq/sdk";
 import { chromium } from "playwright-core";
+import { ElementHandleForTag } from "playwright-core/types/structs";
 
 type Article = {
   title: string;
@@ -17,6 +18,22 @@ export type { Article };
 const bb = new Browserbase({
   apiKey: process.env.BROWSERBASE_API_KEY || "",
 });
+
+async function isArticleInBlob(
+  firstArticleNode: ElementHandleForTag<"article"> | undefined,
+  currentArticles: any[],
+) {
+  if (!firstArticleNode) {
+    return true;
+  }
+  const firstArticleLink = await firstArticleNode.$eval(
+    "a",
+    (node) => node.href,
+  );
+  return currentArticles.some(
+    (currentArticle) => currentArticle.link === firstArticleLink,
+  );
+}
 
 async function getVercelChangelog(size: number = 10) {
   // Create a new session
@@ -43,26 +60,17 @@ async function getVercelChangelog(size: number = 10) {
   await page.waitForTimeout(4000);
   // get all the article nodes
   let articleNodes = await page.$$("article");
-  while (articleNodes.length < size) {
-    const firstArticleNode = articleNodes[0];
-    if (!firstArticleNode) {
-      throw new Error("No latest article node found");
-    }
-    const firstArticleLink = await firstArticleNode.$eval(
-      "a",
-      (node) => node.href,
-    );
-    const isFirstArticleInBlob = currentArticles.some(
-      (currentArticle) => currentArticle.link === firstArticleLink,
-    );
-    if (isFirstArticleInBlob) {
-      console.log(
-        "Latest article is already stored in the blob, stopping the loop",
-      );
-      break; // Exit the loop if the latest article's link is already stored
-    }
+  let firstArticleNode = articleNodes[0];
+  let pointer = 0;
+  let isFirstArticleInBlob = await isArticleInBlob(
+    firstArticleNode,
+    currentArticles,
+  );
+  // if the first article is in the blob, we don't need to load more articles
+  while (articleNodes.length < size && !isFirstArticleInBlob) {
     const showMoreButton = await page.$('button:has-text("Show More")');
     if (showMoreButton) {
+      pointer = articleNodes.length;
       await showMoreButton.click();
       await page.waitForTimeout(4000); // wait for more articles to load
       articleNodes = await page.$$("article");
@@ -70,6 +78,10 @@ async function getVercelChangelog(size: number = 10) {
       break; // Exit the loop if no "Show More" button is found
     }
     console.log("Total article nodes on the page:", articleNodes.length);
+    isFirstArticleInBlob = await isArticleInBlob(
+      articleNodes[pointer],
+      currentArticles,
+    );
   }
   const articles: {
     title: string;
@@ -146,7 +158,6 @@ async function updateVercelChangelog(size: number = 10) {
       newArticles.push(newArticle);
     }
   }
-
   // sort the merged articles by timestamp from newest to oldest
   mergedArticles.sort((a, b) => b.timestamp - a.timestamp);
   const maxUpdates = 150;
