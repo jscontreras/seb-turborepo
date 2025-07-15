@@ -1,0 +1,16 @@
+{
+  "versionGroups": [
+    {
+      "label": "Ignore PostCSS and Tailwind",
+      "isIgnored": true,
+      "dependencies": [
+        "postcss",
+        "tailwindcss",
+        "eslint",
+        "playwright",
+        "tailwind*",
+        "vite"
+      ]
+    }
+  ]
+}

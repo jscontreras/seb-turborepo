@@ -15,23 +15,23 @@
     "@dmitryrechkin/json-schema-to-zod": "^1.0.1",
     "@repo/ai-sdk": "workspace:*",
     "@repo/otel-config": "workspace:*",
-    "ai": "5.0.0-beta.15",
+    "ai": "5.0.0-beta.18",
     "fs": "0.0.1-security",
     "next": "15.4.0-canary.129",
     "path": "^0.12.7",
     "playwright-core": "^1.54.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "zod": "^3.25.49"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:^",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "^20",
+    "@types/node": "^22.15.29",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "*"
   }
 }

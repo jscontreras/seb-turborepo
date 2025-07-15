@@ -19,7 +19,7 @@
     "@vercel/toolbar": "^0.1.38",
     "svelte": "^5.17.3",
     "svelte-check": "^4.0.0",
-    "typescript": "^5.8.3",
+    "typescript": "*",
     "vite": "^6.3.0"
   },
   "type": "module",
