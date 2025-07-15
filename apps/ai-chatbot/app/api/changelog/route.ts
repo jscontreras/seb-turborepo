@@ -1,22 +1,6 @@
 import { convertToModelMessages, streamText } from "ai";
 import { openai } from "@ai-sdk/openai";
-
-type RefinedArticle = {
-  title: string;
-  content: string;
-  link: string;
-  launchDate: string;
-};
-type Article = {
-  title: string;
-  htmlContent: string;
-  markdownContent: string;
-  link: string;
-  launchDate: string;
-  timestamp: number;
-};
-
-let articlesRag: RefinedArticle[] = [];
+import { getRefinedArticles } from "@repo/ai-sdk/agents/changelog";
 
 const changelogInstructions = `You are an agent that answers questions about Vercel's changelog articles or latest launched features from Vercel.
   Here are the articles you can refer to as a JSON array:
@@ -42,27 +26,4 @@ export async function POST(req: Request) {
   });
 
   return result.toUIMessageStreamResponse();
-}
-
-async function getVercelChangelogFromBlob(): Promise<Article[]> {
-  const response = await fetch(
-    "https://xefbf5ydcrobj1vo.public.blob.vercel-storage.com/changelog/vercel-changelog.json",
-  );
-  const articles = await response.json();
-  return articles;
-}
-
-async function getRefinedArticles() {
-  if (articlesRag.length === 0) {
-    const articles = await getVercelChangelogFromBlob();
-    articlesRag = articles.map((article) => {
-      return {
-        title: article.title,
-        link: article.link,
-        launchDate: article.launchDate,
-        content: article.markdownContent,
-      };
-    });
-  }
-  return articlesRag;
 }
