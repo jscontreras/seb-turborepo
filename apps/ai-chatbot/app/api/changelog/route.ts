@@ -31,7 +31,7 @@ function createChangelogInstructions(
 
 // Allow streaming responses up to 5 minutes
 export const maxDuration = 300;
-const maxNumberOfArticles = 150;
+const maxNumberOfArticles = 100;
 let activateWebSearch = false;
 
 export async function POST(req: Request) {
