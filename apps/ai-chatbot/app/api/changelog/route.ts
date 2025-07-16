@@ -33,7 +33,7 @@ const maxNumberOfArticles = 150;
 export async function POST(req: Request) {
   if (articles.length === 0) {
     articles = await getRefinedArticles();
-    articles = articles.slice(0, maxNumberOfArticles);
+    articles = articles;
   }
   let promptArticles = [...articles];
   const { messages, trigger } = await req.json();
@@ -88,6 +88,11 @@ export async function POST(req: Request) {
     articles.length,
     " articles",
   );
+
+  // If the question is not a date range, we can use all the articles but with a limit of 150 articles for performance reasons
+  if (promptArticles.length === articles.length) {
+    promptArticles = promptArticles.slice(0, maxNumberOfArticles);
+  }
 
   const result = streamText({
     model: openai("gpt-4.1-mini"),
