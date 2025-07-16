@@ -87,6 +87,10 @@ export async function POST(req: Request) {
   }
   // If the number of articles is less than 20, we can activate the web search
   activateWebSearch = activateWebSearch && promptArticles.length < 20;
+
+  if (lastUserMessage && lastUserMessage.includes("force-web-search")) {
+    activateWebSearch = true;
+  }
   console.log(
     "ArticlesOptimization",
     promptArticles.length,
