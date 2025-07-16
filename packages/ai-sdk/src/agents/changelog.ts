@@ -34,8 +34,12 @@ async function askChangelogAI(prompt: string, model: string = "openai/gpt-4o") {
   ${JSON.stringify(await getRefinedArticles())}
   \`\`\`
   respond in html format only refering to the articles you can find in the JSON array
-  including the link to the article.
-  Include the release date of the article.`;
+  WHen presenting the articles please include:
+  - the title of the article
+  - the link using the title of the article.
+  - the release date of the article.
+  - a paragraph ofthe content of the article unless the user ask for more details or a specific feature.
+  `;
   // First step: Generate marketing copy
   const { text } = await generateText({
     model: "openai/gpt-4.1-nano",
