@@ -2,12 +2,23 @@
 
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, FileUIPart } from "ai";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import { ImageIcon, Loader2, Paperclip, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import Prism from "prismjs";
+import "prismjs/themes/prism-okaidia.css";
+import "prismjs/components/prism-typescript";
+
+export function PrismLoader() {
+  useEffect(() => {
+    Prism.highlightAll();
+  }, []);
+
+  return <div className="hidden"></div>;
+}
 
 export default function Page() {
   const { messages, sendMessage, status } = useChat({
@@ -257,6 +268,7 @@ export default function Page() {
           </div>
         ))}
       </div>
+      <PrismLoader />
     </div>
   );
 }
