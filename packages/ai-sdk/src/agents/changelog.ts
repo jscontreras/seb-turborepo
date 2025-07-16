@@ -38,7 +38,7 @@ async function askChangelogAI(prompt: string, model: string = "openai/gpt-4o") {
   - the title of the article
   - the link using the title of the article.
   - the release date of the article.
-  - a paragraph ofthe content of the article unless the user ask for more details or a specific feature.
+  - a paragraph summarizing the content of the article unless the user ask for more details or a specific feature with sentences like "Give me more details about the feature" or "Give me a detailed description of the feature".
   `;
   // First step: Generate marketing copy
   const { text } = await generateText({
