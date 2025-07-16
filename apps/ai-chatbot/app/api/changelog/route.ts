@@ -4,6 +4,10 @@ import {
   RefinedArticle,
 } from "@repo/ai-sdk/agents/changelog";
 import { openai } from "@ai-sdk/openai";
+import {
+  detectRange,
+  rewriteRelativeDates,
+} from "@repo/ai-sdk/agents/rangeDetector";
 
 let articles: RefinedArticle[] = [];
 
@@ -24,18 +28,71 @@ function createChangelogInstructions(articles: RefinedArticle[]) {
 
 // Allow streaming responses up to 5 minutes
 export const maxDuration = 300;
+const maxNumberOfArticles = 150;
 
 export async function POST(req: Request) {
   if (articles.length === 0) {
     articles = await getRefinedArticles();
-    articles = articles;
+    articles = articles.slice(0, maxNumberOfArticles);
   }
-  const { messages } = await req.json();
-  console.log("articles.length>>>", articles.length);
+  let promptArticles = [...articles];
+  const { messages, trigger } = await req.json();
+  const message = messages[messages.length - 1];
+  let lastUserMessage = null;
+  if (trigger === "submit-user-message") {
+    lastUserMessage = message.parts
+      .filter((part: { type: string }) => part.type === "text")
+      .map((part: { text: any }) => part.text)
+      .join("");
+  }
+  if (lastUserMessage) {
+    let rangedPrompt = await rewriteRelativeDates(lastUserMessage);
+    // If dates are found
+    if (rangedPrompt !== lastUserMessage) {
+      const rangeObjectResponse = await detectRange(rangedPrompt);
+      const rangeObject = rangeObjectResponse.notifications[0];
+      if (rangeObject.isRangeInPrompt) {
+        let startDateTimestamp = null;
+        let endDateTimestamp = null;
+        if (rangeObject.startDate) {
+          startDateTimestamp = new Date(rangeObject.startDate).getTime();
+        }
+        if (rangeObject.endDate) {
+          endDateTimestamp = new Date(rangeObject.endDate).getTime();
+        }
+
+        if (startDateTimestamp !== null || endDateTimestamp !== null) {
+          promptArticles = promptArticles.filter((article) => {
+            const articleTimestamp = article.launchDateTimestamp;
+            if (startDateTimestamp !== null && endDateTimestamp !== null) {
+              return (
+                articleTimestamp >= startDateTimestamp &&
+                articleTimestamp <= endDateTimestamp
+              );
+            } else if (startDateTimestamp !== null) {
+              return articleTimestamp >= startDateTimestamp;
+            } else if (endDateTimestamp !== null) {
+              return articleTimestamp <= endDateTimestamp;
+            }
+            return true;
+          });
+        }
+      }
+    }
+  }
+
+  console.log(
+    "ArticlesOptimization",
+    promptArticles.length,
+    " of ",
+    articles.length,
+    " articles",
+  );
+
   const result = streamText({
     model: openai("gpt-4.1-mini"),
     maxOutputTokens: 32000,
-    system: createChangelogInstructions(articles),
+    system: createChangelogInstructions(promptArticles),
     messages: convertToModelMessages(messages),
     tools: {
       web_search_preview: openai.tools.webSearchPreview({
@@ -49,5 +106,6 @@ export async function POST(req: Request) {
       }),
     },
   });
+  result.consumeStream();
   return result.toUIMessageStreamResponse();
 }

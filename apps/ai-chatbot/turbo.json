@@ -19,6 +19,7 @@
       ]
     },
     "dev": {
+      "dependsOn": ["^build"],
       "env": [
         "REDIS_URL",
         "BLOB_READ_WRITE_TOKEN",
