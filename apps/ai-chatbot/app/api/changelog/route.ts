@@ -11,10 +11,13 @@ import {
 
 let articles: RefinedArticle[] = [];
 
-function createChangelogInstructions(articles: RefinedArticle[]) {
+function createChangelogInstructions(
+  articles: RefinedArticle[],
+  suggestWebSearch = false,
+) {
   return `Your name is Vercel  Changelog Agent. You are an agent that answers questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions
   As a reference, today is ${new Date().toISOString().split("T")[0]}.
-  Give priority to the article's JSON but if you feel like you need to search the web for more information, but make sure you include "Vercel Features" in the search query, you can use the web_search_preview tool.
+  {${suggestWebSearch ? 'Give priority to the article\'s JSON but if you feel like you need to search the web for more information, make sure you include "Vercel Features" in the search query, you can use the web_search_preview tool.' : "Base your response on the articles JSON information"}
   Here are the list of articles you can refer to as a JSON array:
   \`\`\`json
   ${JSON.stringify(articles)}
@@ -29,6 +32,7 @@ function createChangelogInstructions(articles: RefinedArticle[]) {
 // Allow streaming responses up to 5 minutes
 export const maxDuration = 300;
 const maxNumberOfArticles = 150;
+let activateWebSearch = false;
 
 export async function POST(req: Request) {
   if (articles.length === 0) {
@@ -52,6 +56,7 @@ export async function POST(req: Request) {
       const rangeObjectResponse = await detectRange(rangedPrompt);
       const rangeObject = rangeObjectResponse.notifications[0];
       if (rangeObject.isRangeInPrompt) {
+        activateWebSearch = true;
         let startDateTimestamp = null;
         let endDateTimestamp = null;
         if (rangeObject.startDate) {
@@ -87,6 +92,8 @@ export async function POST(req: Request) {
     " of ",
     articles.length,
     " articles",
+    " activateWebSearch",
+    activateWebSearch,
   );
 
   // If the question is not a date range, we can use all the articles but with a limit of 150 articles for performance reasons
@@ -97,19 +104,23 @@ export async function POST(req: Request) {
   const result = streamText({
     model: openai("gpt-4.1-mini"),
     maxOutputTokens: 32000,
-    system: createChangelogInstructions(promptArticles),
+    system: createChangelogInstructions(promptArticles, activateWebSearch),
     messages: convertToModelMessages(messages),
-    tools: {
-      web_search_preview: openai.tools.webSearchPreview({
-        // optional configuration:
-        searchContextSize: "high",
-        userLocation: {
-          type: "approximate",
-          city: "San Francisco",
-          region: "California",
-        },
-      }),
-    },
+    ...(activateWebSearch
+      ? {
+          tools: {
+            web_search_preview: openai.tools.webSearchPreview({
+              // optional configuration:
+              searchContextSize: "high",
+              userLocation: {
+                type: "approximate",
+                city: "San Francisco",
+                region: "California",
+              },
+            }),
+          },
+        }
+      : {}),
   });
   result.consumeStream();
   return result.toUIMessageStreamResponse();
