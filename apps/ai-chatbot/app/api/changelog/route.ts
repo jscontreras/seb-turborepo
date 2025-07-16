@@ -8,8 +8,9 @@ import { openai } from "@ai-sdk/openai";
 let articles: RefinedArticle[] = [];
 
 function createChangelogInstructions(articles: RefinedArticle[]) {
-  return `You are an agent that answers questions about Vercel's changelog articles or latest launched features from Vercel.
+  return `Your name is Vercel  Changelog Agent. You are an agent that answers questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions
   As a reference, today is ${new Date().toISOString().split("T")[0]}.
+  Give priority to the article's JSON but if you feel like you need to search the web for more information, but make sure you include "Vercel Features" in the search query, you can use the web_search_preview tool.
   Here are the list of articles you can refer to as a JSON array:
   \`\`\`json
   ${JSON.stringify(articles)}
@@ -32,10 +33,21 @@ export async function POST(req: Request) {
   const { messages } = await req.json();
   console.log("articles.length>>>", articles.length);
   const result = streamText({
-    model: openai("gpt-4.1-nano"),
+    model: openai("gpt-4.1-mini"),
     maxOutputTokens: 32000,
     system: createChangelogInstructions(articles),
     messages: convertToModelMessages(messages),
+    tools: {
+      web_search_preview: openai.tools.webSearchPreview({
+        // optional configuration:
+        searchContextSize: "high",
+        userLocation: {
+          type: "approximate",
+          city: "San Francisco",
+          region: "California",
+        },
+      }),
+    },
   });
   return result.toUIMessageStreamResponse();
 }
