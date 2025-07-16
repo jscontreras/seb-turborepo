@@ -13,14 +13,6 @@
       "permanent": false
     }
   ],
-  "functions": {
-    "app/api/**/*": {
-      "memory": 768
-    },
-    "app/**.*": {
-      "memory": 512
-    }
-  },
   "crons": [
     {
       "path": "/api/cron/changelog-rag-update",
