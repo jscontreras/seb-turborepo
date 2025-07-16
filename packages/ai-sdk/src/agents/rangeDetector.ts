@@ -65,6 +65,7 @@ Your job:
 - Identify if the prompt contains any explicit or implicit date range, interval, or period, including both relative (e.g., "last 2 weeks", "in the last 2 weeks") and explicit absolute dates (e.g., "since February 20th", "from January 1, 2024", "after 2023-05-01").
 - If the prompt uses words like "since," "from," "after," "starting," or phrases like "in the last," followed by a date or period, extract that as the start date and use the current date as the end date.
 - If a single explicit date is provided with a range-indicating word, set the startDate accordingly.
+- If the prompt use terms like latest, the ultimate, the fresh (refering to latest features) it means that isRangeInPrompt must be true and and the startDate must be the date from the past 2 weeks and the endDate must be the current date.
 - If a date doesn't specify the year, use the current year: ${new Date().getFullYear()}.
 - Always use the provided currentDate: ${today}.
 If no date is found, return the original prompt; otherwise, return the rewritten prompt.`,
