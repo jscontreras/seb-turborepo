@@ -35,7 +35,7 @@ async function isArticleInBlob(
   );
 }
 
-async function getVercelChangelog(size: number = 10) {
+async function getVercelChangelogFromWebsite(size: number = 10) {
   // Create a new session
   const session = await bb.sessions.create({
     projectId: process.env.BROWSERBASE_PROJECT_ID || "",
@@ -140,7 +140,7 @@ async function getVercelChangelog(size: number = 10) {
 }
 
 async function updateVercelChangelog(size: number = 10) {
-  const articles = await getVercelChangelog(size);
+  const articles = await getVercelChangelogFromWebsite(size);
   if (articles.length === 0) {
     return { status: "OK", message: "nothing to update" };
   }
