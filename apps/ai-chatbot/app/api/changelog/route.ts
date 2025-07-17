@@ -32,7 +32,7 @@ function createChangelogInstructions(
 
 // Allow streaming responses up to 5 minutes
 export const maxDuration = 300;
-const maxNumberOfArticles = 100;
+const maxNumberOfArticles = 300;
 let activateWebSearch = false;
 
 export async function POST(req: Request) {
@@ -93,6 +93,11 @@ export async function POST(req: Request) {
   if (lastUserMessage && lastUserMessage.includes("force-web-search")) {
     activateWebSearch = true;
   }
+
+  if (lastUserMessage && lastUserMessage.includes("full-list")) {
+    promptArticles = articles;
+  }
+
   console.log(
     "ArticlesOptimization",
     promptArticles.length,
