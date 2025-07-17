@@ -3,11 +3,12 @@ import {
   getRefinedArticles,
   RefinedArticle,
 } from "@repo/ai-sdk/agents/changelog";
-import { openai } from "@ai-sdk/openai";
 import {
   detectRange,
   rewriteRelativeDates,
 } from "@repo/ai-sdk/agents/rangeDetector";
+import { gateway } from "@ai-sdk/gateway";
+import { openai } from "@ai-sdk/openai";
 
 let articles: RefinedArticle[] = [];
 
@@ -54,6 +55,7 @@ export async function POST(req: Request) {
     // If dates are found
     if (rangedPrompt !== lastUserMessage) {
       const rangeObjectResponse = await detectRange(rangedPrompt);
+      console.log("rangeObjectResponse", rangeObjectResponse);
       const rangeObject = rangeObjectResponse.notifications[0];
       if (rangeObject.isRangeInPrompt) {
         activateWebSearch = true;
@@ -107,7 +109,7 @@ export async function POST(req: Request) {
   }
 
   const result = streamText({
-    model: openai("gpt-4.1-mini"),
+    model: gateway("gpt-4.1-mini"),
     maxOutputTokens: 32000,
     system: createChangelogInstructions(promptArticles, activateWebSearch),
     messages: convertToModelMessages(messages),

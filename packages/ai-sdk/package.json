@@ -7,6 +7,7 @@
     "build": "tsc"
   },
   "dependencies": {
+    "@ai-sdk/gateway": "1.0.0-beta.8",
     "@ai-sdk/openai": "2.0.0-beta.7",
     "@browserbasehq/sdk": "^2.6.0",
     "@types/turndown": "^5.0.5",
