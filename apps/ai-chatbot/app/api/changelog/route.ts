@@ -1,7 +1,9 @@
-import { convertToModelMessages, streamText } from "ai";
+import { convertToModelMessages, generateText, streamText, tool } from "ai";
 import {
   getRefinedArticles,
   RefinedArticle,
+  determineSources,
+  createExtraReferencesTool,
 } from "@repo/ai-sdk/agents/changelog";
 import {
   detectRange,
@@ -9,25 +11,77 @@ import {
 } from "@repo/ai-sdk/agents/rangeDetector";
 import { gateway } from "@ai-sdk/gateway";
 import { openai } from "@ai-sdk/openai";
+import z from "zod";
 
 let articles: RefinedArticle[] = [];
 
 function createChangelogInstructions(
   articles: RefinedArticle[],
-  suggestWebSearch = false,
+  sources: string[],
 ) {
-  return `Your name is Vercel  Changelog Agent. You are an agent that answers questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions about Vercel's changelog articles or latest launched features from Vercel.  You are a helpful assistant that can answer questions
-  As a reference, today is ${new Date().toISOString().split("T")[0]}.
-  {${suggestWebSearch ? 'Give priority to the article\'s JSON but if you feel like you need to search the web for more information, make sure you include "Vercel Features" in the search query, you can use the web_search_preview tool.' : "Base your response on the articles JSON information"}
-  Here are the list of articles you can refer to as a JSON array:
-  \`\`\`json
-  ${JSON.stringify(articles)}
-  \`\`\`
-  respond in markdown format using the articles data you can find in the JSON array following the instructions:
-  Include the link to the article in the response with the title of the article.
-  Include the release date of the article.
-  Don't include any image in the response.
-  Include the entire markdown content of the article`;
+  return `
+Your name is Vercel Changelog Agent.
+You answer questions about Vercel's changelog articles and recent feature launches. Always follow STEP 1 and STEP 2 in order, streaming STEP 1 first and STEP 2 second.
+
+# INPUTS:
+- Today's date: ${new Date().toISOString().split("T")[0]}
+- List of articles (JSON):
+\`\`\`json
+${JSON.stringify(articles)}
+\`\`\`
+- Web search sources (JSON):
+\`\`\`json
+${JSON.stringify(sources)}
+\`\`\`
+${
+  sources.length > 0
+    ? `
+# RESPONSE INSTRUCTIONS:
+Respond in two clearly separated streamed sections:
+
+---
+
+## CHANGELOG EXTRACT
+- Answer the user question using only the provided articles JSON array.
+- Format your answer in markdown.
+- For each relevant article:
+  - Use the title as a clickable hyperlink to the article.
+  - Write at most 2 sentences describing it.
+  - Include the article's release date.
+  - Do NOT include any images.
+
+---
+
+## EXTRA REFERENCES
+- After CHANGELOG EXTRACT section is complete, stream only this section.
+- Use the getExtraReferences tool to generate references.
+- At the end of the response, include a **References** section:
+  - For each referenced article, list the title as a clickable link.
+  - Never omit, merge, or remove the References section.
+  - Only include references not included in the changelog extract.
+
+---
+
+Always stream CHANGELOG EXTRACT fully first, then EXTRA REFERENCES. Never blend the two sections.
+`
+    : `
+# RESPONSE INSTRUCTIONS:
+Respond in a single section:
+
+---
+
+## CHANGELOG EXTRACT
+- Answer the user question using only the provided articles JSON array.
+- Format your answer in markdown.
+- For each relevant article:
+  - Use the title as a clickable hyperlink to the article.
+  - Write at most 2 sentences describing it.
+  - Include the article's release date.
+  - Do NOT include any images.
+
+---
+`
+}  `;
 }
 
 // Allow streaming responses up to 5 minutes
@@ -69,20 +123,24 @@ export async function POST(req: Request) {
         }
 
         if (startDateTimestamp !== null || endDateTimestamp !== null) {
-          promptArticles = promptArticles.filter((article) => {
-            const articleTimestamp = article.launchDateTimestamp;
-            if (startDateTimestamp !== null && endDateTimestamp !== null) {
-              return (
-                articleTimestamp >= startDateTimestamp &&
-                articleTimestamp <= endDateTimestamp
-              );
-            } else if (startDateTimestamp !== null) {
-              return articleTimestamp >= startDateTimestamp;
-            } else if (endDateTimestamp !== null) {
-              return articleTimestamp <= endDateTimestamp;
+          if (startDateTimestamp !== null && endDateTimestamp !== null) {
+            if (rangeObject.startDate !== rangeObject.endDate) {
+              promptArticles = promptArticles.filter((article) => {
+                const articleTimestamp = article.launchDateTimestamp;
+                if (startDateTimestamp !== null && endDateTimestamp !== null) {
+                  return (
+                    articleTimestamp >= startDateTimestamp &&
+                    articleTimestamp <= endDateTimestamp
+                  );
+                } else if (startDateTimestamp !== null) {
+                  return articleTimestamp >= startDateTimestamp;
+                } else if (endDateTimestamp !== null) {
+                  return articleTimestamp <= endDateTimestamp;
+                }
+                return true;
+              });
             }
-            return true;
-          });
+          }
         }
       }
     }
@@ -112,28 +170,18 @@ export async function POST(req: Request) {
   if (promptArticles.length === articles.length) {
     promptArticles = promptArticles.slice(0, maxNumberOfArticles);
   }
+  // Determine the sources to search the web for
+  const sources = await determineSources(lastUserMessage);
+  console.log(">>>sources", sources);
 
   const result = streamText({
     model: gateway("gpt-4.1-mini"),
     maxOutputTokens: 32000,
-    system: createChangelogInstructions(promptArticles, activateWebSearch),
+    system: createChangelogInstructions(promptArticles, sources),
     messages: convertToModelMessages(messages),
-    ...(activateWebSearch
-      ? {
-          tools: {
-            web_search_preview: openai.tools.webSearchPreview({
-              // optional configuration:
-              searchContextSize: "high",
-              userLocation: {
-                type: "approximate",
-                city: "San Francisco",
-                region: "California",
-              },
-            }),
-          },
-        }
-      : {}),
+    tools: {
+      ...createExtraReferencesTool(sources),
+    },
   });
-  result.consumeStream();
   return result.toUIMessageStreamResponse();
 }

@@ -208,65 +208,81 @@ export function ChatBot() {
         </Alert>
       )}
       <div className="space-y-4 flex flex-col-reverse">
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={`p-6 pb-6 pt-4 mt-6 border rounded  ${message.role === "user" ? "text-blue-900 ml-8" : "text-gray-800 mr-8 bg-blue-100"}`}
-          >
-            <p className="font-semibold mb-2">
-              {message.role === "user" ? "You:" : "Assistant:"}
-            </p>
-            {message.parts.map((part, index) => {
-              switch (part.type) {
-                case "text":
-                  return (
-                    <div key={index} className={`block`}>
-                      <ReactMarkdown>{part.text}</ReactMarkdown>
-                    </div>
-                  );
-                case "tool-echo":
-                  return (
-                    <span key={index}>
-                      <span style={{ color: "red" }}>(echoing)</span>{" "}
-                      <ReactMarkdown components={{ p: "span" }}>
-                        {part.output + ""}
+        {messages.map((message) => {
+          let extraReferences = "";
+          message.parts.forEach((part) => {
+            if (part.type === "tool-getExtraReferences" && part.output) {
+              extraReferences += part.output + "\n";
+            }
+          });
+          return (
+            <div
+              key={message.id}
+              className={`p-6 pb-6 pt-4 mt-6 border rounded  ${message.role === "user" ? "text-blue-900 ml-8" : "text-gray-800 mr-8 bg-blue-100"}`}
+            >
+              <p className="font-semibold mb-2">
+                {message.role === "user" ? "You:" : "Assistant:"}
+              </p>
+              {message.parts.map((part, index) => {
+                switch (part.type) {
+                  case "text":
+                    return (
+                      <div key={index} className={`block`}>
+                        <ReactMarkdown>{part.text}</ReactMarkdown>
+                      </div>
+                    );
+                  case "tool-echo":
+                    return (
+                      <span key={index}>
+                        <span style={{ color: "red" }}>(echoing)</span>{" "}
+                        <ReactMarkdown components={{ p: "span" }}>
+                          {part.output + ""}
+                        </ReactMarkdown>
+                      </span>
+                    );
+                  case "tool-createImage":
+                    console.log(part.state, message);
+                    return (
+                      <span key={index}>
+                        <span style={{ color: "red" }}>
+                          (Generating Imagee)
+                        </span>
+                        <img
+                          src={part.output + "" || "/placeholder.svg"}
+                          alt="Generated content"
+                          className="mt-2 rounded"
+                          width={500}
+                          height={500}
+                        />
+                      </span>
+                    );
+                  case "tool-modifyImage":
+                    console.log(part.state, message);
+                    return (
+                      <span key={index}>
+                        <span style={{ color: "red" }}>(Modifying Image)</span>
+                        <img
+                          src={part.output + "" || "/placeholder.svg"}
+                          alt="Generated content"
+                          className="mt-2 rounded"
+                          width={500}
+                          height={500}
+                        />
+                      </span>
+                    );
+                  case "tool-getExtraReferences":
+                    return (
+                      <ReactMarkdown key={index} components={{ p: "span" }}>
+                        {extraReferences + ""}
                       </ReactMarkdown>
-                    </span>
-                  );
-                case "tool-createImage":
-                  console.log(part.state, message);
-                  return (
-                    <span key={index}>
-                      <span style={{ color: "red" }}>(Generating Imagee)</span>
-                      <img
-                        src={part.output + "" || "/placeholder.svg"}
-                        alt="Generated content"
-                        className="mt-2 rounded"
-                        width={500}
-                        height={500}
-                      />
-                    </span>
-                  );
-                case "tool-modifyImage":
-                  console.log(part.state, message);
-                  return (
-                    <span key={index}>
-                      <span style={{ color: "red" }}>(Modifying Image)</span>
-                      <img
-                        src={part.output + "" || "/placeholder.svg"}
-                        alt="Generated content"
-                        className="mt-2 rounded"
-                        width={500}
-                        height={500}
-                      />
-                    </span>
-                  );
-                default:
-                  return null;
-              }
-            })}
-          </div>
-        ))}
+                    );
+                  default:
+                    return null;
+                }
+              })}
+            </div>
+          );
+        })}
       </div>
       <PrismLoader />
     </div>
