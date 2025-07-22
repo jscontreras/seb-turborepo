@@ -155,28 +155,28 @@ importers:
       '@vercel/functions':
         specifier: ^1.6.0
         version: 1.6.0
+      flags:
+        specifier: ^4.0.1
+        version: 4.0.1(@opentelemetry/api@1.9.0)(@sveltejs/kit@2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       js-cookie:
         specifier: ^3.0.5
         version: 3.0.5
     devDependencies:
       '@sveltejs/adapter-vercel':
         specifier: ^5.7.1
-        version: 5.7.2(@sveltejs/kit@2.23.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(rollup@4.45.0)
+        version: 5.7.2(@sveltejs/kit@2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(rollup@4.45.0)
       '@sveltejs/kit':
-        specifier: ^2.20.8
-        version: 2.23.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
+        specifier: ^2.25.1
+        version: 2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
       '@types/js-cookie':
         specifier: ^3.0.6
         version: 3.0.6
       '@types/node':
         specifier: ^22.15.29
         version: 22.16.3
-      '@vercel/flags':
-        specifier: 2.6.0
-        version: 2.6.0(@sveltejs/kit@2.23.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@vercel/toolbar':
         specifier: ^0.1.38
-        version: 0.1.38(@sveltejs/kit@2.23.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
+        version: 0.1.38(@sveltejs/kit@2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
       svelte:
         specifier: ^5.17.3
         version: 5.36.0
@@ -364,7 +364,7 @@ importers:
         version: 1.1.1
       '@vercel/microfrontends':
         specifier: ^1.4.2
-        version: 1.4.2(@sveltejs/kit@2.23.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(next@15.4.0-canary.129(@opentelemetry/api@1.9.0)(@playwright/test@1.54.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
+        version: 1.4.2(@sveltejs/kit@2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(next@15.4.0-canary.129(@opentelemetry/api@1.9.0)(@playwright/test@1.54.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
       ai:
         specifier: 5.0.0-beta.18
         version: 5.0.0-beta.18(zod@3.25.76)
@@ -694,6 +694,7 @@ packages:
 
   '@apollo/server-gateway-interface@1.1.1':
     resolution: {integrity: sha512-pGwCl/po6+rxRmDMFgozKQo2pbsSwE91TpsDBAOgf74CRDPXHHtM88wbwjab0wMMZh95QfR45GGyDIdhY24bkQ==}
+    deprecated: '@apollo/server-gateway-interface v1 is part of Apollo Server v4, which is deprecated and will transition to end-of-life on January 26, 2026. As long as you are already using a non-EOL version of Node.js, upgrading to v2 should take only a few minutes. See https://www.apollographql.com/docs/apollo-server/previous-versions for details.'
     peerDependencies:
       graphql: 14.x || 15.x || 16.x
 
@@ -882,6 +883,10 @@ packages:
 
   '@dmitryrechkin/json-schema-to-zod@1.0.1':
     resolution: {integrity: sha512-cG9gC4NMu/7JZqmRZy6uIb+l+kxek2GFQ0/qrhw7xeFK2l5B9yF9FVuujoqFPLRGDHNFYqtBWht7hY4KB0ngrA==}
+
+  '@edge-runtime/cookies@5.0.2':
+    resolution: {integrity: sha512-Sd8LcWpZk/SWEeKGE8LT6gMm5MGfX/wm+GPnh1eBEtCpya3vYqn37wYknwAHw92ONoyyREl1hJwxV/Qx2DWNOg==}
+    engines: {node: '>=16'}
 
   '@edge-runtime/format@2.2.1':
     resolution: {integrity: sha512-JQTRVuiusQLNNLe2W9tnzBlV/GvSVcozLl4XZHk5swnRZ/v6jp8TqR8P7sqmJsQqblDZ3EztcWmLDbhRje/+8g==}
@@ -1706,8 +1711,8 @@ packages:
     peerDependencies:
       '@sveltejs/kit': ^2.4.0
 
-  '@sveltejs/kit@2.23.0':
-    resolution: {integrity: sha512-jAgNHbzYiiQe3VFtVkAvX4r/9Py1dhRJSLz95viuGVNY+atqhoYTR4G1bvw1YAlxqh9LtXoJ1Onen+GpnXq69g==}
+  '@sveltejs/kit@2.25.1':
+    resolution: {integrity: sha512-8H+fxDEp7Xq6tLFdrGdS5fLu6ONDQQ9DgyjboXpChubuFdfH9QoFX09ypssBpyNkJNZFt9eW3yLmXIc9CesPCA==}
     engines: {node: '>=18.13'}
     hasBin: true
     peerDependencies:
@@ -1992,6 +1997,9 @@ packages:
   '@types/node@22.16.3':
     resolution: {integrity: sha512-sr4Xz74KOUeYadexo1r8imhRtlVXcs+j3XK3TcoiYk7B1t3YRVJgtaD3cwX73NYb71pmVuMLNRhJ9XKdoDB74g==}
 
+  '@types/node@22.16.5':
+    resolution: {integrity: sha512-bJFoMATwIGaxxx8VJPeM8TonI8t579oRvgAuT8zFugJsJZgzqv0Fu8Mhp68iecjzG7cnN3mO2dJQ5uUM2EFrgQ==}
+
   '@types/prismjs@1.26.5':
     resolution: {integrity: sha512-AUZTa7hQ2KY5L7AmtSiqxlhWxb4ina0yd8hNbl4TWuqnv/pFP0nDMb3YrfSBf4hJVGLh2YEIBfKaBW/9UEl6IQ==}
 
@@ -2107,24 +2115,6 @@ packages:
 
   '@vercel/error-utils@2.0.3':
     resolution: {integrity: sha512-CqC01WZxbLUxoiVdh9B/poPbNpY9U+tO1N9oWHwTl5YAZxcqXmmWJ8KNMFItJCUUWdY3J3xv8LvAuQv2KZ5YdQ==}
-
-  '@vercel/flags@2.6.0':
-    resolution: {integrity: sha512-GvLX0CK/OsIqq672OBvcCeu0k3tb3QdE0lRn1P5zulMQJIPTLlUDEH0y9TeAyC7TMWlpTTT5Bealqu0rmncyXQ==}
-    deprecated: This package has been renamed to flags. It offers the same functionality under a new name. Please follow the upgrade guide https://github.com/vercel/flags/blob/main/packages/flags/guides/upgrade-to-v4.md
-    peerDependencies:
-      '@sveltejs/kit': '*'
-      next: '*'
-      react: '*'
-      react-dom: '*'
-    peerDependenciesMeta:
-      '@sveltejs/kit':
-        optional: true
-      next:
-        optional: true
-      react:
-        optional: true
-      react-dom:
-        optional: true
 
   '@vercel/functions@1.6.0':
     resolution: {integrity: sha512-R6FKQrYT5MZs5IE1SqeCJWxMuBdHawFcCZboKKw8p7s+6/mcd55Gx6tWmyKnQTyrSEA04NH73Tc9CbqpEle8RA==}
@@ -3282,6 +3272,26 @@ packages:
     resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==}
     engines: {node: '>=10'}
 
+  flags@4.0.1:
+    resolution: {integrity: sha512-nJNY97LoI+BDNCSnGIEvBAxYkRYeRuMZ3KtdjCj60quGH3cnyjnSQfw9vB/kvb3+wAtdn2sm5t+jO6dy5tpi1w==}
+    peerDependencies:
+      '@opentelemetry/api': ^1.7.0
+      '@sveltejs/kit': '*'
+      next: '*'
+      react: '*'
+      react-dom: '*'
+    peerDependenciesMeta:
+      '@opentelemetry/api':
+        optional: true
+      '@sveltejs/kit':
+        optional: true
+      next:
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
   flat-cache@4.0.1:
     resolution: {integrity: sha512-f7ccFPK3SXFHpx15UIGyRJ/FJQctuKZ0zVuN3frBo4HnK3cay9VEW0R6yPYFHC0AgqhukPzKjq22t5DmAyqGyw==}
     engines: {node: '>=16'}
@@ -3799,9 +3809,6 @@ packages:
 
   jose@5.10.0:
     resolution: {integrity: sha512-s+3Al/p9g32Iq+oqXxkW//7jk2Vig6FF1CFqzVXoTUXt2qz89YWbL+OwS17NFYEvxC35n0FKeGO2LGYSxeM2Gg==}
-
-  jose@5.2.1:
-    resolution: {integrity: sha512-qiaQhtQRw6YrOaOj0v59h3R6hUY9NvxBmmnMfKemkqYmBB0tEc97NbLP7ix44VP5p9/0YHG8Vyhzuo5YBNwviA==}
 
   js-cookie@3.0.5:
     resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
@@ -5977,6 +5984,8 @@ snapshots:
     dependencies:
       zod: 3.25.76
 
+  '@edge-runtime/cookies@5.0.2': {}
+
   '@edge-runtime/format@2.2.1': {}
 
   '@edge-runtime/node-utils@2.3.0': {}
@@ -6618,9 +6627,9 @@ snapshots:
     dependencies:
       acorn: 8.15.0
 
-  '@sveltejs/adapter-vercel@5.7.2(@sveltejs/kit@2.23.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(rollup@4.45.0)':
+  '@sveltejs/adapter-vercel@5.7.2(@sveltejs/kit@2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(rollup@4.45.0)':
     dependencies:
-      '@sveltejs/kit': 2.23.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
+      '@sveltejs/kit': 2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
       '@vercel/nft': 0.29.4(rollup@4.45.0)
       esbuild: 0.25.6
     transitivePeerDependencies:
@@ -6628,7 +6637,7 @@ snapshots:
       - rollup
       - supports-color
 
-  '@sveltejs/kit@2.23.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))':
+  '@sveltejs/kit@2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))':
     dependencies:
       '@sveltejs/acorn-typescript': 1.0.5(acorn@8.15.0)
       '@sveltejs/vite-plugin-svelte': 5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
@@ -6885,11 +6894,11 @@ snapshots:
   '@types/body-parser@1.19.6':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 22.16.3
+      '@types/node': 22.16.5
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 22.16.3
+      '@types/node': 22.16.5
 
   '@types/cookie@0.6.0': {}
 
@@ -6905,7 +6914,7 @@ snapshots:
 
   '@types/express-serve-static-core@4.19.6':
     dependencies:
-      '@types/node': 22.16.3
+      '@types/node': 22.16.5
       '@types/qs': 6.14.0
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.5
@@ -6971,6 +6980,10 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
+  '@types/node@22.16.5':
+    dependencies:
+      undici-types: 6.21.0
+
   '@types/prismjs@1.26.5': {}
 
   '@types/qs@6.14.0': {}
@@ -6988,12 +7001,12 @@ snapshots:
   '@types/send@0.17.5':
     dependencies:
       '@types/mime': 1.3.5
-      '@types/node': 22.16.3
+      '@types/node': 22.16.5
 
   '@types/serve-static@1.15.8':
     dependencies:
       '@types/http-errors': 2.0.5
-      '@types/node': 22.16.3
+      '@types/node': 22.16.5
       '@types/send': 0.17.5
 
   '@types/through@0.0.33':
@@ -7121,17 +7134,9 @@ snapshots:
 
   '@vercel/error-utils@2.0.3': {}
 
-  '@vercel/flags@2.6.0(@sveltejs/kit@2.23.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
-    dependencies:
-      jose: 5.2.1
-    optionalDependencies:
-      '@sveltejs/kit': 2.23.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
-      react: 19.1.0
-      react-dom: 19.1.0(react@19.1.0)
-
   '@vercel/functions@1.6.0': {}
 
-  '@vercel/microfrontends@1.3.0(@sveltejs/kit@2.23.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))':
+  '@vercel/microfrontends@1.3.0(@sveltejs/kit@2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))':
     dependencies:
       '@next/env': 15.1.6
       ajv: 8.17.1
@@ -7143,14 +7148,14 @@ snapshots:
       nanoid: 3.3.11
       path-to-regexp: 6.2.1
     optionalDependencies:
-      '@sveltejs/kit': 2.23.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
+      '@sveltejs/kit': 2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       vite: 6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)
     transitivePeerDependencies:
       - debug
 
-  '@vercel/microfrontends@1.4.2(@sveltejs/kit@2.23.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(next@15.4.0-canary.129(@opentelemetry/api@1.9.0)(@playwright/test@1.54.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))':
+  '@vercel/microfrontends@1.4.2(@sveltejs/kit@2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(next@15.4.0-canary.129(@opentelemetry/api@1.9.0)(@playwright/test@1.54.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))':
     dependencies:
       '@next/env': 15.4.0-canary.41
       ajv: 8.17.1
@@ -7163,7 +7168,7 @@ snapshots:
       path-to-regexp: 6.2.1
       semver: 7.7.2
     optionalDependencies:
-      '@sveltejs/kit': 2.23.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
+      '@sveltejs/kit': 2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
       next: 15.4.0-canary.129(@babel/core@7.28.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.54.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
@@ -7255,10 +7260,10 @@ snapshots:
       json-schema-to-ts: 1.6.4
       ts-morph: 12.0.0
 
-  '@vercel/toolbar@0.1.38(@sveltejs/kit@2.23.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))':
+  '@vercel/toolbar@0.1.38(@sveltejs/kit@2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))':
     dependencies:
       '@tinyhttp/app': 1.3.0
-      '@vercel/microfrontends': 1.3.0(@sveltejs/kit@2.23.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
+      '@vercel/microfrontends': 1.3.0(@sveltejs/kit@2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
       chokidar: 3.6.0
       execa: 5.1.1
       fast-glob: 3.3.3
@@ -8504,6 +8509,16 @@ snapshots:
       locate-path: 6.0.0
       path-exists: 4.0.0
 
+  flags@4.0.1(@opentelemetry/api@1.9.0)(@sveltejs/kit@2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      '@edge-runtime/cookies': 5.0.2
+      jose: 5.10.0
+    optionalDependencies:
+      '@opentelemetry/api': 1.9.0
+      '@sveltejs/kit': 2.25.1(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)))(svelte@5.36.0)(vite@6.3.5(@types/node@22.16.3)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+
   flat-cache@4.0.1:
     dependencies:
       flatted: 3.3.3
@@ -9066,8 +9081,6 @@ snapshots:
   jiti@2.4.2: {}
 
   jose@5.10.0: {}
-
-  jose@5.2.1: {}
 
   js-cookie@3.0.5: {}
 
