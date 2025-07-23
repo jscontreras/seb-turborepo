@@ -11,21 +11,21 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
   "devDependencies": {
-    "@sveltejs/adapter-vercel": "^5.7.1",
-    "@sveltejs/kit": "^2.25.1",
+    "@sveltejs/adapter-vercel": "^5.8.0",
+    "@sveltejs/kit": "^2.25.2",
     "@types/js-cookie": "^3.0.6",
-    "@types/node": "^22.15.29",
+    "@types/node": "^24.1.0",
     "@vercel/toolbar": "^0.1.38",
-    "svelte": "^5.17.3",
-    "svelte-check": "^4.0.0",
+    "svelte": "^5.36.14",
+    "svelte-check": "^4.3.0",
     "typescript": "*",
     "vite": "^6.3.0"
   },
   "type": "module",
   "dependencies": {
-    "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@sveltejs/vite-plugin-svelte": "^6.1.0",
     "@vercel/edge": "^1.2.2",
-    "@vercel/functions": "^1.6.0",
+    "@vercel/functions": "^2.2.4",
     "flags": "^4.0.1",
     "js-cookie": "^3.0.5"
   }
