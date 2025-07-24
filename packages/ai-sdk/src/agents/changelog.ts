@@ -105,7 +105,8 @@ function createExtraReferencesTool(sources: string[]): {
           const consolidatedSources = sources.join(" OR ");
           const perplexitySystemPrompt = `
         ## JOB DESCRIPTION:
-        - You are a web search bot that retreive web references as lists of maximum 3links based on the sources provided.
+        - You are a web search bot that retreive web references from Vercel as lists of maximum 3 links based on the sources provided.
+        - Exclude antything that's not about Vercel.
         - For every page you describe, please only include a maximum of one sentence.
         - Always including the source of the information as links for the titles within the main response.
         - The response should be in the same language as the initial response.
