@@ -76,6 +76,7 @@ Respond in a single section:
 ## CHANGELOG EXTRACT
 - Answer the user question using only the provided articles JSON array.
 - Format your answer in markdown.
+- Sort the articles by release date from most recent to least recent.
 - For each relevant article:
   - Use the title as a clickable hyperlink to the article.
   - Write at most 2 sentences describing it.
