@@ -85,30 +85,20 @@ Return a plain array of site source strings. Do not include anything else.
  * @param sources - The sources to search the web for
  * @returns The tool to get extra references section to append to the response
  */
-function extractDomain(url: string): string {
-  // Removes "site:" prefix and extracts domain (e.g. "vercel.com" from ":site:https://vercel.com/docs")
-  try {
-    const cleanUrl = url.replace(/^:?site:/, "");
-    return new URL(cleanUrl.startsWith("http") ? cleanUrl : "https://" + cleanUrl).host.replace(/^www\./, "");
-  } catch {
-    return ""; // fallback for malformed input
-  }
-}
-
 function createExtraReferencesTool(sources: string[]): {
   getExtraReferences?: Tool;
 } {
-  // Only keep valid domains for filter
-  const allowedDomains = sources
-    .map(extractDomain)
-    .filter(domain => !!domain);
+  // Only keep valid sites for filter
+  const allowedDomains = sources;
 
   return {
     getExtraReferences: tool({
       name: "getExtraReferences",
       description: "Get extra references section to append to the response.",
       inputSchema: z.object({
-        response: z.string().describe("The response to append the extra references to"),
+        response: z
+          .string()
+          .describe("The response to append the extra references to"),
       }),
       execute: async ({ response }) => {
         if (allowedDomains.length === 0) {
@@ -118,26 +108,54 @@ function createExtraReferencesTool(sources: string[]): {
         const perplexitySystemPrompt = `
 # JOB DESCRIPTION:
 - You are a web search bot that retrieves up to 3 references ONLY from the specified domains.
-- Do NOT include any references from domains not listed.
+- Do NOT include any references from domains  differnet than ${allowedDomains.join(", ")}.
 - If no valid references are found, reply: "No additional references available from the specified domains."
 - Maximum one sentence per reference.
-- Format the response as a markdown section named "## Additional References".
-- Respond in the same language as the input.
-- Domains: ${allowedDomains.join(", ")}
+- Format the response as a markdown list section named "## Additional References".
+
+# FINAL VERIFICATION:
+- All your references are from the domains ${allowedDomains.join(", ")}. Remove any references and responses from other domains.
+- The entire response should be in markdown format.
 `;
 
-        const { text: initialReferences, sources: perplexitySources } = await generateText({
-          model: gateway("perplexity/sonar"),
-          system: perplexitySystemPrompt,
-          prompt: response,
-          providerOptions: {
-            search_domain_filter: allowedDomains,
-          } as any,
+        const { text: initialResponse, sources: preplexitySources } =
+          await generateText({
+            model: gateway("perplexity/sonar"),
+            system: perplexitySystemPrompt,
+            prompt: response,
+            providerOptions: {
+              search_domain_filter: allowedDomains,
+            } as any,
+          });
+
+        const rewriteInstructions = `
+        # DESCRIPTION:
+        You are a markdown modifier and sources verifier bot that can add links to the prompt based on the sources provided. The numbers in the prompt are the source numbers.
+        For example:
+        - Remove any references and responses from domains other than ${allowedDomains.join(", ")}.
+        - if the prompt contains [1] it means that the source is the first one in the sources array, etc.
+        - if the prompt contains [2] it means that the source is the second one in the sources array, etc.
+        - if the prompt contains [3] it means that the source is the third one in the sources array, etc.
+        - Add parenthesys around the numbers as part of the link text so it looks like [(number)](url)
+        - You always return the prompt with the links added.
+        - The entire response should be in markdown format.`;
+        const { text: rewrittenPrompt } = await generateText({
+          model: gateway("openai/gpt-4.1-nano"),
+          system: rewriteInstructions,
+          prompt: JSON.stringify({
+            prompt: initialResponse,
+            sources: preplexitySources,
+          }),
         });
-
-        // Optionally, insert logic for link rewriting if you want the references numbered/linked as before
-
-        return initialReferences;
+        try {
+          console.log(">>>rewrittenPrompt", "VALID JSON");
+          const rewrittenPromptJson = JSON.parse(rewrittenPrompt);
+          return `${sources.length > 0 ? "## Additional References \n\n" : ""}
+          ${rewrittenPromptJson.prompt}
+          `;
+        } catch {
+          return rewrittenPrompt;
+        }
       },
     }),
   };
