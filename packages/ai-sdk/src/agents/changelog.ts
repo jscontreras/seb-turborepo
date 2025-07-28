@@ -111,11 +111,12 @@ function createExtraReferencesTool(sources: string[]): {
 - Do NOT include any references from domains  differnet than ${allowedDomains.join(", ")}.
 - If no valid references are found, reply: "No additional references available from the specified domains."
 - Maximum one sentence per reference.
-- Format the response as a markdown list section named "## Additional References".
+- Format the response as a markdown list".
 
 # FINAL VERIFICATION:
 - All your references are from the domains ${allowedDomains.join(", ")}. Remove any references and responses from other domains.
 - The entire response should be in markdown format.
+- Do not include the original prompt in the response.
 `;
 
         const { text: initialResponse, sources: preplexitySources } =
