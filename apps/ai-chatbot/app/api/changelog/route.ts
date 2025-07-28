@@ -69,14 +69,13 @@ Always stream CHANGELOG EXTRACT fully first, then EXTRA REFERENCES. Never blend 
 `
     : `
 # RESPONSE INSTRUCTIONS:
-Respond in a single section:
+Respond in a single section making sure that the articles are sorted by release date from most recent to least recent, so the most recent article is the first one.
 
 ---
 
 ## CHANGELOG EXTRACT
 - Answer the user question using only the provided articles JSON array.
 - Format your answer in markdown.
-- Sort the articles by release date from most recent to least recent, so the most recent article is the first one.
 - For each relevant article:
   - Use the title as a clickable hyperlink to the article.
   - Write at most 2 sentences describing it.
