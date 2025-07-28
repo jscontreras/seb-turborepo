@@ -7,17 +7,17 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@ai-sdk/gateway": "1.0.0-beta.11",
-    "@ai-sdk/openai": "2.0.0-beta.11",
+    "@ai-sdk/gateway": "1.0.0-beta.15",
+    "@ai-sdk/openai": "2.0.0-beta.13",
     "@browserbasehq/sdk": "^2.6.0",
     "@types/turndown": "^5.0.5",
     "@vercel/blob": "^1.1.1",
-    "ai": "5.0.0-beta.25",
+    "ai": "5.0.0-beta.29",
     "auto-playwright": "^1.16.1",
     "body-parser": "^2.2.0",
     "playwright-core": "^1.54.1",
     "turndown": "^7.2.0",
-    "zod": "^4.0.5"
+    "zod": "^4.0.10"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",

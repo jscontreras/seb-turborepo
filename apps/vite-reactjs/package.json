@@ -15,16 +15,16 @@
     "@auth0/auth0-react": "^2.4.0",
     "@fortawesome/react-fontawesome": "^0.2.3",
     "@vercel/edge": "^1.2.2",
-    "@vercel/functions": "^2.2.4",
-    "@vercel/node": "^5.3.6",
+    "@vercel/functions": "^2.2.5",
+    "@vercel/node": "^5.3.7",
     "globals": "^16.3.0",
     "history": "^5.3.0",
     "jose": "^6.0.12",
     "lorem-ipsum": "^2.0.8",
     "path-to-regexp": "^8.2.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-router-dom": "^7.7.0"
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.7.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.0",

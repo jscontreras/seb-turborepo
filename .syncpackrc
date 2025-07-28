@@ -11,6 +11,18 @@
         "tailwind*",
         "vite"
       ]
+    },
+    {
+      "label": "Vercel Related",
+      "name": "vercelkit",
+      "dependencies": [
+        "vercel/**",
+        "next",
+        "ai",
+        "ai-sdk/**",
+        "@vercel/**",
+        "flags"
+      ]
     }
   ]
 }
