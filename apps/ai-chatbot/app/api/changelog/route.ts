@@ -101,7 +101,7 @@ export async function POST(req: Request) {
   const { messages, trigger } = await req.json();
   const message = messages[messages.length - 1];
   let lastUserMessage = null;
-  if (trigger === "submit-user-message") {
+  if (trigger === "submit-message") {
     lastUserMessage = message.parts
       .filter((part: { type: string }) => part.type === "text")
       .map((part: { text: any }) => part.text)
