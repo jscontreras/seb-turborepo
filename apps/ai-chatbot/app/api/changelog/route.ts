@@ -174,8 +174,9 @@ export async function POST(req: Request) {
     promptArticles = promptArticles.slice(0, maxNumberOfArticles);
   }
   // Determine the sources to search the web for
-  const sources = await determineSources(lastUserMessage);
-  console.log(">>>sources", sources);
+  let sources: string[] = [];
+  // sources = await determineSources(lastUserMessage);
+  // console.log(">>>sources", sources);
 
   const result = streamText({
     model: gateway("gpt-4.1-mini"),

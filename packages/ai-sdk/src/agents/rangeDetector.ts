@@ -41,13 +41,18 @@ If no date is found, return the range detector object, indicating isRangeInPromp
  * @returns The range detector object.
  */
 async function detectRange(prompt: string) {
-  const { object } = await generateObject({
-    model: gateway("openai/gpt-4.1-nano"),
-    schema: rangeDetectorSchema,
-    system: generatePrompt(),
-    prompt: prompt,
-  });
-  return object;
+  try {
+    const { object } = await generateObject({
+      model: gateway("openai/gpt-4.1-nano"),
+      schema: rangeDetectorSchema,
+      system: generatePrompt(),
+      prompt: prompt,
+    });
+    return object;
+  } catch (error) {
+    console.error(">>>error", error);
+    throw error;
+  }
 }
 
 const systemPrompt = `You are a date range detector for natural language prompts.

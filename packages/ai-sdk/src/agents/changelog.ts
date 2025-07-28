@@ -107,13 +107,13 @@ function createExtraReferencesTool(sources: string[]): {
 
         const perplexitySystemPrompt = `
 # JOB DESCRIPTION:
-- You are a web search bot that retrieves up to 3 references ONLY from the specified domains.
+- You are a web search bot that retrieves up to 5 references ONLY from the specified domains.
 - Do NOT include any references from domains  differnet than ${allowedDomains.join(", ")}.
+- Each reference should be a sentence summarizing the content of the article.
 - If no valid references are found, reply: "No additional references available from the specified domains."
-- Maximum one sentence per reference.
 
 # FINAL VERIFICATION:
-- All your references are from the domains ${allowedDomains.join(", ")}. Remove any references and responses from other domains.
+- All your references are from the domains ${allowedDomains.join(", ")}. Remove the entire reference if it is not 100%from the domains ${allowedDomains.join(", ")}.
 - The entire response should be in markdown format.
 - Do not include the original prompt in the response.
 - Format the response as a markdown response".
@@ -129,34 +129,41 @@ function createExtraReferencesTool(sources: string[]): {
             } as any,
           });
 
-        const rewriteInstructions = `
-        # DESCRIPTION:
-        You are a markdown modifier and sources verifier bot that can add links to the prompt based on the sources provided. The numbers in the prompt are the source numbers.
-        For example:
-        - Remove any references and responses from domains other than ${allowedDomains.join(", ")}.
-        - if the prompt contains [1] it means that the source is the first one in the sources array, etc.
-        - if the prompt contains [2] it means that the source is the second one in the sources array, etc.
-        - if the prompt contains [3] it means that the source is the third one in the sources array, etc.
-        - Add parenthesys around the numbers as part of the link text so it looks like [(number)](url)
-        - You always return the prompt with the links added.
-        - The entire response should be in markdown format.`;
-        const { text: rewrittenPrompt } = await generateText({
-          model: gateway("openai/gpt-4.1-nano"),
-          system: rewriteInstructions,
-          prompt: JSON.stringify({
-            prompt: initialResponse,
-            sources: preplexitySources,
-          }),
-        });
-        try {
-          console.log(">>>rewrittenPrompt", "VALID JSON");
-          const rewrittenPromptJson = JSON.parse(rewrittenPrompt);
-          return `${sources.length > 0 ? "## Additional References \n\n" : ""}
-          ${rewrittenPromptJson.prompt}
-          `;
-        } catch {
-          return rewrittenPrompt;
-        }
+        const references = preplexitySources
+          .map(
+            (source: any, index: number) => `- [${index + 1}](${source.url})`,
+          )
+          .join("\n\n");
+        return `${initialResponse} ${references}`;
+        // const rewriteInstructions = `
+        // # DESCRIPTION:
+        // You are a markdown modifier and sources verifier bot that can add links to the prompt based on the sources provided. The numbers in the prompt are the source numbers.
+        // For example:
+        // - Remove any references and responses from domains other than ${allowedDomains.join(", ")}.
+        // - if the prompt contains [1] it means that the source is the first one in the sources array, etc.
+        // - if the prompt contains [2] it means that the source is the second one in the sources array, etc.
+        // - if the prompt contains [3] it means that the source is the third one in the sources array, etc.
+        // - Add parenthesys around the numbers as part of the link text so it looks like [(number)](url)
+        // - You always return the prompt with the links added.
+        // - The entire response should be in markdown format.`;
+        // const { text: rewrittenPrompt } = await generateText({
+        //   model: gateway("openai/gpt-4.1-nano"),
+        //   system: rewriteInstructions,
+        //   prompt: JSON.stringify({
+        //     prompt: initialResponse,
+        //     sources: preplexitySources,
+        //   }),
+        // });
+
+        // try {
+        //   console.log(">>>rewrittenPrompt", "VALID JSON");
+        //   const rewrittenPromptJson = JSON.parse(rewrittenPrompt);
+        //   return `${sources.length > 0 ? "## Additional References \n\n" : ""}
+        //   ${rewrittenPromptJson.prompt}
+        //   `;
+        // } catch {
+        //   return rewrittenPrompt;
+        // }
       },
     }),
   };
