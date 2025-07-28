@@ -64,7 +64,7 @@ async function determineSources(prompt: string): Promise<string[]> {
     system: `You are a bot that determines if the user prompt indicates to expand a search to blogs, blog posts, guides, guidelines, documentation or docs.
     If the user prompts mentions guides or guidelines make sure to include the string :site:https://vercel.com/guides in the array of sources.
     If the user prompts mentions documentation or docs make sure to include the string :site:https://vercel.com/docs in the array of sources.
-    If the user prompts mentions blog posts make sure to include the string :site:https://vercel.com/blog in the array of sources.`,
+    If the user prompts mentions blog posts make sure to include both :site:https://vercel.com/blog and site:https://nextjs.org/blog strings in the array of sources.`,
     prompt: prompt,
     schema: z.object({
       sources: z.array(z.string()),
