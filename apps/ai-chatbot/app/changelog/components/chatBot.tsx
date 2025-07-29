@@ -12,6 +12,14 @@ import Prism from "prismjs";
 import "prismjs/themes/prism-okaidia.css";
 import "prismjs/components/prism-typescript";
 
+// Storage keys
+const STORAGE_KEYS = {
+  MESSAGES: "changelog-chat-messages",
+  ATTACHMENTS: "changelog-chat-attachments",
+  INPUT: "changelog-chat-input",
+  SESSION_ID: "changelog-chat-session-id",
+};
+
 function PrismLoader() {
   useEffect(() => {
     Prism.highlightAll();
@@ -21,16 +29,150 @@ function PrismLoader() {
 }
 
 export function ChatBot() {
-  const { messages, sendMessage, status } = useChat({
-    transport: new DefaultChatTransport({
-      api: "/api/changelog",
-    }),
-  });
   const [input, setInput] = useState("");
   const [attachments, setAttachments] = useState<FileUIPart[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [isRestoring, setIsRestoring] = useState(false);
+
+  // Initialize chat with persistence
+  const { messages, sendMessage, status, setMessages } = useChat({
+    transport: new DefaultChatTransport({
+      api: "/api/changelog",
+    }),
+  });
+
+  // Initialize chat state from localStorage
+  useEffect(() => {
+    // More reliable reload detection using multiple methods
+    const isHardReload = (() => {
+      // Method 1: Check if this is a fresh page load (not navigation)
+      if (typeof window !== "undefined" && window.performance) {
+        const navigation = window.performance.getEntriesByType(
+          "navigation",
+        )[0] as PerformanceNavigationTiming;
+        if (navigation && navigation.type === "reload") {
+          return true;
+        }
+      }
+
+      // Method 2: Check if session storage has a flag (set on beforeunload)
+      const wasReloading = sessionStorage.getItem("chat-reloading");
+      if (wasReloading === "true") {
+        sessionStorage.removeItem("chat-reloading");
+        return true;
+      }
+
+      // Method 3: Check if we have a session ID mismatch
+      const currentSessionId = sessionStorage.getItem("chat-session-id");
+      const storedSessionId = localStorage.getItem(STORAGE_KEYS.SESSION_ID);
+
+      if (!currentSessionId) {
+        // First time visit, generate session ID
+        const newSessionId = Date.now().toString();
+        sessionStorage.setItem("chat-session-id", newSessionId);
+        localStorage.setItem(STORAGE_KEYS.SESSION_ID, newSessionId);
+        return false;
+      }
+
+      if (currentSessionId !== storedSessionId) {
+        // Session ID mismatch indicates a reload
+        localStorage.setItem(STORAGE_KEYS.SESSION_ID, currentSessionId);
+        return true;
+      }
+
+      return false;
+    })();
+
+    if (isHardReload) {
+      // Clear all chat storage on hard reload
+      localStorage.removeItem(STORAGE_KEYS.MESSAGES);
+      localStorage.removeItem(STORAGE_KEYS.ATTACHMENTS);
+      localStorage.removeItem(STORAGE_KEYS.INPUT);
+      console.log("Hard reload detected - cleared chat history");
+    } else {
+      // Load saved state from localStorage
+      setIsRestoring(true);
+      try {
+        const savedMessages = localStorage.getItem(STORAGE_KEYS.MESSAGES);
+        const savedAttachments = localStorage.getItem(STORAGE_KEYS.ATTACHMENTS);
+        const savedInput = localStorage.getItem(STORAGE_KEYS.INPUT);
+
+        if (savedMessages) {
+          const parsedMessages = JSON.parse(savedMessages);
+          setMessages(parsedMessages);
+        }
+
+        if (savedAttachments) {
+          const parsedAttachments = JSON.parse(savedAttachments);
+          setAttachments(parsedAttachments);
+        }
+
+        if (savedInput) {
+          setInput(savedInput);
+        }
+      } catch (error) {
+        console.error("Error loading chat state from localStorage:", error);
+        // Clear corrupted data
+        localStorage.removeItem(STORAGE_KEYS.MESSAGES);
+        localStorage.removeItem(STORAGE_KEYS.ATTACHMENTS);
+        localStorage.removeItem(STORAGE_KEYS.INPUT);
+      } finally {
+        setIsRestoring(false);
+      }
+    }
+
+    setIsInitialized(true);
+
+    // Add beforeunload listener to set a flag for hard reload detection
+    const handleBeforeUnload = () => {
+      sessionStorage.setItem("chat-reloading", "true");
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [setMessages]);
+
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    if (isInitialized && messages.length > 0) {
+      try {
+        localStorage.setItem(STORAGE_KEYS.MESSAGES, JSON.stringify(messages));
+      } catch (error) {
+        console.error("Error saving messages to localStorage:", error);
+      }
+    }
+  }, [messages, isInitialized]);
+
+  // Save attachments to localStorage whenever they change
+  useEffect(() => {
+    if (isInitialized) {
+      try {
+        localStorage.setItem(
+          STORAGE_KEYS.ATTACHMENTS,
+          JSON.stringify(attachments),
+        );
+      } catch (error) {
+        console.error("Error saving attachments to localStorage:", error);
+      }
+    }
+  }, [attachments, isInitialized]);
+
+  // Save input to localStorage whenever it changes
+  useEffect(() => {
+    if (isInitialized) {
+      try {
+        localStorage.setItem(STORAGE_KEYS.INPUT, input);
+      } catch (error) {
+        console.error("Error saving input to localStorage:", error);
+      }
+    }
+  }, [input, isInitialized]);
 
   const uploadFile = async (file: File): Promise<string> => {
     const formData = new FormData();
@@ -92,17 +234,44 @@ export function ChatBot() {
   const clearAttachments = () => {
     setAttachments([]);
   };
+
+  const clearChatHistory = () => {
+    setMessages([]);
+    setAttachments([]);
+    setInput("");
+    localStorage.removeItem(STORAGE_KEYS.MESSAGES);
+    localStorage.removeItem(STORAGE_KEYS.ATTACHMENTS);
+    localStorage.removeItem(STORAGE_KEYS.INPUT);
+    localStorage.removeItem(STORAGE_KEYS.SESSION_ID);
+    sessionStorage.removeItem("chat-reloading");
+    sessionStorage.removeItem("chat-session-id");
+  };
   return (
     <div className="max-w-4xl p-4 mx-auto changelog-bot">
-      <h1 className="mb-4 text-2xl font-bold">
-        {"AI Bot (Vercel Changelog RAG)"}
-      </h1>
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-bold">
+          {"AI Bot (Vercel Changelog RAG)"}
+        </h1>
+        {messages.length > 0 && (
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={clearChatHistory}
+            className="text-sm"
+          >
+            Clear Chat
+          </Button>
+        )}
+      </div>
       <form
         onSubmit={(e) => {
           e.preventDefault();
           if (input.trim()) {
             sendMessage({ text: input, files: attachments });
             setInput("");
+            // Clear input from localStorage after sending
+            localStorage.removeItem(STORAGE_KEYS.INPUT);
           }
         }}
         className="mb-4 space-y-4"
@@ -201,6 +370,17 @@ export function ChatBot() {
           />
         </div>
       </form>
+      {isRestoring && (
+        <Alert className="mb-4">
+          <AlertTitle>Restoring Chat</AlertTitle>
+          <AlertDescription>
+            <div className="flex items-center gap-2">
+              <Loader2 className="w-4 h-4 animate-spin" />
+              Restoring your previous conversation...
+            </div>
+          </AlertDescription>
+        </Alert>
+      )}
       {error && (
         <Alert variant="destructive" className="mb-4">
           <AlertTitle>Error</AlertTitle>

@@ -168,7 +168,7 @@ function getVercelPerplexityTools(): Record<string, Tool> {
         changelogResponse: z
           .string()
           .describe(
-            "The response from the getChangelogs tool. Do not include any other text.",
+            "The response result from the getChangelogs tool previously executed. Do not include the user prompt or any other text.",
           ),
       }),
       execute: async ({ changelogResponse }: { changelogResponse: string }) => {

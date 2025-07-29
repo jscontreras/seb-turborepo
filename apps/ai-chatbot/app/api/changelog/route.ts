@@ -20,7 +20,7 @@ function createChangelogInstructions(
    ${
      sources.length > 1
        ? "Use the getChangelogs to answer the question."
-       : `For any other source, use the getChangelog, getBlogs, getGuides or getDocs tools. Call as many tools you need to get extra references.'}`
+       : `Using the result from the getChangelogs tool (not the user prompt) and the range object, use the getBlogs, getGuides, or getDocs tools to get extra references.`
    }
   `;
 }
