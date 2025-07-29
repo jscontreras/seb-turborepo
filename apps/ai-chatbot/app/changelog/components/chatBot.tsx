@@ -5,7 +5,7 @@ import { DefaultChatTransport, FileUIPart } from "ai";
 import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
-import { ImageIcon, Loader2, Paperclip, X, RefreshCw } from "lucide-react";
+import { ImageIcon, Loader2, Paperclip, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Prism from "prismjs";
@@ -21,115 +21,16 @@ function PrismLoader() {
 }
 
 export function ChatBot() {
-  const [apiError, setApiError] = useState<string | null>(null);
-  const [errorType, setErrorType] = useState<string | null>(null);
-  const [lastFailedMessage, setLastFailedMessage] = useState<string | null>(
-    null,
-  );
-
-  const { messages, sendMessage, status, error } = useChat({
+  const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({
       api: "/api/changelog",
     }),
-    onError: (error) => {
-      console.error("Chat error:", error);
-
-      // Try to extract error information from the error message
-      let errorMessage = "Failed to process your request. Please try again.";
-      let customErrorType = "general";
-
-      // Check if the error message contains our custom error format
-      if (
-        error.message &&
-        error.message.includes("Failed to process date range")
-      ) {
-        errorMessage =
-          "Failed to process date range. Please try again with a different query.";
-        customErrorType = "range_detection";
-      } else if (
-        error.message &&
-        error.message.includes("Service temporarily unavailable")
-      ) {
-        errorMessage =
-          "Service temporarily unavailable due to high demand. Please try again in a moment.";
-        customErrorType = "rate_limit";
-      } else if (error.message && error.message.includes("Request timed out")) {
-        errorMessage =
-          "Request timed out. Please try again with a simpler query.";
-        customErrorType = "timeout";
-      } else if (error.message && error.message.includes("Network error")) {
-        errorMessage =
-          "Network error. Please check your connection and try again.";
-        customErrorType = "network";
-      } else if (
-        error.message &&
-        error.message.includes("AI model temporarily unavailable")
-      ) {
-        errorMessage =
-          "AI model temporarily unavailable. Please try again in a moment.";
-        customErrorType = "model";
-      } else if (
-        error.message &&
-        error.message.includes("Failed to generate response")
-      ) {
-        errorMessage = "Failed to generate response. Please try again.";
-        customErrorType = "generation";
-      }
-
-      setApiError(errorMessage);
-      setErrorType(customErrorType);
-    },
-    onFinish: () => {
-      // Clear any previous errors when a message finishes successfully
-      setApiError(null);
-      setErrorType(null);
-      setLastFailedMessage(null);
-    },
   });
-
   const [input, setInput] = useState("");
   const [attachments, setAttachments] = useState<FileUIPart[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [uploadError, setUploadError] = useState<string | null>(null);
-
-  // Handle retry functionality
-  const handleRetry = () => {
-    if (lastFailedMessage) {
-      setApiError(null);
-      setErrorType(null);
-      sendMessage({ text: lastFailedMessage, files: attachments });
-    }
-  };
-
-  const getErrorSuggestion = () => {
-    switch (errorType) {
-      case "rate_limit":
-        return "Try waiting a moment before retrying.";
-      case "timeout":
-        return "Try breaking down your question into smaller parts.";
-      case "network":
-        return "Check your internet connection and try again.";
-      case "range_detection":
-        return "Try rephrasing your date-related question.";
-      case "generation":
-        return "Try rephrasing your question or try again later.";
-      case "model":
-        return "The AI service is temporarily unavailable. Please try again in a moment.";
-      default:
-        return "Try rephrasing your question or try again later.";
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (input.trim()) {
-      setLastFailedMessage(input);
-      setApiError(null);
-      sendMessage({ text: input, files: attachments });
-      setInput("");
-    }
-  };
+  const [error, setError] = useState<string | null>(null);
 
   const uploadFile = async (file: File): Promise<string> => {
     const formData = new FormData();
@@ -171,7 +72,7 @@ export function ChatBot() {
         setAttachments([...attachments, ...newAttachments]);
       } catch (err) {
         console.error("Error uploading files:", err);
-        setUploadError("Failed to upload one or more files. Please try again.");
+        setError("Failed to upload one or more files. Please try again.");
       } finally {
         setIsUploading(false);
         // Reset the file input
@@ -191,16 +92,21 @@ export function ChatBot() {
   const clearAttachments = () => {
     setAttachments([]);
   };
-
-  const clearUploadError = () => {
-    setUploadError(null);
-  };
   return (
     <div className="max-w-4xl p-4 mx-auto changelog-bot">
       <h1 className="mb-4 text-2xl font-bold">
         {"AI Bot (Vercel Changelog RAG)"}
       </h1>
-      <form onSubmit={handleSubmit} className="mb-4 space-y-4">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (input.trim()) {
+            sendMessage({ text: input, files: attachments });
+            setInput("");
+          }
+        }}
+        className="mb-4 space-y-4"
+      >
         <div className="flex items-center gap-2">
           <Input
             value={input}
@@ -295,49 +201,17 @@ export function ChatBot() {
           />
         </div>
       </form>
-      {uploadError && (
+      {error && (
         <Alert variant="destructive" className="mb-4">
           <AlertTitle>Error</AlertTitle>
-          <AlertDescription>{uploadError}</AlertDescription>
-          <Button variant="outline" onClick={clearUploadError} className="mt-2">
-            <X className="w-4 h-4 mr-2" /> Dismiss
-          </Button>
-        </Alert>
-      )}
-      {apiError && (
-        <Alert variant="destructive" className="mb-4">
-          <AlertTitle>Unable to Process Request</AlertTitle>
-          <AlertDescription>
-            <div className="space-y-2">
-              <p>{apiError}</p>
-              <p className="text-sm opacity-80">{getErrorSuggestion()}</p>
-            </div>
-          </AlertDescription>
-          <div className="flex gap-2 mt-3">
-            <Button
-              variant="outline"
-              onClick={handleRetry}
-              className="flex items-center"
-            >
-              <RefreshCw className="w-4 h-4 mr-2" /> Retry
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => {
-                setApiError(null);
-                setErrorType(null);
-                setLastFailedMessage(null);
-              }}
-            >
-              Dismiss
-            </Button>
-          </div>
+          <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
       <div className="space-y-4 flex flex-col-reverse">
         {messages.map((message) => {
           let extraReferences = "";
-          message.parts.forEach((part: any) => {
+          let changelogExtract = "";
+          message.parts.forEach((part) => {
             if (part.type === "tool-getExtraReferences" && part.output) {
               extraReferences += part.output + "\n";
             }
@@ -350,7 +224,7 @@ export function ChatBot() {
               <p className="font-semibold mb-2">
                 {message.role === "user" ? "You:" : "Assistant:"}
               </p>
-              {message.parts.map((part: any, index: number) => {
+              {message.parts.map((part, index) => {
                 switch (part.type) {
                   case "text":
                     return (
@@ -403,7 +277,26 @@ export function ChatBot() {
                         {extraReferences + ""}
                       </ReactMarkdown>
                     );
+                  case "tool-getChangelogs":
+                    if (part.state === "output-available") {
+                      changelogExtract += (part.output as any).steps
+                        .map((step: any) =>
+                          step.content
+                            .map((content: any) => content.text)
+                            .join("\n"),
+                        )
+                        .join("\n");
+                      return (
+                        <ReactMarkdown key={index} components={{ p: "span" }}>
+                          {changelogExtract + ""}
+                        </ReactMarkdown>
+                      );
+                    } else {
+                      return <span key={index}>"Generating changelog..."</span>;
+                    }
+
                   default:
+                    console.log(">>>part", part);
                     return null;
                 }
               })}

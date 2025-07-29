@@ -4,16 +4,12 @@ import { gateway } from "@ai-sdk/gateway";
 
 // define a schema for the notifications
 const rangeDetectorSchema = z.object({
-  notifications: z.array(
-    z.object({
-      isRangeInPrompt: z
-        .boolean()
-        .describe("Is there a date range implicit on the prompt?"),
-      startDate: z.string().describe("Start date of the range.").nullable(),
-      endDate: z.string().describe("End date of the range.").nullable(),
-      currentDate: z.string().describe("Current date."),
-    }),
-  ),
+  isRangeInPrompt: z
+    .boolean()
+    .describe("Is there a date range implicit on the prompt?"),
+  startDate: z.string().describe("Start date of the range.").nullable(),
+  endDate: z.string().describe("End date of the range.").nullable(),
+  currentDate: z.string().describe("Current date."),
 });
 
 /**
@@ -81,4 +77,9 @@ async function rewriteRelativeDates(prompt: string) {
   });
   return text;
 }
-export { detectRange, type rangeDetectorSchema, rewriteRelativeDates };
+export {
+  detectRange,
+  type rangeDetectorSchema,
+  rangeDetectorSchema as ZodrangeDetectorSchema,
+  rewriteRelativeDates,
+};

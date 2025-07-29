@@ -1,9 +1,9 @@
-import { generateObject, generateText, Tool } from "ai";
+import { generateObject, generateText, Tool, streamText } from "ai";
 import { getVercelChangelogFromBlob } from "../rags/changelog";
 import { gateway } from "@ai-sdk/gateway";
 import { z } from "zod";
 import { tool } from "ai";
-import { rangeDetectorSchema } from "./rangeDetector";
+import { rangeDetectorSchema, ZodrangeDetectorSchema } from "./rangeDetector";
 
 type RefinedArticle = {
   title: string;
@@ -38,30 +38,64 @@ async function getRefinedArticles() {
  */
 async function askChangelogAI(
   prompt: string,
-  dateRange: z.infer<typeof rangeDetectorSchema>,
-  model: string = "openai/gpt-4o",
+  dateRange: z.infer<typeof ZodrangeDetectorSchema>,
+  model: string = "openai/gpt-4.1-nano",
 ) {
-  const changelogInstructions = `You are an agent that answers questions about Vercel's changelog articles that always runs STEP 1 and STEP 2.
-  Here are the articles you can refer to as a JSON array:
+  const changelogInstructions = `
+Your name is Vercel Changelog Agent.
+You answer questions about Vercel's changelog articles and recent feature launches. Always follow STEP 1 and STEP 2 in order, streaming STEP 1 first and STEP 2 second.
+
+IMPORTANT:
+- Unless the user specifies otherwise, always process and answer using the list of articles sorted chronologically from most recent to least recent, even when grouping into categories.
+
+# INPUTS:
+- Today's date: ${new Date().toISOString().split("T")[0]}
+- List of articles (JSON):
   \`\`\`json
-  ${JSON.stringify(await getRefinedArticles())}
+  ${JSON.stringify(
+    filterArticlesByDateRange(dateRange, await getRefinedArticles()),
+  )}
   \`\`\`
-  respond in html format only refering to the articles you can find in the JSON array
-  WHen presenting the articles please include:
-  - the title of the article
-  - the link using the title of the article.
-  - the release date of the article.
-  - a paragraph summarizing the content of the article unless the user ask for more details or a specific feature with sentences like "Give me more details about the feature" or "Give me a detailed description of the feature".
-  `;
+
+# RESPONSE INSTRUCTIONS:
+Respond in a single section making sure that the articles are sorted by release date from most recent to least recent, so the most recent article is the first one.
+---
+
+## CHANGELOG EXTRACT
+- Answer the user question using only the provided articles JSON array.
+- Format your answer in markdown.
+- For each relevant article:
+  - Use the title as a clickable hyperlink to the article.
+  - Write at most 2 sentences describing it.
+  - Include the article's release date.
+  - Do NOT include any images.
+
+---
+`;
   // First step: Generate marketing copy
-  const { text } = await generateText({
-    model: gateway("openai/gpt-4.1-nano"),
+  return await generateText({
+    model: gateway(model),
     maxOutputTokens: 32000,
     system: changelogInstructions,
     prompt: prompt,
   });
-  return text;
 }
+
+/**
+ * A tool to ask the changelog AI
+ * @returns The tool to ask the changelog AI
+ */
+const getChangelogs = tool({
+  name: "askChangelogAi",
+  description: "Ask about Vercel's changelog articles",
+  inputSchema: z.object({
+    prompt: z.string(),
+    dateRange: ZodrangeDetectorSchema,
+  }),
+  execute: async ({ prompt, dateRange }) => {
+    return askChangelogAI(prompt, dateRange);
+  },
+});
 
 /**
  * Determine the sources to expand the search to
@@ -74,9 +108,9 @@ async function determineSources(prompt: string): Promise<string[]> {
     system: `
 You are a bot that generates an array of search source site strings based on keywords found in the user's prompt.
 Rules:
-- If the prompt mentions "guide" or "guidelines", include ":site:https://vercel.com/guides".
-- If the prompt mentions "documentation" or "docs", include ":site:https://vercel.com/docs".
-- If the prompt mentions "blog post" or "blog posts", include both ":site:https://vercel.com/blog" and ":site:https://nextjs.org/blog".
+- If the prompt mentions "guide" or "guidelines", include "guidelines".
+- If the prompt mentions "documentation" or "docs", include "docs".
+- If the prompt mentions "blog post" or "blog posts", include both "blogs".
 - If multiple categories are mentioned, include all relevant sources with no duplicates.
 - Only include sources explicitly indicated by the prompt's keywords.
 Return a plain array of site source strings. Do not include anything else.
@@ -180,6 +214,16 @@ function createExtraReferencesTool(sources: string[]): {
 }
 
 /**
+ * Get the Vercel Perplexity tools
+ * @returns The Vercel Perplexity tools
+ */
+function getVercelPerplexityTools(): Record<string, Tool> {
+  return {
+    getChangelogs,
+  };
+}
+
+/**
  * Filter the articles by date range
  * @param rangeObject - The range object
  * @param articles - The articles to filter
@@ -226,4 +270,5 @@ export {
   filterArticlesByDateRange,
   type RefinedArticle as RefinedArticle,
   createExtraReferencesTool,
+  getVercelPerplexityTools,
 };
