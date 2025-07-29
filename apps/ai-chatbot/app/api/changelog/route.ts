@@ -4,6 +4,7 @@ import {
   RefinedArticle,
   determineSources,
   createExtraReferencesTool,
+  filterArticlesByDateRange,
 } from "@repo/ai-sdk/agents/changelog";
 import {
   detectRange,
@@ -36,41 +37,9 @@ ${JSON.stringify(articles)}
 \`\`\`json
 ${JSON.stringify(sources)}
 \`\`\`
-${
-  sources.length > 0
-    ? `
-# RESPONSE INSTRUCTIONS:
-Respond in two clearly separated streamed sections:
 
----
-
-## CHANGELOG EXTRACT
-- Answer the user question using only the provided articles JSON array.
-- Format your answer in markdown.
-- For each relevant article:
-  - Use the title as a clickable hyperlink to the article.
-  - Write at most 2 sentences describing it.
-  - Include the article's release date.
-  - Do NOT include any images.
-
----
-
-## EXTRA REFERENCES
-- After CHANGELOG EXTRACT section is complete, stream only this section.
-- Use the getExtraReferences tool to generate references.
-- At the end of the response, include a **References** section:
-  - For each referenced article, list the title as a clickable link.
-  - Never omit, merge, or remove the References section.
-  - Only include references not included in the changelog extract.
-
----
-
-Always stream CHANGELOG EXTRACT fully first, then EXTRA REFERENCES. Never blend the two sections.
-`
-    : `
 # RESPONSE INSTRUCTIONS:
 Respond in a single section making sure that the articles are sorted by release date from most recent to least recent, so the most recent article is the first one.
-
 ---
 
 ## CHANGELOG EXTRACT
@@ -83,8 +52,7 @@ Respond in a single section making sure that the articles are sorted by release 
   - Do NOT include any images.
 
 ---
-`
-}  `;
+`;
 }
 
 // Allow streaming responses up to 5 minutes
@@ -92,6 +60,11 @@ export const maxDuration = 300;
 const maxNumberOfArticles = 300;
 let activateWebSearch = false;
 
+/**
+ * POST request handler for the changelog API
+ * @param req - The request object
+ * @returns The response object
+ */
 export async function POST(req: Request) {
   if (articles.length === 0) {
     articles = await getRefinedArticles();
@@ -108,44 +81,57 @@ export async function POST(req: Request) {
       .join("");
   }
   if (lastUserMessage) {
-    let rangedPrompt = await rewriteRelativeDates(lastUserMessage);
-    // If dates are found
-    if (rangedPrompt !== lastUserMessage) {
-      const rangeObjectResponse = await detectRange(rangedPrompt);
-      console.log("rangeObjectResponse", rangeObjectResponse);
-      const rangeObject = rangeObjectResponse.notifications[0];
-      if (rangeObject.isRangeInPrompt) {
-        activateWebSearch = true;
-        let startDateTimestamp = null;
-        let endDateTimestamp = null;
-        if (rangeObject.startDate) {
-          startDateTimestamp = new Date(rangeObject.startDate).getTime();
-        }
-        if (rangeObject.endDate) {
-          endDateTimestamp = new Date(rangeObject.endDate).getTime();
-        }
+    try {
+      let rangedPrompt = await rewriteRelativeDates(lastUserMessage);
+      // If dates are found
+      if (rangedPrompt !== lastUserMessage) {
+        const rangeObjectResponse = await detectRange(rangedPrompt);
+        console.log("rangeObjectResponse", rangeObjectResponse);
+        const rangeObject = rangeObjectResponse.notifications[0];
+        promptArticles = filterArticlesByDateRange(rangeObject, promptArticles);
+      }
+    } catch (error) {
+      console.error("Error in range detection:", error);
 
-        if (startDateTimestamp !== null || endDateTimestamp !== null) {
-          if (startDateTimestamp !== null && endDateTimestamp !== null) {
-            if (rangeObject.startDate !== rangeObject.endDate) {
-              promptArticles = promptArticles.filter((article) => {
-                const articleTimestamp = article.launchDateTimestamp;
-                if (startDateTimestamp !== null && endDateTimestamp !== null) {
-                  return (
-                    articleTimestamp >= startDateTimestamp &&
-                    articleTimestamp <= endDateTimestamp
-                  );
-                } else if (startDateTimestamp !== null) {
-                  return articleTimestamp >= startDateTimestamp;
-                } else if (endDateTimestamp !== null) {
-                  return articleTimestamp <= endDateTimestamp;
-                }
-                return true;
-              });
-            }
-          }
+      // Determine the type of error and provide appropriate message
+      let errorMessage =
+        "Failed to process date range. Please try again with a different query.";
+      let errorType = "range_detection";
+
+      if (error instanceof Error) {
+        if (
+          error.message.includes("rate limit") ||
+          error.message.includes("quota")
+        ) {
+          errorMessage =
+            "Service temporarily unavailable due to high demand. Please try again in a moment.";
+          errorType = "rate_limit";
+        } else if (error.message.includes("timeout")) {
+          errorMessage =
+            "Request timed out. Please try again with a simpler query.";
+          errorType = "timeout";
+        } else if (
+          error.message.includes("network") ||
+          error.message.includes("fetch")
+        ) {
+          errorMessage =
+            "Network error. Please check your connection and try again.";
+          errorType = "network";
         }
       }
+
+      // Return an error response that the UI can handle
+      return new Response(
+        JSON.stringify({
+          error: errorMessage,
+          errorType: errorType,
+          details: error instanceof Error ? error.message : "Unknown error",
+        }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json" },
+        },
+      );
     }
   }
   // If the number of articles is less than 20, we can activate the web search
@@ -175,17 +161,74 @@ export async function POST(req: Request) {
   }
   // Determine the sources to search the web for
   let sources: string[] = [];
-  // sources = await determineSources(lastUserMessage);
-  // console.log(">>>sources", sources);
+  try {
+    sources = await determineSources(lastUserMessage);
+    console.log(">>>sources", sources);
+  } catch (error) {
+    console.error("Error determining sources:", error);
+    // Continue without sources rather than failing completely
+    sources = [];
+  }
 
-  const result = streamText({
-    model: gateway("gpt-4.1-mini"),
-    maxOutputTokens: 32000,
-    system: createChangelogInstructions(promptArticles, sources),
-    messages: convertToModelMessages(messages),
-    tools: {
-      ...createExtraReferencesTool(sources),
-    },
-  });
-  return result.toUIMessageStreamResponse();
+  try {
+    const result = streamText({
+      model: gateway("gpt-4.1-mini"),
+      maxOutputTokens: 32000,
+      system: createChangelogInstructions(promptArticles, sources),
+      messages: convertToModelMessages(messages),
+      tools: {
+        ...createExtraReferencesTool(sources),
+      },
+      toolChoice: "auto",
+    });
+    return result.toUIMessageStreamResponse();
+  } catch (error) {
+    console.error("Error in streamText:", error);
+
+    // Determine the type of error and provide appropriate message
+    let errorMessage = "Failed to generate response. Please try again.";
+    let errorType = "generation";
+
+    if (error instanceof Error) {
+      if (
+        error.message.includes("rate limit") ||
+        error.message.includes("quota")
+      ) {
+        errorMessage =
+          "Service temporarily unavailable due to high demand. Please try again in a moment.";
+        errorType = "rate_limit";
+      } else if (error.message.includes("timeout")) {
+        errorMessage =
+          "Request timed out. Please try again with a simpler query.";
+        errorType = "timeout";
+      } else if (
+        error.message.includes("network") ||
+        error.message.includes("fetch")
+      ) {
+        errorMessage =
+          "Network error. Please check your connection and try again.";
+        errorType = "network";
+      } else if (
+        error.message.includes("model") ||
+        error.message.includes("gpt")
+      ) {
+        errorMessage =
+          "AI model temporarily unavailable. Please try again in a moment.";
+        errorType = "model";
+      }
+    }
+
+    // Return an error response that the UI can handle
+    return new Response(
+      JSON.stringify({
+        error: errorMessage,
+        errorType: errorType,
+        details: error instanceof Error ? error.message : "Unknown error",
+      }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+  }
 }

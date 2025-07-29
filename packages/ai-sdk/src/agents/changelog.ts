@@ -3,6 +3,7 @@ import { getVercelChangelogFromBlob } from "../rags/changelog";
 import { gateway } from "@ai-sdk/gateway";
 import { z } from "zod";
 import { tool } from "ai";
+import { rangeDetectorSchema } from "./rangeDetector";
 
 type RefinedArticle = {
   title: string;
@@ -29,8 +30,17 @@ async function getRefinedArticles() {
   }
   return articlesRag;
 }
-
-async function askChangelogAI(prompt: string, model: string = "openai/gpt-4o") {
+/**
+ * Ask the changelog AI
+ * @param prompt - The prompt to ask the changelog AI
+ * @param model - The model to use
+ * @returns The response from the changelog AI
+ */
+async function askChangelogAI(
+  prompt: string,
+  dateRange: z.infer<typeof rangeDetectorSchema>,
+  model: string = "openai/gpt-4o",
+) {
   const changelogInstructions = `You are an agent that answers questions about Vercel's changelog articles that always runs STEP 1 and STEP 2.
   Here are the articles you can refer to as a JSON array:
   \`\`\`json
@@ -168,10 +178,52 @@ function createExtraReferencesTool(sources: string[]): {
     }),
   };
 }
+
+/**
+ * Filter the articles by date range
+ * @param rangeObject - The range object
+ * @param articles - The articles to filter
+ * @returns The filtered articles
+ */
+function filterArticlesByDateRange(
+  rangeObject: any,
+  articles: { launchDateTimestamp: number }[],
+): any[] {
+  if (!rangeObject.isRangeInPrompt) return articles;
+
+  let startDateTimestamp = rangeObject.startDate
+    ? new Date(rangeObject.startDate).getTime()
+    : null;
+  let endDateTimestamp = rangeObject.endDate
+    ? new Date(rangeObject.endDate).getTime() + 24 * 60 * 60 * 1000
+    : null;
+
+  if (
+    startDateTimestamp !== null &&
+    endDateTimestamp !== null &&
+    rangeObject.startDate !== rangeObject.endDate
+  ) {
+    return articles.filter((article) => {
+      const articleTimestamp = article.launchDateTimestamp;
+      return (
+        (startDateTimestamp !== null
+          ? articleTimestamp >= startDateTimestamp
+          : true) &&
+        (endDateTimestamp !== null
+          ? articleTimestamp <= endDateTimestamp
+          : true)
+      );
+    });
+  }
+
+  return articles;
+}
+
 export {
   askChangelogAI,
   getRefinedArticles,
   determineSources,
+  filterArticlesByDateRange,
   type RefinedArticle as RefinedArticle,
   createExtraReferencesTool,
 };
