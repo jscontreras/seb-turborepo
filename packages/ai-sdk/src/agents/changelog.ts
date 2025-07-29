@@ -40,7 +40,7 @@ async function getRefinedArticles() {
 async function askChangelogAI(
   prompt: string,
   dateRange: z.infer<typeof ZodrangeDetectorSchema>,
-  model: string = "openai/gpt-4.1-nano",
+  model: string = "openai/gpt-4.1-mini",
 ) {
   const changelogInstructions = `
 Your name is Vercel Changelog Agent.
@@ -77,6 +77,7 @@ Respond in a single section making sure that the articles are sorted by release 
   // Return a complete response - streaming is handled by the main streamText call
   return await generateText({
     model: gateway(model),
+    temperature: 0.5,
     maxOutputTokens: 32000,
     system: changelogInstructions,
     prompt: prompt,
@@ -126,103 +127,69 @@ Return a plain array of site source strings. Do not include anything else.
   return Array.from(new Set(object.sources));
 }
 
-/**
- * Create a tool to get extra references section to append to the response
- * @param sources - The sources to search the web for
- * @returns The tool to get extra references section to append to the response
- */
-function createExtraReferencesTool(sources: string[]): {
-  getExtraReferences?: Tool;
-} {
-  // Only keep valid sites for filter
-  const allowedDomains = sources;
+// Only allowed URL prefixes—update as needed for each content type
+const URL_PATTERNS: Record<string, string[]> = {
+  Blogs: ['https://vercel.com/blog/', 'https://nextjs.org/blog/'],
+  Guides: ['https://vercel.com/guides/'],
+  Docs: ['https://vercel.com/docs/'],
+};
 
-  return {
-    getExtraReferences: tool({
-      name: "getExtraReferences",
-      description: "Get extra references section to append to the response.",
-      inputSchema: z.object({
-        response: z
-          .string()
-          .describe("The response to append the extra references to"),
-      }),
-      execute: async ({ response }) => {
-        if (allowedDomains.length === 0) {
-          return "---";
-        }
 
-        const perplexitySystemPrompt = `
-# JOB DESCRIPTION:
-- You are a web search bot that retrieves up to 5 references ONLY from the specified domains.
-- Do NOT include any references from domains  differnet than ${allowedDomains.join(", ")}.
-- Each reference should be a sentence summarizing the content of the article.
-- If no valid references are found, reply: "No additional references available from the specified domains."
+// Generates the strict system prompt for reference extraction
+function generateSystemPrompt(toolName: string): string {
+  const allowedUrls = URL_PATTERNS;
+  return `
+You are a markdown reference assistant that ONLY extracts items where the URL starts with one of:
+${allowedUrls}
 
-# FINAL VERIFICATION:
-- All your references are from the domains ${allowedDomains.join(", ")}. Remove the entire reference if it is not 100%from the domains ${allowedDomains.join(", ")}.
-- The entire response should be in markdown format.
-- Do not include the original prompt in the response.
-- Format the response as a markdown response".
+If you find zero valid URLs, reply: "No additional references available from the specified domains."
+Never guess, rewrite, paraphrase, or summarize sources.
+
+Format:
+---
+## ${toolName} EXTRACT
+- [Title](link) - one or two sentence summary.
+- ...
+---
+
+No results? Reply only: "No additional references available from the specified domains."
+
+Only output valid references, nothing else.
 `;
-
-        const { text: initialResponse, sources: preplexitySources } =
-          await generateText({
-            model: gateway("perplexity/sonar"),
-            system: perplexitySystemPrompt,
-            prompt: response,
-            providerOptions: {
-              search_domain_filter: allowedDomains,
-            } as any,
-          });
-
-        const references = preplexitySources
-          .map(
-            (source: any, index: number) => `- [${index + 1}](${source.url})`,
-          )
-          .join("\n\n");
-        return `${initialResponse} ${references}`;
-        // const rewriteInstructions = `
-        // # DESCRIPTION:
-        // You are a markdown modifier and sources verifier bot that can add links to the prompt based on the sources provided. The numbers in the prompt are the source numbers.
-        // For example:
-        // - Remove any references and responses from domains other than ${allowedDomains.join(", ")}.
-        // - if the prompt contains [1] it means that the source is the first one in the sources array, etc.
-        // - if the prompt contains [2] it means that the source is the second one in the sources array, etc.
-        // - if the prompt contains [3] it means that the source is the third one in the sources array, etc.
-        // - Add parenthesys around the numbers as part of the link text so it looks like [(number)](url)
-        // - You always return the prompt with the links added.
-        // - The entire response should be in markdown format.`;
-        // const { text: rewrittenPrompt } = await generateText({
-        //   model: gateway("openai/gpt-4.1-nano"),
-        //   system: rewriteInstructions,
-        //   prompt: JSON.stringify({
-        //     prompt: initialResponse,
-        //     sources: preplexitySources,
-        //   }),
-        // });
-
-        // try {
-        //   console.log(">>>rewrittenPrompt", "VALID JSON");
-        //   const rewrittenPromptJson = JSON.parse(rewrittenPrompt);
-        //   return `${sources.length > 0 ? "## Additional References \n\n" : ""}
-        //   ${rewrittenPromptJson.prompt}
-        //   `;
-        // } catch {
-        //   return rewrittenPrompt;
-        // }
-      },
-    }),
-  };
 }
 
-/**
- * Get the Vercel Perplexity tools
- * @returns The Vercel Perplexity tools
- */
 function getVercelPerplexityTools(): Record<string, Tool> {
-  return {
-    getChangelogs,
-  };
+  const tools: Record<string, Tool> = {};
+
+  for (const toolName of Object.keys(URL_PATTERNS)) {
+    tools[`get${toolName}`] = tool({
+      name: toolName,
+      description: `Get ${toolName} references from official Vercel sources`,
+      inputSchema: z.object({
+        changelogResponse: z.string().describe("The response from the getChangelogs tool. Do not include any other text.")
+      }),
+      execute: async ({ changelogResponse }: { changelogResponse: string }) => {
+        console.log(">>>", '...', changelogResponse.split(" ").slice(0, 4).join(" "), '...');
+        const systemPrompt = generateSystemPrompt(toolName);
+        const result = await generateText({
+          model: "perplexity/sonar",
+          temperature: 0,
+          system: systemPrompt,
+          prompt: changelogResponse,
+          providerOptions: {
+            "search_domain_filter": ['vercel.com', 'nextjs.org'],
+          } as any,
+        });
+
+        return result;
+      },
+    });
+  }
+
+  // Add getChangelogs tool as before if defined elsewhere
+  tools.getChangelogs = getChangelogs;
+
+  return tools;
 }
 
 /**
@@ -271,6 +238,5 @@ export {
   determineSources,
   filterArticlesByDateRange,
   type RefinedArticle as RefinedArticle,
-  createExtraReferencesTool,
   getVercelPerplexityTools,
 };

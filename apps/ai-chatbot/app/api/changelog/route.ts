@@ -61,8 +61,8 @@ export async function POST(req: Request) {
         rangeObject = rangeObjectResponse;
       }
     }
-
-    sources = [...sources, ...(await determineSources(lastUserMessage))];
+    const detectedSources = await determineSources(lastUserMessage);
+    sources = detectedSources.length > 0 ? detectedSources : sources;
     console.log(">>>sources", sources);
     const result = streamText({
       model: gateway("gpt-4.1-mini"),
