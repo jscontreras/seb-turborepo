@@ -11,6 +11,10 @@ import {
 } from "@repo/ai-sdk/agents/rangeDetector";
 import { z } from "zod";
 
+// Allow streaming responses up to 5 minutes
+export const maxDuration = 300;
+let latestChangelogResponse: string | null = null;
+
 function createChangelogInstructions(
   sources: string[],
   rangeObject: z.infer<typeof ZodrangeDetectorSchema>,
@@ -24,9 +28,6 @@ function createChangelogInstructions(
    }
   `;
 }
-
-// Allow streaming responses up to 5 minutes
-export const maxDuration = 300;
 
 /**
  * POST request handler for the changelog API
@@ -51,7 +52,27 @@ export async function POST(req: Request) {
         .map((part: { text: any }) => part.text)
         .join("");
     }
+    if (!latestChangelogResponse) {
+      const changelogResponse = messages
+        .filter((msg: { role: string }) => msg.role === "assistant")
+        .map((assistantMessage: { parts: any }) =>
+          assistantMessage.parts.filter(
+            (part: { type: string; state: string }) =>
+              part.type === "tool-getChangelogs" &&
+              part.state === "output-available",
+          ),
+        )
+        .flat()
+        .pop();
 
+      if (changelogResponse) {
+        latestChangelogResponse = changelogResponse.output.steps
+          .map((step: any) =>
+            step.content.map((content: any) => content.text).join("\n"),
+          )
+          .join("\n");
+      }
+    }
     if (lastUserMessage) {
       let rangedPrompt = await rewriteRelativeDates(lastUserMessage);
       // If dates are found
@@ -77,7 +98,7 @@ export async function POST(req: Request) {
       ),
       messages: convertToModelMessages(messages),
       tools: {
-        ...getVercelPerplexityTools(),
+        ...getVercelPerplexityTools(latestChangelogResponse),
       },
       toolChoice: "auto",
     });

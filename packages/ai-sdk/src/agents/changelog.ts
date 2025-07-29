@@ -110,15 +110,18 @@ async function determineSources(prompt: string): Promise<string[]> {
     model: gateway("openai/gpt-4.1-nano"),
     system: `
 You are a bot that generates an array of search source site strings based on keywords found in the user's prompt.
-Rules:
+## Rules:
 - If the prompt mentions "guide" or "guidelines", include "guidelines".
 - If the prompt mentions "documentation" or "docs", include "docs".
 - If the prompt mentions "blog post" or "blog posts", include both "blogs".
 - If multiple categories are mentioned, include all relevant sources with no duplicates.
-- Only include sources explicitly indicated by the prompt's keywords.
+- If none of the above are mentioned, return an empty array.
+- Only include sources that are one of the following: "blogs", "guides", "docs".
+## OUTPUT:
 Return a plain array of site source strings. Do not include anything else.
     `,
     prompt,
+    temperature: 0,
     schema: z.object({
       sources: z.array(z.string()),
     }),
@@ -157,7 +160,9 @@ Only output valid references, nothing else.
 `;
 }
 
-function getVercelPerplexityTools(): Record<string, Tool> {
+function getVercelPerplexityTools(
+  changelogResponse: string | null,
+): Record<string, Tool> {
   const tools: Record<string, Tool> = {};
 
   for (const toolName of Object.keys(URL_PATTERNS)) {
@@ -165,17 +170,24 @@ function getVercelPerplexityTools(): Record<string, Tool> {
       name: toolName,
       description: `Get ${toolName} references from official Vercel sources`,
       inputSchema: z.object({
-        changelogResponse: z
+        changelogResponseTool: z
           .string()
           .describe(
             "The response result from the getChangelogs tool previously executed. Do not include the user prompt or any other text.",
           ),
       }),
-      execute: async ({ changelogResponse }: { changelogResponse: string }) => {
+      execute: async ({
+        changelogResponseTool,
+      }: {
+        changelogResponseTool: string;
+      }) => {
+        if (!changelogResponseTool) {
+          return "No changelog response available.";
+        }
         console.log(
           ">>>",
           "...",
-          changelogResponse.split(" ").slice(0, 4).join(" "),
+          (changelogResponse + "").split(" ").slice(0, 4).join(" "),
           "...",
         );
         const systemPrompt = generateSystemPrompt(toolName);
@@ -183,7 +195,7 @@ function getVercelPerplexityTools(): Record<string, Tool> {
           model: "perplexity/sonar",
           temperature: 0,
           system: systemPrompt,
-          prompt: changelogResponse,
+          prompt: changelogResponse + "",
           providerOptions: {
             search_domain_filter: ["vercel.com", "nextjs.org"],
           } as any,
