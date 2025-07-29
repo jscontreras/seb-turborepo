@@ -33,6 +33,7 @@ async function getRefinedArticles() {
 /**
  * Ask the changelog AI
  * @param prompt - The prompt to ask the changelog AI
+ * @param dateRange - The date range to filter articles
  * @param model - The model to use
  * @returns The response from the changelog AI
  */
@@ -43,7 +44,7 @@ async function askChangelogAI(
 ) {
   const changelogInstructions = `
 Your name is Vercel Changelog Agent.
-You answer questions about Vercel's changelog articles and recent feature launches. Always follow STEP 1 and STEP 2 in order, streaming STEP 1 first and STEP 2 second.
+You answer questions about Vercel's changelog articles and recent feature launches.
 
 IMPORTANT:
 - Unless the user specifies otherwise, always process and answer using the list of articles sorted chronologically from most recent to least recent, even when grouping into categories.
@@ -72,7 +73,8 @@ Respond in a single section making sure that the articles are sorted by release 
 
 ---
 `;
-  // First step: Generate marketing copy
+
+  // Return a complete response - streaming is handled by the main streamText call
   return await generateText({
     model: gateway(model),
     maxOutputTokens: 32000,
@@ -86,7 +88,7 @@ Respond in a single section making sure that the articles are sorted by release 
  * @returns The tool to ask the changelog AI
  */
 const getChangelogs = tool({
-  name: "askChangelogAi",
+  name: "getChangelogs",
   description: "Ask about Vercel's changelog articles",
   inputSchema: z.object({
     prompt: z.string(),

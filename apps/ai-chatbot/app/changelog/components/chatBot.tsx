@@ -278,21 +278,31 @@ export function ChatBot() {
                       </ReactMarkdown>
                     );
                   case "tool-getChangelogs":
-                    if (part.state === "output-available") {
-                      changelogExtract += (part.output as any).steps
-                        .map((step: any) =>
-                          step.content
-                            .map((content: any) => content.text)
-                            .join("\n"),
-                        )
-                        .join("\n");
+                    // Handle changelog tool response
+                    if (part.output) {
+                      // The output is the final text from the tool
+                      if (part.state === "output-available") {
+                        changelogExtract += (part.output as any).steps
+                          .map((step: any) =>
+                            step.content
+                              .map((content: any) => content.text)
+                              .join("\n"),
+                          )
+                          .join("\n");
+                      }
                       return (
-                        <ReactMarkdown key={index} components={{ p: "span" }}>
-                          {changelogExtract + ""}
-                        </ReactMarkdown>
+                        <div key={index}>
+                          <ReactMarkdown>{changelogExtract}</ReactMarkdown>
+                        </div>
                       );
                     } else {
-                      return <span key={index}>"Generating changelog..."</span>;
+                      // Show loading state when output is not yet available
+                      return (
+                        <div key={index} className="flex items-center gap-2">
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          <span>Generating changelog response...</span>
+                        </div>
+                      );
                     }
 
                   default:
