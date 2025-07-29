@@ -129,11 +129,10 @@ Return a plain array of site source strings. Do not include anything else.
 
 // Only allowed URL prefixes—update as needed for each content type
 const URL_PATTERNS: Record<string, string[]> = {
-  Blogs: ['https://vercel.com/blog/', 'https://nextjs.org/blog/'],
-  Guides: ['https://vercel.com/guides/'],
-  Docs: ['https://vercel.com/docs/'],
+  Blogs: ["https://vercel.com/blog/", "https://nextjs.org/blog/"],
+  Guides: ["https://vercel.com/guides/"],
+  Docs: ["https://vercel.com/docs/"],
 };
-
 
 // Generates the strict system prompt for reference extraction
 function generateSystemPrompt(toolName: string): string {
@@ -166,10 +165,19 @@ function getVercelPerplexityTools(): Record<string, Tool> {
       name: toolName,
       description: `Get ${toolName} references from official Vercel sources`,
       inputSchema: z.object({
-        changelogResponse: z.string().describe("The response from the getChangelogs tool. Do not include any other text.")
+        changelogResponse: z
+          .string()
+          .describe(
+            "The response from the getChangelogs tool. Do not include any other text.",
+          ),
       }),
       execute: async ({ changelogResponse }: { changelogResponse: string }) => {
-        console.log(">>>", '...', changelogResponse.split(" ").slice(0, 4).join(" "), '...');
+        console.log(
+          ">>>",
+          "...",
+          changelogResponse.split(" ").slice(0, 4).join(" "),
+          "...",
+        );
         const systemPrompt = generateSystemPrompt(toolName);
         const result = await generateText({
           model: "perplexity/sonar",
@@ -177,7 +185,7 @@ function getVercelPerplexityTools(): Record<string, Tool> {
           system: systemPrompt,
           prompt: changelogResponse,
           providerOptions: {
-            "search_domain_filter": ['vercel.com', 'nextjs.org'],
+            search_domain_filter: ["vercel.com", "nextjs.org"],
           } as any,
         });
 

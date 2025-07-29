@@ -279,15 +279,42 @@ export function ChatBot() {
                     );
                   case "tool-getBlogs":
                     // Usage for Blogs
-                    return(<div key={`${index}-blogs`}>{renderToolOutput(part, index, "Blogs", "https://vercel.com/blog/")}</div>);
+                    return (
+                      <div key={`${index}-blogs`}>
+                        {renderToolOutput(
+                          part,
+                          index,
+                          "Blogs",
+                          "https://vercel.com/blog/",
+                        )}
+                      </div>
+                    );
                     break;
                   case "tool-getGuides":
                     // Usage for Guides
-                    return(<div key={`${index}-guides`}>{renderToolOutput(part, index, "Guides", "https://vercel.com/guides/")}</div>);
+                    return (
+                      <div key={`${index}-guides`}>
+                        {renderToolOutput(
+                          part,
+                          index,
+                          "Guides",
+                          "https://vercel.com/guides/",
+                        )}
+                      </div>
+                    );
                     break;
                   case "tool-getDocs":
                     // Usage for Docs
-                    return(<div key={`${index}-docs`}>{renderToolOutput(part, index, "Docs", "https://vercel.com/docs/")}</div>);
+                    return (
+                      <div key={`${index}-docs`}>
+                        {renderToolOutput(
+                          part,
+                          index,
+                          "Docs",
+                          "https://vercel.com/docs/",
+                        )}
+                      </div>
+                    );
                     break;
                   case "tool-getChangelogs":
                     // Handle changelog tool response
@@ -331,19 +358,33 @@ export function ChatBot() {
   );
 }
 
-const renderToolOutput = (part: any, index: number, type: string, urlPrefix: string) => {
+const renderToolOutput = (
+  part: any,
+  index: number,
+  type: string,
+  urlPrefix: string,
+) => {
   console.log(">>>Tool", part);
   let stringResults = "";
   if (part.state === "output-available") {
     // The output is the final text from the tool
     if (part.state === "output-available") {
       const filteredResults = (part.output as any).steps
-        .map((step: any) => step.content.filter((content: any) => content.type === "source" && content.url.startsWith(urlPrefix)))
+        .map((step: any) =>
+          step.content.filter(
+            (content: any) =>
+              content.type === "source" && content.url.startsWith(urlPrefix),
+          ),
+        )
         .flat();
 
       console.log(">>>Filtered Results", filteredResults);
       if (filteredResults.length > 0) {
-        stringResults += `## ${type} Extract\n` + filteredResults.map((content: any) => `- [${content.url}](${content.url})`).join("\n");
+        stringResults +=
+          `## ${type} Extract\n` +
+          filteredResults
+            .map((content: any) => `- [${content.url}](${content.url})`)
+            .join("\n");
       } else {
         stringResults += `## ${type} Extract\n - No results found.`;
       }
