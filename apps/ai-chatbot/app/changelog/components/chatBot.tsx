@@ -524,7 +524,7 @@ export function ChatBot() {
                     );
                     break;
                   case "tool-getChangelogs":
-                    console.log(">>>partChangelogs", part);
+                    // console.log(">>>partChangelogs", part);
                     // Handle changelog tool response
                     if (part.errorText) {
                       return (
@@ -537,13 +537,13 @@ export function ChatBot() {
                       // The output is the final text from the tool
                       if (part.state === "output-available") {
                         if ((part.output as any).steps) {
-                        changelogExtract += (part.output as any).steps
-                          .map((step: any) =>
-                            step.content
-                              .map((content: any) => content.text)
-                              .join("\n"),
-                          )
-                          .join("\n");
+                          changelogExtract += (part.output as any).steps
+                            .map((step: any) =>
+                              step.content
+                                .map((content: any) => content.text)
+                                .join("\n"),
+                            )
+                            .join("\n");
                         } else {
                           changelogExtract += part.output + "";
                         }

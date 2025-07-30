@@ -51,31 +51,32 @@ export async function POST(req: Request) {
         .filter((part: { type: string }) => part.type === "text")
         .map((part: { text: any }) => part.text)
         .join("");
-    }
-    const changelogResponse = messages
-      .slice()
-      .reverse()
-      .find(
-        (msg: { role: string; parts: [] }) =>
-          msg.role === "assistant" &&
-          msg.parts.some(
-            (part: { type: string; state: string }) =>
-              part.type === "tool-getChangelogs" &&
-              part.state === "output-available",
-          ),
-      )
-      ?.parts.find(
-        (part: { type: string; state: string }) =>
-          part.type === "tool-getChangelogs" &&
-          part.state === "output-available",
-      );
 
-    if (changelogResponse) {
-      latestChangelogResponse = changelogResponse.output.steps
-        .map((step: any) =>
-          step.content.map((content: any) => content.text).join("\n"),
+      latestChangelogResponse = null;
+      const changelogResponse = [...messages]
+        .reverse()
+        .find(
+          (msg: { role: string; parts: [] }) =>
+            msg.role === "assistant" &&
+            msg.parts.some(
+              (part: { type: string; state: string }) =>
+                part.type === "tool-getChangelogs" &&
+                part.state === "output-available",
+            ),
         )
-        .join("\n");
+        ?.parts.find(
+          (part: { type: string; state: string }) =>
+            part.type === "tool-getChangelogs" &&
+            part.state === "output-available",
+        );
+
+      if (changelogResponse) {
+        latestChangelogResponse = changelogResponse.output.steps
+          .map((step: any) =>
+            step.content.map((content: any) => content.text).join("\n"),
+          )
+          .join("\n");
+      }
     }
 
     if (lastUserMessage) {
