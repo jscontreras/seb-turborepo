@@ -7,7 +7,7 @@ import { rangeDetectorSchema, ZodrangeDetectorSchema } from "./rangeDetector";
 
 type RefinedArticle = {
   title: string;
-  content: string;
+  // content: string;
   link: string;
   launchDate: string;
   launchDateTimestamp: number;
@@ -22,7 +22,7 @@ async function getRefinedArticles() {
         title: article.title,
         link: article.link,
         launchDate: article.launchDate,
-        content: article.markdownContent,
+        // content: article.markdownContent,
         launchDateTimestamp: new Date(article.launchDate).getTime(),
       };
       return refinedArticle;
