@@ -8,11 +8,11 @@
   },
   "dependencies": {
     "@ai-sdk/gateway": "1.0.0-beta.15",
-    "@ai-sdk/openai": "2.0.0-beta.13",
+    "@ai-sdk/openai": "2.0.0-beta.15",
     "@browserbasehq/sdk": "^2.6.0",
     "@types/turndown": "^5.0.5",
     "@vercel/blob": "^1.1.1",
-    "ai": "5.0.0-beta.29",
+    "ai": "5.0.0-beta.33",
     "auto-playwright": "^1.16.1",
     "body-parser": "^2.2.0",
     "playwright-core": "^1.54.1",
