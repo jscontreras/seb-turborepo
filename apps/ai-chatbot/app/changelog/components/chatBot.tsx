@@ -37,11 +37,35 @@ export function ChatBot() {
   const [isInitialized, setIsInitialized] = useState(false);
   const [isRestoring, setIsRestoring] = useState(false);
 
-  // Initialize chat with persistence
+  // Create a custom transport that extends DefaultChatTransport with error handling
+  const customTransport = new DefaultChatTransport({
+    api: "/api/changelog",
+    async fetch(url, options) {
+      try {
+        const response = await fetch(url, options);
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          const errorMessage =
+            errorData.error ||
+            `HTTP ${response.status}: ${response.statusText}`;
+          setError(errorMessage);
+          throw new Error(errorMessage);
+        }
+
+        return response;
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "An unexpected error occurred";
+        setError(errorMessage);
+        throw err;
+      }
+    },
+  });
+
+  // Initialize chat with persistence and custom transport
   const { messages, sendMessage, status, setMessages } = useChat({
-    transport: new DefaultChatTransport({
-      api: "/api/changelog",
-    }),
+    transport: customTransport,
   });
 
   // Initialize chat state from localStorage
@@ -239,6 +263,7 @@ export function ChatBot() {
     setMessages([]);
     setAttachments([]);
     setInput("");
+    setError(null); // Clear any errors when clearing chat
     localStorage.removeItem(STORAGE_KEYS.MESSAGES);
     localStorage.removeItem(STORAGE_KEYS.ATTACHMENTS);
     localStorage.removeItem(STORAGE_KEYS.INPUT);
@@ -268,6 +293,8 @@ export function ChatBot() {
         onSubmit={(e) => {
           e.preventDefault();
           if (input.trim()) {
+            // Clear any previous errors when sending a new message
+            setError(null);
             sendMessage({ text: input, files: attachments });
             setInput("");
             // Clear input from localStorage after sending
@@ -545,6 +572,13 @@ const renderToolOutput = (
   urlPrefix: string,
 ) => {
   console.log(">>>Tool", part);
+  if (part.errrText) {
+    return (
+      <div key={index}>
+        <span style={{ color: "red" }}>{part.errorText}</span>
+      </div>
+    );
+  }
   let stringResults = "";
   if (part.state === "output-available") {
     // The output is the final text from the tool

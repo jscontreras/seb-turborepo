@@ -52,27 +52,32 @@ export async function POST(req: Request) {
         .map((part: { text: any }) => part.text)
         .join("");
     }
-    if (!latestChangelogResponse) {
-      const changelogResponse = messages
-        .filter((msg: { role: string }) => msg.role === "assistant")
-        .map((assistantMessage: { parts: any }) =>
-          assistantMessage.parts.filter(
+    const changelogResponse = messages
+      .slice()
+      .reverse()
+      .find(
+        (msg: { role: string; parts: [] }) =>
+          msg.role === "assistant" &&
+          msg.parts.some(
             (part: { type: string; state: string }) =>
               part.type === "tool-getChangelogs" &&
               part.state === "output-available",
           ),
-        )
-        .flat()
-        .pop();
+      )
+      ?.parts.find(
+        (part: { type: string; state: string }) =>
+          part.type === "tool-getChangelogs" &&
+          part.state === "output-available",
+      );
 
-      if (changelogResponse) {
-        latestChangelogResponse = changelogResponse.output.steps
-          .map((step: any) =>
-            step.content.map((content: any) => content.text).join("\n"),
-          )
-          .join("\n");
-      }
+    if (changelogResponse) {
+      latestChangelogResponse = changelogResponse.output.steps
+        .map((step: any) =>
+          step.content.map((content: any) => content.text).join("\n"),
+        )
+        .join("\n");
     }
+
     if (lastUserMessage) {
       let rangedPrompt = await rewriteRelativeDates(lastUserMessage);
       // If dates are found

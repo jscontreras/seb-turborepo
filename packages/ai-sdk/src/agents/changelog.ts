@@ -181,7 +181,7 @@ function getVercelPerplexityTools(
       }: {
         changelogResponseTool: string;
       }) => {
-        if (!changelogResponseTool) {
+        if (!changelogResponse) {
           return "No changelog response available.";
         }
         console.log(
@@ -195,7 +195,7 @@ function getVercelPerplexityTools(
           model: "perplexity/sonar",
           temperature: 0,
           system: systemPrompt,
-          prompt: changelogResponse + "",
+          prompt: changelogResponseTool + "\n\n" + changelogResponse + " ",
           providerOptions: {
             search_domain_filter: ["vercel.com", "nextjs.org"],
           } as any,

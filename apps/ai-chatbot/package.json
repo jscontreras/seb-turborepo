@@ -7,7 +7,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "vercel": "rm -rf ../../.vercel && vercel dev --cwd ../../"
   },
   "dependencies": {
     "@ai-sdk/gateway": "1.0.0-beta.15",
