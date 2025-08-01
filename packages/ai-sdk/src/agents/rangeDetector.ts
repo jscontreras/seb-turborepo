@@ -61,7 +61,7 @@ If no date range is found, return the original prompt; otherwise, return the rew
 - If the prompt uses terms like latest, the ultimate, the fresh (referring to latest features), it means that isRangeInPrompt must be true and the startDate must be the date from the past 4 weeks and the endDate must be the current date.
 - For prompts containing wordslike "give me last X features" where X is a number, calculate the startDate based on the formula: startDate = currentDate - (30 + X) days and print the startDate and endDate accordingly.
 - If a date doesn't specify the year, use the current year: ${new Date().getFullYear()}.
-- Always use the provided currentDate: ${new Date().toISOString().split("T")[0]}.
+- Always use the provided currentDate: ${new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split("T")[0]}.
 And JUST return the rewritten prompt. Feel free to rewrite the prompt to make it more clear and concise always using the dates.`;
 
 /**
