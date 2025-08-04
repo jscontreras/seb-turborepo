@@ -18,7 +18,7 @@ const rangeDetectorSchema = z.object({
  * @returns The prompt for the range detector.
  */
 function generatePrompt(): string {
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split("T")[0];
   return `
 You are a date range detector for natural language prompts.
 

@@ -3,7 +3,7 @@ import { getVercelChangelogFromBlob } from "../rags/changelog";
 import { gateway } from "@ai-sdk/gateway";
 import { z } from "zod";
 import { tool } from "ai";
-import { rangeDetectorSchema, ZodrangeDetectorSchema } from "./rangeDetector";
+import { ZodrangeDetectorSchema } from "./rangeDetector";
 
 type RefinedArticle = {
   title: string;
