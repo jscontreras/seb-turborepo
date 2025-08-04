@@ -141,7 +141,7 @@ const URL_PATTERNS: Record<string, string[]> = {
 function generateSystemPrompt(toolName: string): string {
   const allowedUrls = URL_PATTERNS;
   return `
-You are a markdown reference assistant that ONLY extracts items where the URL starts with one of:
+You are a markdown reference assistant taht search the web based on the user's prompt and ONLY extracts items where the URL starts with one of:
 ${allowedUrls}
 
 If you find zero valid URLs, reply: "No additional references available from the specified domains."
@@ -181,13 +181,14 @@ function getVercelPerplexityTools(
       }: {
         changelogResponseTool: string;
       }) => {
-        if (!changelogResponse) {
-          return "No changelog response available.";
+        if (!changelogResponse && !changelogResponseTool) {
+          return "No changelog context or response available.";
         }
         console.log(
           ">>>",
           "...",
-          (changelogResponse + "").split(" ").slice(0, 4).join(" "),
+          (changelogResponse + "").split(" ").slice(0, 4).join(" ") +
+            changelogResponseTool,
           "...",
         );
         const systemPrompt = generateSystemPrompt(toolName);
@@ -195,7 +196,9 @@ function getVercelPerplexityTools(
           model: "perplexity/sonar",
           temperature: 0,
           system: systemPrompt,
-          prompt: changelogResponseTool + "\n\n" + changelogResponse + " ",
+          prompt: changelogResponse
+            ? changelogResponseTool + "\n\n" + changelogResponse + " "
+            : `Find any Vercel references about ${changelogResponseTool}`,
           providerOptions: {
             search_domain_filter: ["vercel.com", "nextjs.org"],
           } as any,

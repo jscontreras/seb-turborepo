@@ -595,24 +595,28 @@ const renderToolOutput = (
   if (part.state === "output-available") {
     // The output is the final text from the tool
     if (part.state === "output-available") {
-      const filteredResults = (part.output as any).steps
-        .map((step: any) =>
-          step.content.filter(
-            (content: any) =>
-              content.type === "source" && content.url.startsWith(urlPrefix),
-          ),
-        )
-        .flat();
+      if (part.output.steps) {
+        const filteredResults = (part.output as any).steps
+          .map((step: any) =>
+            step.content.filter(
+              (content: any) =>
+                content.type === "source" && content.url.startsWith(urlPrefix),
+            ),
+          )
+          .flat();
 
-      console.log(">>>Filtered Results", filteredResults);
-      if (filteredResults.length > 0) {
-        stringResults +=
-          `## ${type} Extract\n` +
-          filteredResults
-            .map((content: any) => `- [${content.url}](${content.url})`)
-            .join("\n");
+        console.log(">>>Filtered Results", filteredResults);
+        if (filteredResults.length > 0) {
+          stringResults +=
+            `## ${type} Extract\n` +
+            filteredResults
+              .map((content: any) => `- [${content.url}](${content.url})`)
+              .join("\n");
+        } else {
+          stringResults += `## ${type} Extract\n - No results found.`;
+        }
       } else {
-        stringResults += `## ${type} Extract\n - No results found.`;
+        stringResults += part.output + "";
       }
     }
     return (
