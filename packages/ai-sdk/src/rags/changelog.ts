@@ -103,7 +103,7 @@ async function getVercelChangelogFromWebsite(size: number = 10) {
       (node: HTMLElement) => node.innerHTML,
     );
     const launchDate = await articleNode.$eval(
-      'time[class^="date-pill_date"]',
+      'time[class^="date-pill-module"]',
       (node) => node.getAttribute("datetime") || "",
     );
 
