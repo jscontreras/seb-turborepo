@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function Page() {
   return (
-    <div className="vercel-changelog-chatbot">
+    <div className="vercel-changelog-chatbot flex-1 min-h-0 flex flex-col">
       <ChatBot />
     </div>
   );

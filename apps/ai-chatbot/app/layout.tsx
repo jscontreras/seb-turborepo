@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <nav className="p-4 bg-primary text-primary-foreground">
           <div className="flex justify-between max-w-4xl mx-auto">
@@ -43,7 +43,7 @@ export default function RootLayout({
             </div>
           </div>
         </nav>
-        <main>{children}</main>
+        <main className="flex-1 min-h-0">{children}</main>
       </body>
     </html>
   );

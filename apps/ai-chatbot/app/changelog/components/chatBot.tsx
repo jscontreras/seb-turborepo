@@ -272,7 +272,7 @@ export function ChatBot() {
     sessionStorage.removeItem("chat-session-id");
   };
   return (
-    <div className="max-w-4xl p-4 mx-auto changelog-bot">
+    <div className="p-4 mx-auto changelog-bot flex-1 min-h-0 flex flex-col w-full max-w-none xl:max-w-6xl">
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold">
           {"AI Bot (Vercel Changelog RAG)"}
@@ -414,7 +414,7 @@ export function ChatBot() {
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
-      <div className="space-y-4 flex flex-col-reverse">
+      <div className="space-y-4 flex flex-col-reverse overflow-auto flex-1 min-h-0">
         {messages.map((message) => {
           let extraReferences = "";
           let changelogExtract = "";
