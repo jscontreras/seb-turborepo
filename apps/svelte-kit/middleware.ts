@@ -1,4 +1,4 @@
-import { next } from "@vercel/edge";
+import { next } from "@vercel/node";
 
 // config with custom matcher - include redirect routes
 export const config = {
