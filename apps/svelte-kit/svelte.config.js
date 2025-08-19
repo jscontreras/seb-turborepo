@@ -7,7 +7,12 @@ const config = {
 	// for more information about preprocessors
 	preprocess: vitePreprocess(),
 	kit: {
-		adapter: adapter()
+		adapter: adapter({
+			runtime: "nodejs22.x",
+		}),
+		router: {
+			resolution: 'server'
+		}
 	}
 };
 
