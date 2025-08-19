@@ -6,9 +6,11 @@ const config = {
 	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
 	// for more information about preprocessors
 	preprocess: vitePreprocess(),
+	externals: ['@sveltejs/kit'],
 	kit: {
 		adapter: adapter({
-			runtime: "nodejs22.x",
+			platform: 'node',
+			external: ['node:crypto']
 		}),
 		router: {
 			resolution: 'server'
