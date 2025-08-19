@@ -1,6 +1,7 @@
 // config with custom matcher - include redirect routes
 export const config = {
   matcher: ["/", "/redirect/:path*"],
+  runtime: 'nodejs', // defaults to 'edge'
 };
 
 export default function middleware(request: Request) {
