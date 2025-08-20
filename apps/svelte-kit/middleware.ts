@@ -1,7 +1,8 @@
+import { next } from "@vercel/edge";
+
 // config with custom matcher - include redirect routes
 export const config = {
   matcher: ["/", "/redirect/:path*"],
-  runtime: 'nodejs',
 };
 
 export default function middleware(request: Request) {
@@ -26,4 +27,5 @@ export default function middleware(request: Request) {
     zipcode: request.headers.get("x-vercel-ip-postal-code") || null,
   };
   console.log(">>>>>MIDDLEWARE VERCEL", geo);
+  return next();
 }

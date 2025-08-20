@@ -13,9 +13,9 @@ const config = {
 			platform: 'node',
 			external: ['node:crypto']
 		}),
-		router: {
-			resolution: 'server'
-		}
+		// router: {
+		// 	resolution: 'server'
+		// }
 	}
 };
 
