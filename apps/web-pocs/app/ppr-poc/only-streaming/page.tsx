@@ -119,7 +119,7 @@ export default function StreamingPage() {
           </Button>
         </div>
 
-        <h1 className="text-3xl font-bold mb-2">Streaming Only Demo</h1>
+        <h1 className="text-3xl font-bold mb-2">Streaming Only Demo (force-static)</h1>
         <p className="text-muted-foreground mb-8">
           This page uses regular streaming without PPR - components stream in but no static shell is prerendered.
         </p>
@@ -159,11 +159,11 @@ export default function StreamingPage() {
 
         <div className="mt-8 p-4 bg-orange-50 rounded-lg border border-orange-200">
           <h3 className="font-semibold text-orange-800 mb-2">What's happening:</h3>
-          <ul className="text-sm text-orange-700 space-y-1">
-            <li>1. Static shell (blue card) renders immediately</li>
-            <li>2. Loading skeletons show for dynamic content</li>
-            <li>3. Each component streams in as its data becomes available</li>
-            <li>4. Faster components appear before slower ones</li>
+          <ul className="space-y-1 text-muted-foreground">
+            <li>• Entire page waits for all content</li>
+            <li>• All content renders at once</li>
+            <li>• Longer initial loading time</li>
+            <li>• No progressive enhancement</li>
           </ul>
         </div>
       </div>

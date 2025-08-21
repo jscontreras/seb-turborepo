@@ -55,11 +55,11 @@ export default function HomePage() {
             </div>
             <div>
               <h3 className="font-medium mb-2">Streaming (/only-streaming)</h3>
-             <ul className="space-y-1 text-muted-foreground">
-                <li>• Static shell renders immediately</li>
-                <li>• Dynamic content streams in progressively</li>
-                <li>• Better perceived performance</li>
-                <li>• Fallback UI shows while loading</li>
+              <ul className="space-y-1 text-muted-foreground">
+                <li>• Entire page waits for all content</li>
+                <li>• All content renders at once</li>
+                <li>• Longer initial loading time</li>
+                <li>• No progressive enhancement</li>
               </ul>
             </div>
           </div>
