@@ -58,7 +58,7 @@ export default function HomePage() {
               <ul className="space-y-1 text-muted-foreground">
                 <li>• When force-static is used, the entire page renders everything at once as static, including the streaming components</li>
                 <li>• When force-dynamic is used, the entire page renders as dynamic, using the streaming components</li>
-                <li>• Longer initial loading time as the content that could be static is rendered as dynamic</li>
+                <li>• Longer initial loading time as the content that could be static is rendered as dynamic (2s added to make it noticeable)</li>
               </ul>
             </div>
           </div>

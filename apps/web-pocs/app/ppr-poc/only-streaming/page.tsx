@@ -109,7 +109,11 @@ function LoadingCard({ title, delay }: { title: string; delay: string }) {
   )
 }
 
-export default function StreamingPage() {
+export default async function StreamingPage() {
+  console.log(`[v0] StreamingPage starting at ${new Date().toLocaleTimeString()}`)
+  await new Promise((resolve) => setTimeout(resolve, 2000))
+  console.log(`[v0] StreamingPage finished 2s delay at ${new Date().toLocaleTimeString()}`)
+
   return (
     <div className="min-h-screen bg-background p-8">
       <div className="max-w-4xl mx-auto">
@@ -162,7 +166,7 @@ export default function StreamingPage() {
           <ul className="space-y-1 text-muted-foreground">
             <li>• When force-static is used, the entire page renders everything at once as static, including the streaming components</li>
             <li>• When force-dynamic is used, the entire page renders as dynamic, including the streaming components</li>
-            <li>• Longer initial loading time as the content that could be static is rendered as dynamic</li>
+            <li>• Longer initial loading time as the content that could be static is rendered as dynamic (2s added to make it noticeable)</li>
           </ul>
         </div>
       </div>

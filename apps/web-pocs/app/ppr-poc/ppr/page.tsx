@@ -125,7 +125,12 @@ function LoadingCard({ title, delay }: { title: string; delay: string }) {
   )
 }
 
-export default function PPRPage() {
+export default async function PPRPage() {
+  console.log(`[v0] PPRPage starting at ${new Date().toLocaleTimeString()}`)
+  // This waiting is irrelevant as it takes place during build time, not runtime
+  await new Promise((resolve) => setTimeout(resolve, 2000))
+  console.log(`[v0] PPRPage finished 2s delay at ${new Date().toLocaleTimeString()}`)
+
   return (
     <div className="min-h-screen bg-background p-8">
       <div className="max-w-4xl mx-auto">
