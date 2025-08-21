@@ -5,7 +5,7 @@ import { Suspense } from "react"
 import { Skeleton } from "@repo/ui/components/ui/skeleton"
 import { headers } from "next/headers"
 
-export const dynamic = "force-static"
+export const dynamic = "force-dynamic"
 export const experimental_ppr = false
 
 async function FastComponent() {
@@ -119,7 +119,7 @@ export default function StreamingPage() {
           </Button>
         </div>
 
-        <h1 className="text-3xl font-bold mb-2">Streaming Only Demo (force-static)</h1>
+        <h1 className="text-3xl font-bold mb-2">Streaming Only Demo (force-dynamic)</h1>
         <p className="text-muted-foreground mb-8">
           This page uses regular streaming without PPR - components stream in but no static shell is prerendered.
         </p>
@@ -160,10 +160,9 @@ export default function StreamingPage() {
         <div className="mt-8 p-4 bg-orange-50 rounded-lg border border-orange-200">
           <h3 className="font-semibold text-orange-800 mb-2">What's happening:</h3>
           <ul className="space-y-1 text-muted-foreground">
-            <li>• When force-static is used, the entire page render as static, including the streaming components (Disable JS and reload to see it)</li>
-            <li>• All content renders at once</li>
-            <li>• Longer initial loading time</li>
-            <li>• After full hyddration, streaming components will stream in (overriding the static content)</li>
+            <li>• When force-static is used, the entire page render everything at once as static, including the streaming components</li>
+            <li>• When force-dynamic is used, the entire page render as dynamic, including the streaming components</li>
+            <li>• Longer initial loading time as the content that could be static is rendered as dynamic</li>
           </ul>
         </div>
       </div>
