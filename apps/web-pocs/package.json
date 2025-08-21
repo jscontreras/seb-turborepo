@@ -14,6 +14,7 @@
   "dependencies": {
     "@ai-sdk/openai": "2.0.0-beta.15",
     "@ai-sdk/react": "2.0.0-beta.29",
+    "@radix-ui/react-slot": "^1.2.3",
     "@repo/ui": "workspace:*",
     "@upstash/redis": "^1.35.1",
     "@vercel/blob": "^1.1.1",

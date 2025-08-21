@@ -2,8 +2,8 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/navbar";
-import { VersionPopup } from "@/components/version-popup";
+import { Navbar } from "@repo/ui/components/navbar";
+import { VersionPopup } from "@repo/ui/components/version-popup";
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@repo/ui/components/card";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@repo/ui/components/badge";
 import {
   Upload,
   Search,
