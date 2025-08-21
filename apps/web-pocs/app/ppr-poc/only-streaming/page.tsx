@@ -5,7 +5,7 @@ import { Suspense } from "react"
 import { Skeleton } from "@repo/ui/components/ui/skeleton"
 import { headers } from "next/headers"
 
-export const dynamic = "force-static"
+export const dynamic = "force-dynamic"
 export const experimental_ppr = false
 
 async function FastComponent() {
@@ -119,7 +119,7 @@ export default function StreamingPage() {
           </Button>
         </div>
 
-        <h1 className="text-3xl font-bold mb-2">Streaming Only Demo (force-static)</h1>
+        <h1 className="text-3xl font-bold mb-2">Streaming Only Demo (force-dynamic)</h1>
         <p className="text-muted-foreground mb-8">
           This page uses regular streaming without PPR - components stream in but no static shell is prerendered.
         </p>
@@ -164,6 +164,7 @@ export default function StreamingPage() {
             <li>• All content renders at once</li>
             <li>• Longer initial loading time</li>
             <li>• No progressive enhancement</li>
+            <li>• If force-static is used, the page will not stream in (it will load all content at once, including the streaming components)</li>
           </ul>
         </div>
       </div>
