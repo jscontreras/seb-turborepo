@@ -126,6 +126,7 @@ export default async function StreamingPage() {
         <h1 className="text-3xl font-bold mb-2">Streaming Only Demo (force-dynamic)</h1>
         <p className="text-muted-foreground mb-8">
           This page uses regular streaming without PPR - components stream in but no static shell is prerendered.
+          A 2s delay is added to make it noticeable. This delay affects TTFB (Time To First Byte) as the page is rendered as dynamic.
         </p>
 
         {/* Static content */}
