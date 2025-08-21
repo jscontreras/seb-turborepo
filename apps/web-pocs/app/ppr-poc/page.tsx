@@ -56,10 +56,9 @@ export default function HomePage() {
             <div>
               <h3 className="font-medium mb-2">Streaming (/only-streaming)</h3>
               <ul className="space-y-1 text-muted-foreground">
-                <li>• Entire page waits for all content</li>
-                <li>• All content renders at once</li>
-                <li>• Longer initial loading time</li>
-                <li>• No progressive enhancement</li>
+                <li>• When force-static is used, the entire page renders everything at once as static, including the streaming components</li>
+                <li>• When force-dynamic is used, the entire page renders as dynamic, using the streaming components</li>
+                <li>• Longer initial loading time as the content that could be static is rendered as dynamic</li>
               </ul>
             </div>
           </div>

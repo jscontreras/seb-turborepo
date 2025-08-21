@@ -160,8 +160,8 @@ export default function StreamingPage() {
         <div className="mt-8 p-4 bg-orange-50 rounded-lg border border-orange-200">
           <h3 className="font-semibold text-orange-800 mb-2">What's happening:</h3>
           <ul className="space-y-1 text-muted-foreground">
-            <li>• When force-static is used, the entire page render everything at once as static, including the streaming components</li>
-            <li>• When force-dynamic is used, the entire page render as dynamic, including the streaming components</li>
+            <li>• When force-static is used, the entire page renders everything at once as static, including the streaming components</li>
+            <li>• When force-dynamic is used, the entire page renders as dynamic, including the streaming components</li>
             <li>• Longer initial loading time as the content that could be static is rendered as dynamic</li>
           </ul>
         </div>
