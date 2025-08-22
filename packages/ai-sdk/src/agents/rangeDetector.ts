@@ -41,7 +41,7 @@ If no date is found, return the range detector object, indicating isRangeInPromp
 async function detectRange(prompt: string) {
   try {
     const { object } = await generateObject({
-      model: gateway("openai/gpt-4.1-nano"),
+      model: gateway(process.env.NANO_MODEL || "openai/gpt-4.1-nano"),
       schema: rangeDetectorSchema,
       system: generatePrompt(),
       prompt: prompt,
@@ -73,7 +73,7 @@ And JUST return the rewritten prompt. Feel free to rewrite the prompt to make it
  */
 async function rewriteRelativeDates(prompt: string) {
   const { text } = await generateText({
-    model: gateway("openai/gpt-4.1-nano"),
+    model: gateway(process.env.NANO_MODEL || "openai/gpt-4.1-nano"),
     system: systemPrompt,
     prompt: prompt,
   });

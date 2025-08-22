@@ -1,87 +1,124 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/components/ui/card"
-import Link from "next/link"
-import { Button } from "@repo/ui/components/ui/button"
-import { Suspense } from "react"
-import { Skeleton } from "@repo/ui/components/ui/skeleton"
-import { headers } from "next/headers"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@repo/ui/components/ui/card";
+import Link from "next/link";
+import { Button } from "@repo/ui/components/ui/button";
+import { Suspense } from "react";
+import { Skeleton } from "@repo/ui/components/ui/skeleton";
+import { headers } from "next/headers";
 
-export const dynamic = "force-dynamic"
-export const experimental_ppr = false
+export const dynamic = "force-dynamic";
+export const experimental_ppr = false;
 
 async function FastComponent() {
-  const headersList = headers()
-  console.log(`[v0] Fast Content (2s delay) starting at ${new Date().toLocaleTimeString()}`)
-  await new Promise((resolve) => setTimeout(resolve, 2000))
-  console.log(`[v0] Fast Content (2s delay) finished rendering at ${new Date().toLocaleTimeString()}`)
+  const headersList = headers();
+  console.log(
+    `[v0] Fast Content (2s delay) starting at ${new Date().toLocaleTimeString()}`,
+  );
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  console.log(
+    `[v0] Fast Content (2s delay) finished rendering at ${new Date().toLocaleTimeString()}`,
+  );
 
   return (
     <Card className="border-green-200">
       <CardHeader>
-        <CardTitle className="text-green-600">Fast Content (2s delay)</CardTitle>
+        <CardTitle className="text-green-600">
+          Fast Content (2s delay)
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <p>This content loaded after 2000ms delay</p>
-        <p className="text-sm text-muted-foreground mt-2">Rendered at: {new Date().toLocaleTimeString()}</p>
+        <p className="text-sm text-muted-foreground mt-2">
+          Rendered at: {new Date().toLocaleTimeString()}
+        </p>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 async function MediumComponent() {
-  const headersList = headers()
-  console.log(`[v0] Medium Content (4s delay) starting at ${new Date().toLocaleTimeString()}`)
-  await new Promise((resolve) => setTimeout(resolve, 4000))
-  console.log(`[v0] Medium Content (4s delay) finished rendering at ${new Date().toLocaleTimeString()}`)
+  const headersList = headers();
+  console.log(
+    `[v0] Medium Content (4s delay) starting at ${new Date().toLocaleTimeString()}`,
+  );
+  await new Promise((resolve) => setTimeout(resolve, 4000));
+  console.log(
+    `[v0] Medium Content (4s delay) finished rendering at ${new Date().toLocaleTimeString()}`,
+  );
 
   return (
     <Card className="border-blue-200">
       <CardHeader>
-        <CardTitle className="text-blue-600">Medium Content (4s delay)</CardTitle>
+        <CardTitle className="text-blue-600">
+          Medium Content (4s delay)
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <p>This content loaded after 4000ms delay</p>
-        <p className="text-sm text-muted-foreground mt-2">Rendered at: {new Date().toLocaleTimeString()}</p>
+        <p className="text-sm text-muted-foreground mt-2">
+          Rendered at: {new Date().toLocaleTimeString()}
+        </p>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 async function SlowComponent() {
-  const headersList = headers()
-  console.log(`[v0] Slow Content (6s delay) starting at ${new Date().toLocaleTimeString()}`)
-  await new Promise((resolve) => setTimeout(resolve, 6000))
-  console.log(`[v0] Slow Content (6s delay) finished rendering at ${new Date().toLocaleTimeString()}`)
+  const headersList = headers();
+  console.log(
+    `[v0] Slow Content (6s delay) starting at ${new Date().toLocaleTimeString()}`,
+  );
+  await new Promise((resolve) => setTimeout(resolve, 6000));
+  console.log(
+    `[v0] Slow Content (6s delay) finished rendering at ${new Date().toLocaleTimeString()}`,
+  );
 
   return (
     <Card className="border-orange-200">
       <CardHeader>
-        <CardTitle className="text-orange-600">Slow Content (6s delay)</CardTitle>
+        <CardTitle className="text-orange-600">
+          Slow Content (6s delay)
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <p>This content loaded after 6000ms delay</p>
-        <p className="text-sm text-muted-foreground mt-2">Rendered at: {new Date().toLocaleTimeString()}</p>
+        <p className="text-sm text-muted-foreground mt-2">
+          Rendered at: {new Date().toLocaleTimeString()}
+        </p>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 async function VerySlowComponent() {
-  const headersList = headers()
-  console.log(`[v0] Very Slow Content (8s delay) starting at ${new Date().toLocaleTimeString()}`)
-  await new Promise((resolve) => setTimeout(resolve, 8000))
-  console.log(`[v0] Very Slow Content (8s delay) finished rendering at ${new Date().toLocaleTimeString()}`)
+  const headersList = headers();
+  console.log(
+    `[v0] Very Slow Content (8s delay) starting at ${new Date().toLocaleTimeString()}`,
+  );
+  await new Promise((resolve) => setTimeout(resolve, 8000));
+  console.log(
+    `[v0] Very Slow Content (8s delay) finished rendering at ${new Date().toLocaleTimeString()}`,
+  );
 
   return (
     <Card className="border-red-200">
       <CardHeader>
-        <CardTitle className="text-red-600">Very Slow Content (8s delay)</CardTitle>
+        <CardTitle className="text-red-600">
+          Very Slow Content (8s delay)
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <p>This content loaded after 8000ms delay</p>
-        <p className="text-sm text-muted-foreground mt-2">Rendered at: {new Date().toLocaleTimeString()}</p>
+        <p className="text-sm text-muted-foreground mt-2">
+          Rendered at: {new Date().toLocaleTimeString()}
+        </p>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 function LoadingCard({ title, delay }: { title: string; delay: string }) {
@@ -99,20 +136,32 @@ function LoadingCard({ title, delay }: { title: string; delay: string }) {
           <Skeleton className="h-4 w-3/4 animate-pulse" />
           <div className="flex items-center gap-2 mt-3">
             <div className="h-2 w-2 bg-orange-400 rounded-full animate-bounce"></div>
-            <div className="h-2 w-2 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
-            <div className="h-2 w-2 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-            <span className="text-xs text-orange-600 ml-2">Streaming {delay}...</span>
+            <div
+              className="h-2 w-2 bg-orange-400 rounded-full animate-bounce"
+              style={{ animationDelay: "0.1s" }}
+            ></div>
+            <div
+              className="h-2 w-2 bg-orange-400 rounded-full animate-bounce"
+              style={{ animationDelay: "0.2s" }}
+            ></div>
+            <span className="text-xs text-orange-600 ml-2">
+              Streaming {delay}...
+            </span>
           </div>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 export default async function StreamingPage() {
-  console.log(`[v0] StreamingPage starting at ${new Date().toLocaleTimeString()}`)
-  await new Promise((resolve) => setTimeout(resolve, 2000))
-  console.log(`[v0] StreamingPage finished 2s delay at ${new Date().toLocaleTimeString()}`)
+  console.log(
+    `[v0] StreamingPage starting at ${new Date().toLocaleTimeString()}`,
+  );
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  console.log(
+    `[v0] StreamingPage finished 2s delay at ${new Date().toLocaleTimeString()}`,
+  );
 
   return (
     <div className="min-h-screen bg-background p-8">
@@ -123,10 +172,14 @@ export default async function StreamingPage() {
           </Button>
         </div>
 
-        <h1 className="text-3xl font-bold mb-2">Streaming Only Demo (force-dynamic)</h1>
+        <h1 className="text-3xl font-bold mb-2">
+          Streaming Only Demo (force-dynamic)
+        </h1>
         <p className="text-muted-foreground mb-8">
-          This page uses regular streaming without PPR - components stream in but no static shell is prerendered.
-          A 2s delay is added to make it noticeable. This delay affects TTFB (Time To First Byte) as the page is rendered as dynamic.
+          This page uses regular streaming without PPR - components stream in
+          but no static shell is prerendered. A 2s delay is added to make it
+          noticeable. This delay affects TTFB (Time To First Byte) as the page
+          is rendered as dynamic.
         </p>
 
         {/* Static content */}
@@ -135,42 +188,66 @@ export default async function StreamingPage() {
             <CardTitle className="text-orange-700">Static Content</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>This content streams in with the rest of the page - no prerendered shell.</p>
-            <p className="text-sm text-muted-foreground mt-2">Page loaded at: {new Date().toLocaleTimeString()}</p>
+            <p>
+              This content streams in with the rest of the page - no prerendered
+              shell.
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              Page loaded at: {new Date().toLocaleTimeString()}
+            </p>
           </CardContent>
         </Card>
 
         <div className="space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
-            <Suspense fallback={<LoadingCard title="Fast Content" delay="2s" />}>
+            <Suspense
+              fallback={<LoadingCard title="Fast Content" delay="2s" />}
+            >
               <FastComponent />
             </Suspense>
 
-            <Suspense fallback={<LoadingCard title="Medium Content" delay="4s" />}>
+            <Suspense
+              fallback={<LoadingCard title="Medium Content" delay="4s" />}
+            >
               <MediumComponent />
             </Suspense>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <Suspense fallback={<LoadingCard title="Slow Content" delay="6s" />}>
+            <Suspense
+              fallback={<LoadingCard title="Slow Content" delay="6s" />}
+            >
               <SlowComponent />
             </Suspense>
 
-            <Suspense fallback={<LoadingCard title="Very Slow Content" delay="8s" />}>
+            <Suspense
+              fallback={<LoadingCard title="Very Slow Content" delay="8s" />}
+            >
               <VerySlowComponent />
             </Suspense>
           </div>
         </div>
 
         <div className="mt-8 p-4 bg-orange-50 rounded-lg border border-orange-200">
-          <h3 className="font-semibold text-orange-800 mb-2">What's happening:</h3>
+          <h3 className="font-semibold text-orange-800 mb-2">
+            What's happening:
+          </h3>
           <ul className="space-y-1 text-muted-foreground">
-            <li>• When force-static is used, the entire page renders everything at once as static, including the streaming components</li>
-            <li>• When force-dynamic is used, the entire page renders as dynamic, including the streaming components</li>
-            <li>• Longer initial loading time as the content that could be static is rendered as dynamic (2s added to make it noticeable)</li>
+            <li>
+              • When force-static is used, the entire page renders everything at
+              once as static, including the streaming components
+            </li>
+            <li>
+              • When force-dynamic is used, the entire page renders as dynamic,
+              including the streaming components
+            </li>
+            <li>
+              • Longer initial loading time as the content that could be static
+              is rendered as dynamic (2s added to make it noticeable)
+            </li>
           </ul>
         </div>
       </div>
     </div>
-  )
+  );
 }

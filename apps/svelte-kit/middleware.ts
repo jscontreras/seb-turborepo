@@ -7,12 +7,14 @@ export const config = {
 
 export default function middleware(request: Request) {
   const url = new URL(request.url);
-  const pathSegments = url.pathname.split('/').filter(Boolean);
+  const pathSegments = url.pathname.split("/").filter(Boolean);
 
   // Handle /redirect/[something] -> /redirected/[something]
-  if (pathSegments[0] === 'redirect' && pathSegments[1]) {
+  if (pathSegments[0] === "redirect" && pathSegments[1]) {
     const something = pathSegments[1];
-    console.log(`🔄 Middleware redirect: /redirect/${something} -> /redirected/${something}`);
+    console.log(
+      `🔄 Middleware redirect: /redirect/${something} -> /redirected/${something}`,
+    );
 
     // Create the redirect URL
     const redirectUrl = new URL(url);

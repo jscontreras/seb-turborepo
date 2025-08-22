@@ -8,7 +8,9 @@
       "env": [
         "REDIS_URL",
         "BLOB_READ_WRITE_TOKEN",
-        "AI_GATEWAY_API_KEY"
+        "AI_GATEWAY_API_KEY",
+        "NANO_MODEL",
+        "MINI_MODEL"
       ],
       "outputs": [
         ".next/**",
@@ -23,7 +25,9 @@
       "env": [
         "REDIS_URL",
         "BLOB_READ_WRITE_TOKEN",
-        "AI_GATEWAY_API_KEY"
+        "AI_GATEWAY_API_KEY",
+        "NANO_MODEL",
+        "MINI_MODEL"
       ]
     }
   }

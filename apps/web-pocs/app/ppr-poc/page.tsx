@@ -1,23 +1,33 @@
-import Link from "next/link"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@repo/ui/components/ui/card"
-import { Button } from "@repo/ui/components/ui/button"
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@repo/ui/components/ui/card";
+import { Button } from "@repo/ui/components/ui/button";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-background p-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-8">Next.js Rendering Strategies Demo</h1>
+        <h1 className="text-4xl font-bold text-center mb-8">
+          Next.js Rendering Strategies Demo
+        </h1>
 
         <div className="grid md:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
               <CardTitle>Partial Prerendering (PPR)</CardTitle>
-              <CardDescription>Demonstrates PPR with static shell and streaming dynamic content</CardDescription>
+              <CardDescription>
+                Demonstrates PPR with static shell and streaming dynamic content
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="mb-4 text-sm text-muted-foreground">
-                Shows how PPR renders a static shell immediately while streaming dynamic content as it becomes
-                available.
+                Shows how PPR renders a static shell immediately while streaming
+                dynamic content as it becomes available.
               </p>
               <Button asChild>
                 <Link href="/ppr-poc/ppr">View PPR Demo</Link>
@@ -28,11 +38,14 @@ export default function HomePage() {
           <Card>
             <CardHeader>
               <CardTitle>Streaming Only</CardTitle>
-              <CardDescription>Same logic but with force-static dynamic export</CardDescription>
+              <CardDescription>
+                Same logic but with force-static dynamic export
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="mb-4 text-sm text-muted-foreground">
-                Shows traditional streaming behavior where the entire page waits for all content to be ready.
+                Shows traditional streaming behavior where the entire page waits
+                for all content to be ready.
               </p>
               <Button asChild>
                 <Link href="/ppr-poc/only-streaming">View Streaming Demo</Link>
@@ -56,14 +69,24 @@ export default function HomePage() {
             <div>
               <h3 className="font-medium mb-2">Streaming (/only-streaming)</h3>
               <ul className="space-y-1 text-muted-foreground">
-                <li>• When force-static is used, the entire page renders everything at once as static, including the streaming components</li>
-                <li>• When force-dynamic is used, the entire page renders as dynamic, using the streaming components</li>
-                <li>• Longer initial loading time as the content that could be static is rendered as dynamic (2s added to make it noticeable)</li>
+                <li>
+                  • When force-static is used, the entire page renders
+                  everything at once as static, including the streaming
+                  components
+                </li>
+                <li>
+                  • When force-dynamic is used, the entire page renders as
+                  dynamic, using the streaming components
+                </li>
+                <li>
+                  • Longer initial loading time as the content that could be
+                  static is rendered as dynamic (2s added to make it noticeable)
+                </li>
               </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

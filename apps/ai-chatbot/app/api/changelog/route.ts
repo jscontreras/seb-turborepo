@@ -92,7 +92,7 @@ export async function POST(req: Request) {
     sources = detectedSources.length > 0 ? detectedSources : sources;
     console.log(">>>sources", sources);
     const result = streamText({
-      model: gateway("gpt-4.1-mini"),
+      model: gateway(process.env.MINI_MODEL || "gpt-4.1-mini"),
       system: createChangelogInstructions(
         sources,
         rangeObject || {

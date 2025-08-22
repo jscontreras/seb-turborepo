@@ -108,7 +108,7 @@ const getChangelogs = tool({
  */
 async function determineSources(prompt: string): Promise<string[]> {
   const { object } = await generateObject({
-    model: gateway("openai/gpt-4.1-nano"),
+    model: gateway(process.env.NANO_MODEL || "openai/gpt-4.1-nano"),
     system: `
 You are a bot that generates an array of search source site strings based on keywords found in the user's prompt.
 ## Rules:

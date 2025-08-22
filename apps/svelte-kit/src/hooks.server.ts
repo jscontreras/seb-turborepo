@@ -8,7 +8,6 @@ const featureFlagsHandle = createHandle({ secret: FLAGS_SECRET, flags });
 
 // Wrap the feature flags handle to add custom headers
 export const handle = async ({ event, resolve }) => {
-
   // Add to locals
   const geo = {
     country: decodeURIComponent(
