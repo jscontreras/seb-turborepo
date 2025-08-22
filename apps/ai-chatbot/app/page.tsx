@@ -3,10 +3,10 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, FileUIPart } from "ai";
 import { useRef, useState } from "react";
-import { Button } from "@repo/ui/components/ui/button";
+import { Button } from "@repo/ui/components/button";
 import ReactMarkdown from "react-markdown";
 import { ImageIcon, Loader2, Paperclip, X } from "lucide-react";
-import { Input } from "@repo/ui/components/ui/input";
+import { Input } from "@repo/ui/components/input";
 import {
   Alert,
   AlertDescription,
@@ -177,7 +177,7 @@ export default function Page() {
           <Button
             type="submit"
             disabled={status !== "ready"}
-            className="w-full"
+            className="w-full h-10 px-6 py-3 text-base"
           >
             {" "}
             {status !== "ready" ? "Generating..." : "Generate with AI"}
