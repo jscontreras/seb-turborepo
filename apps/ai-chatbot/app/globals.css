@@ -138,3 +138,7 @@ body {
     display: none;
   }
 }
+
+button {
+  height: 2rem;
+}

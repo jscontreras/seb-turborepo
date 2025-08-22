@@ -13,9 +13,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function Page() {
+  const nanoModel = process.env.NANO_MODEL || "Nano Model";
+  const miniModel = process.env.MINI_MODEL || "Mini Model";
   return (
     <div className="vercel-changelog-chatbot flex-1 min-h-0 flex flex-col">
-      <ChatBot />
+      <ChatBot nanoModel={nanoModel} miniModel={miniModel} />
     </div>
   );
 }

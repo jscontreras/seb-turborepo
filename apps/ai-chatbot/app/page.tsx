@@ -3,11 +3,15 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, FileUIPart } from "ai";
 import { useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import { ImageIcon, Loader2, Paperclip, X } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Input } from "@repo/ui/components/ui/input";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@repo/ui/components/ui/alert";
 
 export default function Page() {
   const { messages, sendMessage, status } = useChat({

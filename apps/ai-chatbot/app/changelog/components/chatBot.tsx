@@ -3,15 +3,19 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, FileUIPart } from "ai";
 import { useRef, useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import { ImageIcon, Loader2, Paperclip, X } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Input } from "@repo/ui/components/ui/input";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@repo/ui/components/ui/alert";
 import Prism from "prismjs";
 import "prismjs/themes/prism-okaidia.css";
 import "prismjs/components/prism-typescript";
-
+import { Badge } from "@repo/ui/components/badge";
 // Storage keys
 const STORAGE_KEYS = {
   MESSAGES: "changelog-chat-messages",
@@ -28,7 +32,13 @@ function PrismLoader() {
   return <div className="hidden"></div>;
 }
 
-export function ChatBot() {
+export function ChatBot({
+  nanoModel,
+  miniModel,
+}: {
+  nanoModel: string;
+  miniModel: string;
+}) {
   const [input, setInput] = useState("");
   const [attachments, setAttachments] = useState<FileUIPart[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -276,6 +286,12 @@ export function ChatBot() {
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold">
           {"AI Bot (Vercel Changelog RAG)"}
+          <Badge className="ml-4 bg-purple-100 text-purple-800 px-3 py-1">
+            {nanoModel}
+          </Badge>{" "}
+          <Badge className="bg-sky-100 text-sky-800 px-3 py-1">
+            {miniModel}
+          </Badge>
         </h1>
         {messages.length > 0 && (
           <Button
