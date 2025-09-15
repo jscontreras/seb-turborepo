@@ -205,3 +205,5 @@ button:disabled, [data-slot="button"]:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+@import "@repo/ui/repo-ui.css";

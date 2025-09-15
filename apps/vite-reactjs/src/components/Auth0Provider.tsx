@@ -1,8 +1,6 @@
 import { AppState, Auth0Provider } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
-
 import { ReactNode } from "react";
-
 export const Auth0ProviderWithNavigate = ({
   children,
 }: {
@@ -27,7 +25,7 @@ export const Auth0ProviderWithNavigate = ({
       }}
       onRedirectCallback={onRedirectCallback}
     >
-      {children}
+      {children as any}
     </Auth0Provider>
   );
 };

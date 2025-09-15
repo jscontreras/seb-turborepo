@@ -3,21 +3,31 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@repo/ui/*": ["../../packages/ui/src/*"]
+      "@/*": [
+        "./*"
+      ],
+      "@repo/ui/*": [
+        "../../packages/ui/src/*"
+      ]
     },
     "plugins": [
       {
         "name": "next"
       }
-    ]
+    ],
+    "jsx": "react-jsx"
   },
   "include": [
     "next-env.d.ts",
     "next.config.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
-, "../../packages/ui/src/components/navbar.tsx", "../../packages/ui/src/components/providers.tsx", "../../packages/ui/src/components/version-popup.tsx"  ],
-  "exclude": ["node_modules"]
+    ".next/types/**/*.ts",
+    "../../packages/ui/src/components/navbar.tsx",
+    "../../packages/ui/src/components/providers.tsx",
+    "../../packages/ui/src/components/version-popup.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

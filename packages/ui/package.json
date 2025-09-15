@@ -4,13 +4,18 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "lint": "eslint . --max-warnings 0"
+    "lint": "eslint . --max-warnings 0",
+    "build": "pnpm dlx @tailwindcss/cli -i ./src/styles/globals.css -o ./dist/repo-ui.css --minify"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",
+    "@radix-ui/react-slider": "^1.3.6",
     "@radix-ui/react-slot": "^1.2.3",
+    "@tailwindcss/cli": "^4.1.13",
+    "@vercel/analytics": "^1.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "geist": "^1.5.1",
     "lucide-react": "^0.532.0",
     "next": "15.6.0-canary.7",
     "next-themes": "^0.4.6",
@@ -28,10 +33,11 @@
     "@types/node": "^24.3.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "tailwindcss": "^4.0.8",
-    "typescript": "*"
+    "typescript": "*",
+    "tailwindcss": "^4.0.8"
   },
   "exports": {
+    "./repo-ui.css": "./dist/repo-ui.css",
     "./globals.css": "./src/styles/globals.css",
     "./postcss.config": "./postcss.config.mjs",
     "./lib/*": "./src/lib/*.ts",
