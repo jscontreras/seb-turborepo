@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import type React from "react";
 import { AudioLibrary } from "./audioLibrary";
 
 export const metadata: Metadata = {
