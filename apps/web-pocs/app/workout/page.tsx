@@ -10,6 +10,8 @@ import {
 } from "@repo/ui/components/ui/card";
 import { Slider } from "@repo/ui/components/ui/slider";
 import { Badge } from "@repo/ui/components/ui/badge";
+import { Checkbox } from "@repo/ui/components/ui/checkbox";
+import { Label } from "@repo/ui/components/ui/label";
 import { Play, Pause, Square, RotateCcw } from "lucide-react";
 
 type ExerciseType = {
@@ -56,34 +58,62 @@ export default function EllipticalApp() {
   const [exerciseTimeRemaining, setExerciseTimeRemaining] = useState(45); // 45 seconds per exercise
   const [routine, setRoutine] = useState<ExerciseType[]>([]);
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
+  const [selectedExercises, setSelectedExercises] = useState<string[]>(
+    exercises.map((e) => e.name),
+  );
 
   // Generate random routine
-  const generateRoutine = useCallback((totalMinutes: number) => {
-    const totalSeconds = totalMinutes * 60;
-    const exercisesNeeded = Math.floor(totalSeconds / 45); // 45 seconds per exercise
-    const newRoutine: ExerciseType[] = [];
-
-    // Start with low intensity
-    let useHighIntensity = false;
-
-    for (let i = 0; i < exercisesNeeded; i++) {
-      const intensityExercises = exercises.filter((ex) =>
-        useHighIntensity ? ex.intensity === "high" : ex.intensity === "low",
+  const generateRoutine = useCallback(
+    (totalMinutes: number) => {
+      const availableExercises = exercises.filter((e) =>
+        selectedExercises.includes(e.name),
       );
-      const randomExercise =
-        intensityExercises[
-          Math.floor(Math.random() * intensityExercises.length)
-        ];
-      newRoutine.push(randomExercise);
-
-      // Alternate intensity every 2-3 exercises
-      if (i > 0 && i % (Math.floor(Math.random() * 2) + 2) === 0) {
-        useHighIntensity = !useHighIntensity;
+      if (availableExercises.length === 0) {
+        // Handle case where no exercises are selected, maybe alert user or use all as default
+        return [];
       }
-    }
+      const totalSeconds = totalMinutes * 60;
+      const exercisesNeeded = Math.floor(totalSeconds / 45); // 45 seconds per exercise
+      const newRoutine: ExerciseType[] = [];
 
-    return newRoutine;
-  }, []);
+      // Start with low intensity
+      let useHighIntensity = false;
+
+      for (let i = 0; i < exercisesNeeded; i++) {
+        const intensityExercises = availableExercises.filter((ex) =>
+          useHighIntensity ? ex.intensity === "high" : ex.intensity === "low",
+        );
+
+        if (intensityExercises.length === 0) {
+          // If no exercises for current intensity, switch intensity
+          useHighIntensity = !useHighIntensity;
+          const fallbackIntensityExercises = availableExercises.filter((ex) =>
+            useHighIntensity ? ex.intensity === "high" : ex.intensity === "low",
+          );
+          if (fallbackIntensityExercises.length === 0) continue; // no available exercises for either intensity
+          const randomExercise =
+            fallbackIntensityExercises[
+              Math.floor(Math.random() * fallbackIntensityExercises.length)
+            ];
+          newRoutine.push(randomExercise);
+        } else {
+          const randomExercise =
+            intensityExercises[
+              Math.floor(Math.random() * intensityExercises.length)
+            ];
+          newRoutine.push(randomExercise);
+        }
+
+        // Alternate intensity every 2-3 exercises
+        if (i > 0 && i % (Math.floor(Math.random() * 2) + 2) === 0) {
+          useHighIntensity = !useHighIntensity;
+        }
+      }
+
+      return newRoutine;
+    },
+    [selectedExercises],
+  );
 
   // Start workout
   const startWorkout = () => {
@@ -113,10 +143,15 @@ export default function EllipticalApp() {
 
   // Reset to setup
   const resetToSetup = () => {
-    setTimeRemaining(selectedTime * 60);
-    setCurrentExercise(exercises[0]);
-    setExerciseTimeRemaining(45);
-    setCurrentExerciseIndex(0);
+    stopWorkout();
+  };
+
+  const toggleExerciseSelection = (exerciseName: string) => {
+    setSelectedExercises((prev) =>
+      prev.includes(exerciseName)
+        ? prev.filter((name) => name !== exerciseName)
+        : [...prev, exerciseName],
+    );
   };
 
   // Timer effect
@@ -168,8 +203,8 @@ export default function EllipticalApp() {
 
   if (currentExercise) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 dark:from-gray-900 dark:to-gray-800 p-4">
-        <div className="max-w-md mx-auto space-y-6">
+      <div className="max-sm:p-0 min-h-screen bg-gradient-to-br from-blue-50 to-green-50 dark:from-gray-900 dark:to-gray-800 md:p-4">
+        <div className="max-w-md mx-auto md:space-y-6">
           {/* Main Timer */}
           <Card className="text-center">
             <CardContent className="pt-6">
@@ -283,7 +318,8 @@ export default function EllipticalApp() {
               Stop
             </Button>
             <Button onClick={resetToSetup} variant="outline" size="lg">
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw className="w-4 h-4 mr-2" />
+              Reset
             </Button>
           </div>
         </div>
@@ -292,7 +328,7 @@ export default function EllipticalApp() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 dark:from-gray-900 dark:to-gray-800 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 dark:from-gray-900 dark:to-gray-800 md:p-4">
       <div className="max-w-md mx-auto space-y-6">
         <Card>
           <CardHeader>
@@ -344,30 +380,51 @@ export default function EllipticalApp() {
               <h4 className="font-semibold text-center">Exercise Types</h4>
               <div className="grid grid-cols-1 gap-2 text-sm">
                 {exercises.map((exercise, index) => (
-                  <div
+                  <Label
                     key={index}
-                    className="flex justify-between items-center p-2 bg-muted rounded-lg"
+                    htmlFor={`ex-${index}`}
+                    className="flex items-center justify-between p-2 rounded-lg bg-muted cursor-pointer hover:bg-muted/90"
                   >
-                    <span className="font-medium">{exercise.name}</span>
-                    <div className="flex gap-2">
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        id={`ex-${index}`}
+                        checked={selectedExercises.includes(exercise.name)}
+                        onCheckedChange={() =>
+                          toggleExerciseSelection(exercise.name)
+                        }
+                      />
+                      <span className="font-medium">{exercise.name}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
                       <Badge
                         variant={
                           exercise.intensity === "high"
                             ? "destructive"
                             : "secondary"
                         }
-                        className="text-xs"
+                        className="text-xs pointer-events-none"
+                      >
+                        {exercise.intensity}
+                      </Badge>
+                      <Badge
+                        variant="outline"
+                        className="text-xs pointer-events-none"
                       >
                         {exercise.rpm} RPM
                       </Badge>
                     </div>
-                  </div>
+                  </Label>
                 ))}
               </div>
             </div>
 
             {/* Start Button */}
-            <Button onClick={startWorkout} size="lg" className="w-full">
+            <Button
+              onClick={startWorkout}
+              size="lg"
+              className="w-full"
+              disabled={selectedExercises.length === 0}
+            >
               <Play className="w-4 h-4 mr-2" />
               Start Workout
             </Button>
