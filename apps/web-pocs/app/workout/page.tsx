@@ -35,7 +35,19 @@ const exercises: ExerciseType[] = [
     intensity: "high",
   },
   {
+    name: "High Intensity - With Handles (backwards)",
+    rpm: 140,
+    handles: true,
+    intensity: "high",
+  },
+  {
     name: "Low Intensity - No Handles",
+    rpm: 140,
+    handles: false,
+    intensity: "low",
+  },
+  {
+    name: "Low Intensity - No Handles (backwards)",
     rpm: 140,
     handles: false,
     intensity: "low",
@@ -48,6 +60,8 @@ const exercises: ExerciseType[] = [
   },
 ];
 
+const exerciseDuration = 45;
+
 export default function EllipticalApp() {
   const [selectedTime, setSelectedTime] = useState(20); // in minutes
   const [isRunning, setIsRunning] = useState(false);
@@ -55,7 +69,7 @@ export default function EllipticalApp() {
   const [currentExercise, setCurrentExercise] = useState<ExerciseType | null>(
     null,
   );
-  const [exerciseTimeRemaining, setExerciseTimeRemaining] = useState(45); // 45 seconds per exercise
+  const [exerciseTimeRemaining, setExerciseTimeRemaining] = useState(exerciseDuration); // 45 seconds per exercise
   const [routine, setRoutine] = useState<ExerciseType[]>([]);
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [selectedExercises, setSelectedExercises] = useState<string[]>(
@@ -78,36 +92,45 @@ export default function EllipticalApp() {
 
       // Start with low intensity
       let useHighIntensity = false;
-
+      let previousExercise: ExerciseType | null = null;
       for (let i = 0; i < exercisesNeeded; i++) {
         const intensityExercises = availableExercises.filter((ex) =>
           useHighIntensity ? ex.intensity === "high" : ex.intensity === "low",
         );
 
-        if (intensityExercises.length === 0) {
-          // If no exercises for current intensity, switch intensity
+        // Filter out the previous exercise to avoid consecutive duplicates
+        const availableForSelection = intensityExercises.filter((ex) =>
+          !previousExercise || ex.name !== previousExercise.name
+        );
+
+        let selectedExercise: ExerciseType;
+
+        if (availableForSelection.length === 0) {
+          // If no exercises available after filtering, try switching intensity
           useHighIntensity = !useHighIntensity;
           const fallbackIntensityExercises = availableExercises.filter((ex) =>
             useHighIntensity ? ex.intensity === "high" : ex.intensity === "low",
           );
-          if (fallbackIntensityExercises.length === 0) continue; // no available exercises for either intensity
-          const randomExercise =
-            fallbackIntensityExercises[
-              Math.floor(Math.random() * fallbackIntensityExercises.length)
-            ];
-          newRoutine.push(randomExercise);
+          const fallbackAvailable = fallbackIntensityExercises.filter((ex) =>
+            !previousExercise || ex.name !== previousExercise.name
+          );
+
+          if (fallbackAvailable.length === 0) {
+            // If still no exercises available, use any exercise from the current intensity
+            if (intensityExercises.length === 0) continue;
+            selectedExercise = intensityExercises[Math.floor(Math.random() * intensityExercises.length)]!;
+          } else {
+            selectedExercise = fallbackAvailable[Math.floor(Math.random() * fallbackAvailable.length)]!;
+          }
         } else {
-          const randomExercise =
-            intensityExercises[
-              Math.floor(Math.random() * intensityExercises.length)
-            ];
-          newRoutine.push(randomExercise);
+          selectedExercise = availableForSelection[Math.floor(Math.random() * availableForSelection.length)]!;
         }
 
-        // Alternate intensity every 2-3 exercises
-        if (i > 0 && i % (Math.floor(Math.random() * 2) + 2) === 0) {
-          useHighIntensity = !useHighIntensity;
-        }
+        newRoutine.push(selectedExercise);
+        previousExercise = selectedExercise;
+
+        // Alternate intensity every exercise (1 and 1)
+        useHighIntensity = !useHighIntensity;
       }
 
       return newRoutine;
@@ -121,8 +144,8 @@ export default function EllipticalApp() {
     setRoutine(newRoutine);
     setTimeRemaining(selectedTime * 60);
     setCurrentExerciseIndex(0);
-    setCurrentExercise(newRoutine[0]);
-    setExerciseTimeRemaining(45);
+    setCurrentExercise(newRoutine[0] || null);
+    setExerciseTimeRemaining(exerciseDuration);
     setIsRunning(true);
   };
 
@@ -136,7 +159,7 @@ export default function EllipticalApp() {
     setIsRunning(false);
     setTimeRemaining(0);
     setCurrentExercise(null);
-    setExerciseTimeRemaining(45);
+    setExerciseTimeRemaining(exerciseDuration);
     setRoutine([]);
     setCurrentExerciseIndex(0);
   };
@@ -156,6 +179,7 @@ export default function EllipticalApp() {
 
   // Timer effect
   useEffect(() => {
+    document.getElementById("version-popup")?.remove();
     if (!isRunning || timeRemaining <= 0) return;
 
     const interval = setInterval(() => {
@@ -173,12 +197,12 @@ export default function EllipticalApp() {
           setCurrentExerciseIndex((prevIndex) => {
             const nextIndex = prevIndex + 1;
             if (nextIndex < routine.length) {
-              setCurrentExercise(routine[nextIndex]);
+              setCurrentExercise(routine[nextIndex] || null);
               return nextIndex;
             }
             return prevIndex;
           });
-          return 45; // Reset to 45 seconds
+          return exerciseDuration; // Reset to 45 seconds
         }
         return prev - 1;
       });
@@ -199,14 +223,23 @@ export default function EllipticalApp() {
     selectedTime * 60 > 0
       ? ((selectedTime * 60 - timeRemaining) / (selectedTime * 60)) * 100
       : 0;
-  const exerciseProgress = ((45 - exerciseTimeRemaining) / 45) * 100;
+  const calculatedProgress = ((exerciseDuration - exerciseTimeRemaining) / exerciseDuration) * 100;
+  const exerciseProgress = calculatedProgress;
+
+  // Calculate if current exercise is the last one
+  const isLastExercise = currentExerciseIndex >= routine.length - 1;
+
+  // Get the next exercise
+  const nextExercise = currentExerciseIndex + 1 < routine.length
+    ? routine[currentExerciseIndex + 1]
+    : null;
 
   if (currentExercise) {
     return (
       <div className="max-sm:p-0 min-h-screen bg-gradient-to-br from-blue-50 to-green-50 dark:from-gray-900 dark:to-gray-800 md:p-4">
-        <div className="max-w-md mx-auto md:space-y-6">
+        <div className="max-w-md mx-auto md:space-y-6 sm:p-0">
           {/* Main Timer */}
-          <Card className="text-center">
+          <Card className="text-center mt-2">
             <CardContent className="pt-6">
               <div className="relative w-48 h-48 mx-auto mb-4">
                 <svg
@@ -252,7 +285,17 @@ export default function EllipticalApp() {
           {/* Current Exercise */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-center">Current Exercise</CardTitle>
+              <CardTitle className="text-center">
+                <span className={isLastExercise ? "text-green-600 dark:text-green-400" : "text-foreground"}>
+                  {isLastExercise ? (
+                    <>
+                      Routine Completed! <span className="text-2xl">🎉</span>
+                    </>
+                  ) : (
+                    "Next Exercise: " + (nextExercise?.name || "No More Exercises")
+                  )}
+                </span>
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="text-center">
@@ -278,13 +321,13 @@ export default function EllipticalApp() {
 
               {/* Exercise Timer */}
               <div className="text-center">
-                <div className="text-2xl font-bold text-foreground mb-2">
-                  {exerciseTimeRemaining}s
+                <div className={`text-2xl font-bold mb-2 ${isLastExercise ? 'text-gray-400 dark:text-gray-500' : 'text-foreground'}`}>
+                  {isLastExercise ? 'Well Done!' : exerciseTimeRemaining + 's'}
                 </div>
                 <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                   <div
-                    className="bg-blue-500 h-2 rounded-full transition-all duration-1000 ease-linear"
-                    style={{ width: `${exerciseProgress}%` }}
+                    className={`h-2 rounded-full ${isLastExercise ? 'bg-gray-400 dark:bg-gray-500' : 'bg-blue-500 transition-all duration-1000 ease-linear'}`}
+                    style={{ width: `${isLastExercise ? 100 : exerciseProgress}%` }}
                   />
                 </div>
               </div>
@@ -292,13 +335,13 @@ export default function EllipticalApp() {
           </Card>
 
           {/* Progress Info */}
-          <Card>
+          <Card className="mb-2">
             <CardContent className="pt-6">
-              <div className="flex justify-between text-sm text-muted-foreground">
+              <div className={`flex justify-between text-sm ${isLastExercise ? 'text-gray-400 dark:text-gray-500' : 'text-muted-foreground'}`}>
                 <span>
                   Exercise {currentExerciseIndex + 1} of {routine.length}
                 </span>
-                <span>{Math.round(totalProgress)}% Complete</span>
+                <span>{isLastExercise ? '100' : Math.round(totalProgress)}% Complete</span>
               </div>
             </CardContent>
           </Card>
@@ -329,8 +372,8 @@ export default function EllipticalApp() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 dark:from-gray-900 dark:to-gray-800 md:p-4">
-      <div className="max-w-md mx-auto space-y-6">
-        <Card>
+      <div className="max-w-md mx-auto space-y-6 p-0 md:p-0">
+        <Card className="border-0 md:border rounded-none md:rounded-lg" id="workout-card">
           <CardHeader>
             <CardTitle className="text-center text-2xl">
               Elliptical Workout
@@ -348,7 +391,7 @@ export default function EllipticalApp() {
 
               <Slider
                 value={[selectedTime]}
-                onValueChange={(value) => setSelectedTime(value[0])}
+                onValueChange={(value) => setSelectedTime(value[0] || 20)}
                 min={10}
                 max={60}
                 step={5}
