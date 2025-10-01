@@ -180,6 +180,7 @@ export default function EllipticalApp() {
   // Timer effect
   useEffect(() => {
     document.getElementById("version-popup")?.remove();
+    document.querySelector("header")?.remove();
     if (!isRunning || timeRemaining <= 0) return;
 
     const interval = setInterval(() => {
@@ -336,7 +337,7 @@ export default function EllipticalApp() {
 
           {/* Progress Info */}
           <Card className="mb-2">
-            <CardContent className="pt-6">
+            <CardContent className="pt-1">
               <div className={`flex justify-between text-sm ${isLastExercise ? 'text-gray-400 dark:text-gray-500' : 'text-muted-foreground'}`}>
                 <span>
                   Exercise {currentExerciseIndex + 1} of {routine.length}
@@ -347,7 +348,7 @@ export default function EllipticalApp() {
           </Card>
 
           {/* Controls */}
-          <div className="flex gap-2 justify-center">
+          <div className="flex gap-2 justify-center flex-align-center">
             <Button onClick={togglePause} size="lg" className="flex-1">
               {isRunning ? (
                 <Pause className="w-4 h-4 mr-2" />
