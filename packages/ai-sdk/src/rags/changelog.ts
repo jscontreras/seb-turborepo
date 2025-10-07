@@ -6,7 +6,6 @@ import { ElementHandleForTag } from "playwright-core/types/structs";
 
 type Article = {
   title: string;
-  htmlContent: string;
   markdownContent: string;
   link: string;
   launchDate: string;
@@ -85,7 +84,6 @@ async function getVercelChangelogFromWebsite(size: number = 10) {
   }
   const articles: {
     title: string;
-    htmlContent: string;
     markdownContent: string;
     link: string;
     launchDate: string;
@@ -127,7 +125,6 @@ async function getVercelChangelogFromWebsite(size: number = 10) {
     }
     articles.push({
       title,
-      htmlContent,
       markdownContent,
       link,
       launchDate,
