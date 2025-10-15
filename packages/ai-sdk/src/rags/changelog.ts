@@ -131,7 +131,9 @@ async function getVercelChangelogFromWebsite(size: number = 10) {
       timestamp,
     });
   }
-
+  // Visit the audio lib site
+  await page.goto("https://v0pocs.tc-vercel.dev/audio-lib");
+  await page.waitForTimeout(4000);
   browser.close();
   return articles;
 }
