@@ -1,3 +1,5 @@
+import { DocsCodeButtons } from "@/components/docs-code-buttons"
+
 export default function StreamingPage() {
   return (
     <div className="p-8">
@@ -14,6 +16,7 @@ export default function StreamingPage() {
             Streaming allows you to break down the page's HTML into smaller chunks and progressively send those chunks
             to the client.
           </p>
+          <DocsCodeButtons docsUrl="/nested-layouts" codeUrl="/grouped-layouts" />
         </div>
       </div>
     </div>

@@ -1,3 +1,5 @@
+import { DocsCodeButtons } from "@/components/docs-code-buttons"
+
 export default function ClientContextPage() {
   return (
     <div className="min-h-screen p-8">
@@ -23,6 +25,7 @@ export default function ClientContextPage() {
                 <li>Combine with client state management solutions</li>
               </ul>
             </div>
+            <DocsCodeButtons docsUrl="/nested-layouts" codeUrl="/grouped-layouts" />
           </div>
         </div>
       </div>

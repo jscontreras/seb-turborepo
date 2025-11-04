@@ -1,3 +1,5 @@
+import { DocsCodeButtons } from "@/components/docs-code-buttons"
+
 export default function NotFoundPage() {
   return (
     <div className="p-8">
@@ -14,6 +16,7 @@ export default function NotFoundPage() {
             Not Found pages help users understand when they've navigated to a route that doesn't exist and provide
             helpful navigation options.
           </p>
+          <DocsCodeButtons docsUrl="/nested-layouts" codeUrl="/grouped-layouts" />
         </div>
       </div>
     </div>

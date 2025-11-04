@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { menuItems } from "@/lib/menu-items"
+import { DocsCodeButtons } from "@/components/docs-code-buttons"
 
 export default function HomePage() {
   return (
@@ -27,6 +28,10 @@ export default function HomePage() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-12">
+          <DocsCodeButtons docsUrl="/nested-layouts" codeUrl="/grouped-layouts" />
         </div>
       </div>
     </div>

@@ -1,3 +1,5 @@
+import { DocsCodeButtons } from "@/components/docs-code-buttons"
+
 export default function StaticDataPage() {
   return (
     <div className="p-8">
@@ -11,6 +13,7 @@ export default function StaticDataPage() {
         <div className="text-foreground/90">
           <p className="mb-4">Fetch and display static data at build time.</p>
           <p>Static data fetching allows you to generate pages at build time for optimal performance and SEO.</p>
+          <DocsCodeButtons docsUrl="/nested-layouts" codeUrl="/grouped-layouts" />
         </div>
       </div>
     </div>

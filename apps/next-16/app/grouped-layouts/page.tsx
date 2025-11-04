@@ -1,3 +1,5 @@
+import { DocsCodeButtons } from "@/components/docs-code-buttons"
+
 export default function GroupedLayoutsPage() {
   return (
     <div className="p-8">
@@ -14,6 +16,7 @@ export default function GroupedLayoutsPage() {
             Route groups allow you to organize your files and routes in a logical way while keeping your URL structure
             clean.
           </p>
+          <DocsCodeButtons docsUrl="/nested-layouts" codeUrl="/grouped-layouts" />
         </div>
       </div>
     </div>

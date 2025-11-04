@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { DocsCodeButtons } from "@/components/docs-code-buttons"
 
 export default function ParallelRoutesPage() {
   return (
@@ -41,14 +40,7 @@ export default function ParallelRoutesPage() {
             </li>
           </ul>
 
-          <div className="flex gap-3 pt-4">
-            <Button asChild>
-              <Link href="/nested-layouts">Docs</Link>
-            </Button>
-            <Button variant="secondary" asChild>
-              <Link href="/grouped-layouts">Code</Link>
-            </Button>
-          </div>
+          <DocsCodeButtons docsUrl="/nested-layouts" codeUrl="/grouped-layouts" />
         </div>
       </div>
     </div>

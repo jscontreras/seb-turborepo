@@ -1,3 +1,5 @@
+import { DocsCodeButtons } from "@/components/docs-code-buttons"
+
 export default function LoadingPage() {
   return (
     <div className="p-8">
@@ -13,6 +15,7 @@ export default function LoadingPage() {
           <p>
             Loading UI helps provide feedback to users while content is being fetched or components are being rendered.
           </p>
+          <DocsCodeButtons docsUrl="/nested-layouts" codeUrl="/grouped-layouts" />
         </div>
       </div>
     </div>

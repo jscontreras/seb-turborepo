@@ -1,3 +1,5 @@
+import { DocsCodeButtons } from "@/components/docs-code-buttons"
+
 export default function DynamicDataPage() {
   return (
     <div className="p-8">
@@ -14,6 +16,7 @@ export default function DynamicDataPage() {
             Dynamic data fetching allows you to fetch fresh data on every request, perfect for personalized or
             frequently changing content.
           </p>
+          <DocsCodeButtons docsUrl="/nested-layouts" codeUrl="/grouped-layouts" />
         </div>
       </div>
     </div>

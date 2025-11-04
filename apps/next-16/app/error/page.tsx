@@ -1,3 +1,5 @@
+import { DocsCodeButtons } from "@/components/docs-code-buttons"
+
 export default function ErrorPage() {
   return (
     <div className="p-8">
@@ -14,6 +16,7 @@ export default function ErrorPage() {
             Error boundaries catch JavaScript errors anywhere in the component tree and display a fallback UI instead of
             crashing the entire app.
           </p>
+          <DocsCodeButtons docsUrl="/nested-layouts" codeUrl="/grouped-layouts" />
         </div>
       </div>
     </div>

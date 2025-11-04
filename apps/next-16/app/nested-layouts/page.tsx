@@ -1,3 +1,5 @@
+import { DocsCodeButtons } from "@/components/docs-code-buttons"
+
 export default function NestedLayoutsPage() {
   return (
     <div className="p-8">
@@ -14,6 +16,7 @@ export default function NestedLayoutsPage() {
             expensive re-renders.
           </p>
           <p>Layouts wrap around page components and can be nested to create sophisticated routing structures.</p>
+          <DocsCodeButtons docsUrl="/nested-layouts" codeUrl="/grouped-layouts" />
         </div>
       </div>
     </div>
