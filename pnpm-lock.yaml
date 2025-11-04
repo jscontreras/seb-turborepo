@@ -131,7 +131,7 @@ importers:
         specifier: '*'
         version: 5.9.2
 
-  apps/next-16:
+  apps/next16-poc:
     dependencies:
       '@hookform/resolvers':
         specifier: ^3.10.0
