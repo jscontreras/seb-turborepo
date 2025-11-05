@@ -5,6 +5,10 @@ import { DocsCodeButtons } from "@/components/docs-code-buttons"
 export default function HomePage() {
   return (
     <div className="min-h-screen p-8">
+      <div className="mb-8 flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-3">
+        <span className="text-sm text-muted-foreground">acme.com</span>
+        <span className="text-sm text-foreground font-medium">/</span>
+      </div>
       <div className="mx-auto max-w-7xl">
         <h1 className="mb-8 text-3xl font-bold">Examples</h1>
 

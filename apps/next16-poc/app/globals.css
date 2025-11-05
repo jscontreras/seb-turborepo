@@ -123,3 +123,5 @@
     @apply bg-background text-foreground;
   }
 }
+
+@import "@repo/ui/repo-ui.css";

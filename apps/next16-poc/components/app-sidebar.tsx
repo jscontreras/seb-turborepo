@@ -18,14 +18,14 @@ export function AppSidebar() {
       <Button
         variant="ghost"
         size="icon"
-        className="fixed left-4 top-4 z-50 md:hidden"
+        className="fixed left-4 top-4 z-50 block md:hidden lg:hidden flex sm:bg-background md:bg-transparent"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        {isOpen ? <X className="h-5 w-5 md:hidden lg:hidden" /> : <Menu className="h-5 w-5 md:hidden lg:hidden" />}
       </Button>
 
       {/* Overlay */}
-      {isOpen && <div className="fixed inset-0 z-30 bg-black/50 md:hidden" onClick={() => setIsOpen(false)} />}
+      {isOpen && <div className="fixed inset-0 z-30 bg-black/50 md:hidden lg:hidden" onClick={() => setIsOpen(false)} />}
 
       {/* Sidebar */}
       <aside
@@ -36,8 +36,8 @@ export function AppSidebar() {
       >
         <div className="flex h-full flex-col">
           {/* Logo section */}
-          <div className="flex h-16 items-center border-b border-sidebar-border px-6">
-            <Link href="/" className="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-primary rounded">
+          <div className="flex h-16 items-center border-b border-sidebar-border self-center md:self-start">
+            <Link href="/" className="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-primary rounded sm:translate-x-4">
               <svg className="h-8 w-8" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask
                   id="mask0_408_139"
