@@ -20,7 +20,7 @@ interface Carrier {
  * Enables tracing for an API function using OpenTelemetry.
  *
  * @param name - The name of the span.
- * @param fn - The function to be traced, which returns a `NextResponse`.
+ * @param fn - The function to be traced, which returns a `Response` (e.g., `NextResponse`).
  * @param options - Optional configuration for the trace.
  * @param options.sendLogs - Whether to send logs or not. Default is `false`.
  * @param options.extraAttributes - Additional attributes to add to the span. Default is an empty object.
@@ -30,7 +30,7 @@ interface Carrier {
  */
 export async function apiTraceEnabler(
   name: string,
-  fn: () => NextResponse,
+  fn: () => Response,
   optionsBase: TraceOptions,
 ): Promise<Response> {
   const options: TraceOptionsStable = {

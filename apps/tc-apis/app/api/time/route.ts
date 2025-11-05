@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
       };
 
       // Return the response
-      return NextResponse.json(data) as NextResponse;
+      return NextResponse.json(data);
     },
     {
       sendLogs: true,
