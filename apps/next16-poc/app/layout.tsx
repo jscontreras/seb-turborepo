@@ -4,6 +4,8 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { AppSidebar } from "@/components/app-sidebar"
+import { UrlBreadcrumb } from "@/components/url-breadcrumb"
+import { Suspense } from "react"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -14,7 +16,7 @@ export const metadata: Metadata = {
   generator: "v0.app",
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
@@ -24,7 +26,16 @@ export default function RootLayout({
       <body className={`font-sans antialiased`}>
         <AppSidebar />
         <div className="md:pl-72">
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen">
+            <div className="min-h-screen p-8">
+              <Suspense fallback={<div>Loading Url Breadcrumb...</div>}>
+                <UrlBreadcrumb />
+              </Suspense>
+              <div className="min-h-screen p-8">
+              {children}
+              </div>
+            </div>
+          </main>
         </div>
         <Analytics />
       </body>

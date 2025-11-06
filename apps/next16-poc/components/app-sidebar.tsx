@@ -21,7 +21,7 @@ export function AppSidebar() {
         className="fixed left-4 top-4 z-50 block md:hidden lg:hidden flex sm:bg-background md:bg-transparent"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {isOpen ? <X className="h-5 w-5 md:hidden lg:hidden" /> : <Menu className="h-5 w-5 md:hidden lg:hidden" />}
+        {isOpen ? <X className="h-5 w-5 md:hidden lg:hidden" /> : <Menu className="h-5 w-5 scale-150 md:hidden lg:hidden" />}
       </Button>
 
       {/* Overlay */}
