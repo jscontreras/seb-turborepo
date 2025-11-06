@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   generator: "v0.app",
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
@@ -28,9 +28,7 @@ export default async function RootLayout({
         <div className="md:pl-72">
           <main className="min-h-screen">
             <div className="min-h-screen p-8">
-              <Suspense fallback={<div>Loading Url Breadcrumb...</div>}>
-                <UrlBreadcrumb />
-              </Suspense>
+              <UrlBreadcrumb />
               <div className="min-h-screen p-8">
               {children}
               </div>
