@@ -393,21 +393,21 @@ export default function EllipticalApp() {
               <Slider
                 value={[selectedTime]}
                 onValueChange={(value) => setSelectedTime(value[0] || 20)}
-                min={10}
-                max={60}
-                step={5}
+                min={20}
+                max={80}
+                step={20}
                 className="w-full"
               />
 
               <div className="flex justify-between text-sm text-muted-foreground">
-                <span>10 min</span>
-                <span>60 min</span>
+                <span>20 min</span>
+                <span>80 min</span>
               </div>
             </div>
 
             {/* Quick Time Buttons */}
             <div className="grid grid-cols-4 gap-2">
-              {[15, 20, 30, 45].map((time) => (
+              {[20, 30, 60, 80].map((time) => (
                 <Button
                   key={time}
                   variant={selectedTime === time ? "default" : "outline"}
@@ -466,7 +466,7 @@ export default function EllipticalApp() {
             <Button
               onClick={startWorkout}
               size="lg"
-              className="w-full"
+              className="w-full !mt-0 pt-0"
               disabled={selectedExercises.length === 0}
             >
               <Play className="w-4 h-4 mr-2" />
