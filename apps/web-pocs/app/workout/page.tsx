@@ -61,6 +61,7 @@ const exercises: ExerciseType[] = [
 ];
 
 const exerciseDuration = 45;
+const LOCAL_STORAGE_KEY = "elliptical-workout-settings";
 
 export default function EllipticalApp() {
   const [selectedTime, setSelectedTime] = useState(20); // in minutes
@@ -75,6 +76,67 @@ export default function EllipticalApp() {
   const [selectedExercises, setSelectedExercises] = useState<string[]>(
     exercises.map((e) => e.name),
   );
+  const [settingsInitialized, setSettingsInitialized] = useState(false);
+
+  useEffect(() => {
+    try {
+      const storedSettings = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (!storedSettings) {
+        return;
+      }
+
+      const parsedSettings = JSON.parse(storedSettings) as {
+        selectedTime?: number;
+        selectedExercises?: string[];
+      };
+
+      if (
+        typeof parsedSettings.selectedTime === "number" &&
+        parsedSettings.selectedTime !== selectedTime
+      ) {
+        setSelectedTime(parsedSettings.selectedTime);
+      }
+
+      if (Array.isArray(parsedSettings.selectedExercises)) {
+        const validExercises = parsedSettings.selectedExercises.filter((name) =>
+          exercises.some((exercise) => exercise.name === name),
+        );
+
+        if (
+          validExercises.length === 0 &&
+          parsedSettings.selectedExercises.length > 0
+        ) {
+          setSelectedExercises(exercises.map((exercise) => exercise.name));
+        } else if (
+          parsedSettings.selectedExercises.length === 0 ||
+          validExercises.length > 0
+        ) {
+          setSelectedExercises(validExercises);
+        }
+      }
+    } catch (error) {
+      console.warn("Failed to load workout settings from localStorage.", error);
+    } finally {
+      setSettingsInitialized(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!settingsInitialized) {
+      return;
+    }
+
+    try {
+      const settingsToStore = JSON.stringify({
+        selectedTime,
+        selectedExercises,
+      });
+
+      localStorage.setItem(LOCAL_STORAGE_KEY, settingsToStore);
+    } catch (error) {
+      console.warn("Failed to save workout settings to localStorage.", error);
+    }
+  }, [selectedTime, selectedExercises, settingsInitialized]);
 
   // Generate random routine
   const generateRoutine = useCallback(
@@ -407,7 +469,7 @@ export default function EllipticalApp() {
 
             {/* Quick Time Buttons */}
             <div className="grid grid-cols-4 gap-2">
-              {[20, 30, 60, 80].map((time) => (
+              {[20, 40, 60, 80].map((time) => (
                 <Button
                   key={time}
                   variant={selectedTime === time ? "default" : "outline"}
