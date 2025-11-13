@@ -7,9 +7,9 @@ export interface MenuItem {
 export const menuItems: Record<string, MenuItem[]> = {
   LAYOUTS: [
     {
-      name: "Nested Layouts",
-      description: "Create UI that is shared across routes",
-      relativeUrl: "/nested-layouts",
+      name: "ISR",
+      description: "Checking ISR with Next.js 16",
+      relativeUrl: "/isr",
     },
     {
       name: "Grouped Layouts",
