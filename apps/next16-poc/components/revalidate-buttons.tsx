@@ -20,7 +20,7 @@ export function RevalidateButtons({ isrId, seconds }: { isrId: string, seconds: 
         className="w-full"
         onClick={() => handleRevalidate(() => revalidateByPath(isrId))}
       >
-        Revalidate Page By Path <span className="text-amber-500">[/isr/{isrId}]</span>
+        Revalidate Path <span className="text-amber-500">/isr/{isrId}</span>
       </Button>
       <Button
         variant="secondary"
@@ -28,7 +28,7 @@ export function RevalidateButtons({ isrId, seconds }: { isrId: string, seconds: 
         className="w-full"
         onClick={() => handleRevalidate(() => revalidateByPageTag(isrId))}
       >
-        Revalidate Page By Tag <span className="text-sky-500">[isr-page-{isrId}]</span>
+        Revalidate Tag <span className="text-sky-500">[isr-page-{isrId}]</span>
       </Button>
 
       <Button
@@ -37,7 +37,7 @@ export function RevalidateButtons({ isrId, seconds }: { isrId: string, seconds: 
         className="w-full"
         onClick={() => handleRevalidate(() => revalidateDateTag())}
       >
-        Revalidate Fetch Date Tag <span className="text-purple-500">[isr-date-fetch]</span>
+        Revalidate Fetch <span className="text-purple-500">[isr-date-fetch]</span>
       </Button>
 
       <Button
@@ -46,7 +46,7 @@ export function RevalidateButtons({ isrId, seconds }: { isrId: string, seconds: 
         className="w-full"
         onClick={() => handleRevalidate(() => revalidateLoremParams(isrId))}
       >
-        Revalidate Fetch Lorem Params <span className="text-green-500">[isr-lorem-{isrId}]</span>
+        Revalidate Fetch <span className="text-green-500">[isr-lorem-{isrId}]</span>
       </Button>
 
       <Button
@@ -55,7 +55,7 @@ export function RevalidateButtons({ isrId, seconds }: { isrId: string, seconds: 
         className="w-full"
         onClick={() => handleRevalidate(() => revalidateLoremSeconds(seconds))}
       >
-        Revalidate Fetch Lorem Seconds <span className="text-green-500">[isr-lorem-{seconds}]</span>
+        Revalidate Fetch <span className="text-green-500">[isr-lorem-{seconds}]</span>
       </Button>
     </div>
   );
