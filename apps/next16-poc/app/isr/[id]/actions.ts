@@ -41,5 +41,6 @@ export async function getLoremData(id: number) {
   }
   // Append them to the body separated by spaces
   data.body = data.body + ' ' + randomWords.join(' ');
+  data.title = data.title.substring(0, 15);
   return data;
 }

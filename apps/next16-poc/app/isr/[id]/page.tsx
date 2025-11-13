@@ -80,8 +80,8 @@ export default async function Page({
   return (
 
     // Create bottoms panel
-    <div className="grid grid-cols-6 gap-x-6 gap-y-3">
-      <div className="col-span-full space-y-3 lg:col-span-4">
+    <div className="grid grid-cols-6 gap-y-3">
+      <div className="col-span-full space-y-3">
         <h1 className="text-2xl font-medium capitalize text-gray-200">ISR Page with slug param <span className="text-sky-500">[{id}]</span>
         <RenderTags cacheTags={[`isr-page-${id}`]} /></h1>
         <hr></hr>
