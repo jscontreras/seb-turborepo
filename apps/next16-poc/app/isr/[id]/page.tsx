@@ -1,6 +1,7 @@
 import { cacheLife, cacheTag } from 'next/cache';
 import { notFound } from 'next/navigation';
 import { RevalidateButtons } from '@/components/revalidate-buttons';
+import { getLoremData } from './actions';
 
 // Next.js will invalidate the cache when a
 // request comes in, at most once every 100 seconds.
@@ -38,13 +39,7 @@ export default async function Page({
   }
   console.log('revalidating', process.env.CUSTOM_API_KEY);
 
-  const res = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${int_id}`,
-    {
-      next: { tags: [`isr-lorem-${id}`] },
-      cache: 'force-cache',
-    },
-  );
+  const res = await getLoremData(int_id);
   const timeRes = await fetch(`https://api.tc-vercel.dev/api/time`, {
     headers: {
       'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
@@ -66,7 +61,7 @@ export default async function Page({
   );
   const loremSecondsData = (await loremSeconds.json()) as { title: string; body: string };
 
-  const data = (await res.json()) as { title: string; body: string };
+  const data = res as { title: string; body: string };
 
   return (
 
@@ -92,3 +87,4 @@ export default async function Page({
     </div>
   );
 }
+
