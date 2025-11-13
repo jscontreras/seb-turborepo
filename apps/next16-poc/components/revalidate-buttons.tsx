@@ -13,7 +13,7 @@ export function RevalidateButtons({ isrId, seconds }: { isrId: string, seconds: 
   };
 
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2">
       <Button
         variant="secondary"
         size="lg"
