@@ -1,5 +1,6 @@
-import { cacheLife } from 'next/cache';
+import { cacheLife, cacheTag } from 'next/cache';
 import { notFound } from 'next/navigation';
+import { RevalidateButtons } from '@/components/revalidate-buttons';
 
 // Next.js will invalidate the cache when a
 // request comes in, at most once every 100 seconds.
@@ -9,7 +10,6 @@ const dateFormat: Intl.DateTimeFormatOptions = {
   hour: 'numeric',
   minute: 'numeric',
   second: 'numeric',
-  fractionalSecondDigits: 2,
 };
 
 export async function generateStaticParams() {
@@ -31,6 +31,7 @@ export default async function Page({
   const { id } = await params;
   const int_id = Number.parseInt(id, 10);
 
+  cacheTag(`isr-page-${id}`);
   // Check if id is bigger than 100
   if (int_id > 100) {
     notFound();
@@ -40,7 +41,7 @@ export default async function Page({
   const res = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${int_id}`,
     {
-      next: { tags: ['collection'] },
+      next: { tags: [`isr-lorem-${id}`] },
       cache: 'force-cache',
     },
   );
@@ -48,8 +49,8 @@ export default async function Page({
     headers: {
       'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
     },
-    cache: 'no-cache',
-    next: { tags: ['isr-tag-date'] },
+    cache: 'force-cache',
+    next: { tags: ['isr-date-fetch'] },
   });
   const { datetime } = (await timeRes.json()) as { datetime: string };
   const dateObj = new Date(datetime);
@@ -59,7 +60,7 @@ export default async function Page({
   const loremSeconds = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${seconds}`,
     {
-      next: { tags: ['collection'] },
+      next: { tags: [`isr-lorem-${seconds}`] },
       cache: 'force-cache',
     },
   );
@@ -68,22 +69,25 @@ export default async function Page({
   const data = (await res.json()) as { title: string; body: string };
 
   return (
+
+    // Create bottoms panel
     <div className="grid grid-cols-6 gap-x-6 gap-y-3">
       <div className="col-span-full space-y-3 lg:col-span-4">
-        <p className="font-medium text-amber-200">
+        <p className="font-medium text-purple-400">
           API based Date: {currentTime}
         </p>
         <h1 className="truncate text-2xl font-medium capitalize text-gray-200">{`[${int_id}] ${data.title}`}</h1>
         <p className="font-medium text-gray-500">{data.body}</p>
       </div>
-      <div className="-order-1 col-span-full lg:order-none lg:col-span-2">
-      </div>
-      <div className="col-span-full space-y-3 lg:col-span-4">
+      <div className="col-span-full space-y-3">
         <h1 className="truncate text-2xl font-medium capitalize text-gray-200">{`[${seconds}] ${loremSecondsData.title}`}</h1>
         <p className="font-medium text-gray-500">{loremSecondsData.body}</p>
         <p className="font-medium text-amber-200">
           Function based Date: {new Date().toLocaleString('en-US', dateFormat)}
         </p>
+      </div>
+      <div className="-order-1 col-span-full lg:order-none lg:col-span-11">
+        <RevalidateButtons isrId={id} seconds={seconds} />
       </div>
     </div>
   );
