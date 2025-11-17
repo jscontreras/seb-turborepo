@@ -1,7 +1,9 @@
 import { cacheLife, cacheTag } from 'next/cache';
 import { notFound } from 'next/navigation';
 import { RevalidateButtons } from '@/components/revalidate-buttons';
+import { MermaidDiagram } from '@/components/mermaid-diagram';
 import { getLoremData } from './actions';
+import { ISR_FLOW_DIAGRAM } from './diagram-chart';
 
 // Next.js will invalidate the cache when a
 // request comes in, at most once every 100 seconds.
@@ -102,6 +104,13 @@ export default async function Page({
       </div>
       <div className="mt-4 col-span-full lg:order-none lg:col-span-11 p-8 border border-border rounded-lg">
         <RevalidateButtons isrId={id} seconds={seconds} />
+      </div>
+      <div className="mt-4 col-span-full p-8 border border-border rounded-lg bg-muted/30">
+        <h2 className="text-xl font-medium mb-4 text-gray-200">Flow Diagram</h2>
+        <MermaidDiagram
+          chart={ISR_FLOW_DIAGRAM}
+          className="py-4"
+        />
       </div>
     </div>
   );
