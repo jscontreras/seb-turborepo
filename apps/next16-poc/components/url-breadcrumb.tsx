@@ -2,35 +2,37 @@ import { headers } from "next/headers"
 import { UrlBreadcrumbWithPath } from "./url-breadcrumb-path"
 import { cacheLife } from "next/cache"
 
-// Server Component que usa headers() dentro de un Suspense boundary
-// Con PPR habilitado, esto permite un shell estático con streaming del contenido dinámico
+// Server Component that uses headers() inside a Suspense boundary
+// With PPR enabled, this allows a static shell with streaming of dynamic content
 //
-// 'use cache: private' - Cache privado para contenido que depende de datos específicos de la solicitud
+// 'use cache: private' - Private cache for content that depends on request-specific data
 //
-// DIFERENCIAS CLAVE:
-// - 'use cache' (normal): Cachea en el servidor, reutilizable entre todas las solicitudes
-// - 'use cache: private': NO cachea en el servidor, solo permite prefetching en el cliente
+// KEY DIFFERENCES:
+// - 'use cache' (normal): Caches on the server, reusable across all requests
+// - 'use cache: private': Does NOT cache on the server, only allows client prefetching
 //
-// POR QUÉ USAR 'use cache: private' AQUÍ:
-// Este componente depende de headers() que varía por solicitud (hostname diferente por dominio).
-// No puede usar 'use cache' normal porque cada solicitud tiene headers únicos.
-// 'use cache: private' permite:
-//   1. Prefetching en el cliente para mejorar el rendimiento
-//   2. NO almacenar en caché del servidor (evita servir hostname incorrecto a otros usuarios)
-//   3. Renderizado dinámico correcto para cada solicitud específica
+// WHY USE 'use cache: private' HERE:
+// This component depends on headers() which vary per request (hostname differs by domain).
+// It cannot use normal 'use cache' because each request has unique headers.
+// 'use cache: private' allows:
+//   1. Client prefetching to improve performance
+//   2. NO server-side caching (prevents serving incorrect hostname to other users)
+//   3. Proper dynamic rendering for each specific request
 //
-// COMPORTAMIENTO:
-// - El componente se renderiza en cada solicitud con los headers correctos
-// - Next.js puede prefetchear el componente en el cliente para navegación anticipada
-// - NO genera headers de caché del servidor (x-nextjs-cache no aparecerá para este RSC)
-// - El cacheLife({ stale: Infinity }) controla el tiempo de prefetch en el cliente
+// BEHAVIOR:
+// - The component renders on every request with the correct headers
+// - Next.js can prefetch the component on the client for faster navigation
+// - Does NOT generate server cache headers (x-nextjs-cache will not appear for this RSC)
+// - cacheLife({ stale: Infinity }) controls client prefetch lifetime
 export async function UrlBreadcrumb() {
   'use cache: private'
 
-  // Configura el tiempo de vida de la caché (opcional)
-  // stale: tiempo en segundos antes de que la caché se considere obsoleta
-  cacheLife({ stale: Infinity })
+  // adding latency for easier debugging
+  await new Promise(resolve => setTimeout(resolve, 3000))
 
+  // Configure cache lifetime (optional)
+  // stale: time in seconds before the cache is considered stale
+  cacheLife({ stale: Infinity })
   const hostname = (await headers()).get('host') || ''
   return <UrlBreadcrumbWithPath hostName={hostname} />
 }
