@@ -8,7 +8,7 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: '4mb',
     },
-    ppr: true,
+    ppr: false,
   },
   eslint: {
     ignoreDuringBuilds: true,
