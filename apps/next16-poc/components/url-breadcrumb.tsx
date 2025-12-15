@@ -1,6 +1,6 @@
 import { headers } from "next/headers"
 import { UrlBreadcrumbWithPath } from "./url-breadcrumb-path"
-import { cacheLife } from "next/cache"
+import { cacheLife, cacheTag } from "next/cache"
 
 // Server Component that uses headers() inside a Suspense boundary
 // With PPR enabled, this allows a static shell with streaming of dynamic content
@@ -28,7 +28,7 @@ export async function UrlBreadcrumb() {
   'use cache: private'
 
   // adding latency for easier debugging
-  await new Promise(resolve => setTimeout(resolve, 3000))
+  await new Promise(resolve => setTimeout(resolve, 2000))
 
   // Configure cache lifetime (optional)
   // stale: time in seconds before the client checks the server again
@@ -36,6 +36,8 @@ export async function UrlBreadcrumb() {
   // The stale parameter controls client-side prefetch cache expiration
   // After 30 seconds, client-side navigation will fetch fresh data from server
   cacheLife({ stale: 30, revalidate: 60, expire: 3600 })
+  cacheTag('url-breadcrumb')
   const hostname = 'cache:private[' + Date.now() + '] ' + (await headers()).get('host') || ''
+
   return <UrlBreadcrumbWithPath hostName={hostname} />
 }
