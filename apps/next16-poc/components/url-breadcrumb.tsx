@@ -31,8 +31,11 @@ export async function UrlBreadcrumb() {
   await new Promise(resolve => setTimeout(resolve, 3000))
 
   // Configure cache lifetime (optional)
-  // stale: time in seconds before the cache is considered stale
-  cacheLife({ stale: Infinity })
-  const hostname = (await headers()).get('host') || ''
+  // stale: time in seconds before the client checks the server again
+  // With cache:private, the server always renders fresh (no server cache)
+  // The stale parameter controls client-side prefetch cache expiration
+  // After 30 seconds, client-side navigation will fetch fresh data from server
+  cacheLife({ stale: 30, revalidate: 60, expire: 3600 })
+  const hostname = 'cache:private[' + Date.now() + '] ' + (await headers()).get('host') || ''
   return <UrlBreadcrumbWithPath hostName={hostname} />
 }

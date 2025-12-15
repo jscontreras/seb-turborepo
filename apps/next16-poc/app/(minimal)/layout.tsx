@@ -2,7 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
-import "./globals.css"
+import "@/app/globals.css"
 import { AppSidebar } from "@/components/app-sidebar"
 import { UrlBreadcrumb } from "@/components/url-breadcrumb"
 import { Suspense } from "react"
@@ -29,17 +29,6 @@ export default function RootLayout({
         <div className="md:pl-72">
           <main className="min-h-screen">
             <div className="min-h-screen p-8">
-              {/* Suspense boundary para PPR: shell estático con streaming del contenido dinámico */}
-              <Suspense
-                fallback={
-                  <div className="ml-8 md:ml-0 lg:ml-0 flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-3">
-                    <Skeleton className="h-4 w-20" />
-                    <Skeleton className="h-4 w-32" />
-                  </div>
-                }
-              >
-                <UrlBreadcrumb />
-              </Suspense>
               <div className="min-h-screen p-8">
               {children}
               </div>

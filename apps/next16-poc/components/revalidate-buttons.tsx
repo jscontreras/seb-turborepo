@@ -1,6 +1,6 @@
 'use client';
 
-import { revalidateByPageTag, revalidateByPath, revalidateDateTag, revalidateLoremParams, revalidateLoremSeconds } from '@/app/isr/[id]/actions';
+import { revalidateByPageTag, revalidateByPath, revalidateDateTag, revalidateLoremParams, revalidateLoremSeconds } from '@/app/(main)/isr/[id]/actions';
 import { Button } from '@repo/ui/components/ui/button';
 import { useRouter } from 'next/navigation';
 
