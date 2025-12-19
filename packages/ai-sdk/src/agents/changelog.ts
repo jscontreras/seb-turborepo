@@ -133,8 +133,8 @@ Return a plain array of site source strings. Do not include anything else.
 
 // Only allowed URL prefixes—update as needed for each content type
 const URL_PATTERNS: Record<string, string[]> = {
-  Blogs: ["https://vercel.com/blog/", "https://nextjs.org/blog/"],
-  Guides: ["https://vercel.com/guides/"],
+  Blogs: ["https://vercel.com/blog/", "https://vercel.com/kb/"],
+  Guides: ["https://vercel.com/kb/"],
   Docs: ["https://vercel.com/docs/"],
 };
 
