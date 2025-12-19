@@ -40,8 +40,11 @@ async function getRefinedArticles() {
 async function askChangelogAI(
   prompt: string,
   dateRange: z.infer<typeof ZodrangeDetectorSchema>,
-  model: string = "openai/gpt-4.1-mini",
+  model: string | undefined = undefined,
 ) {
+  // Use NANO_MODEL for faster performance (faster than MINI_MODEL)
+  // This function processes structured RAG data, so a faster model is sufficient
+  const modelToUse = model || process.env.NANO_MODEL || "openai/gpt-4.1-mini";
   const changelogInstructions = `
 Your name is Vercel Changelog Agent.
 You answer questions about Vercel's changelog articles and recent feature launches.
@@ -76,10 +79,11 @@ Respond in a single section making sure that the articles are sorted by release 
 `;
 
   // Return a complete response - streaming is handled by the main streamText call
+  // Use faster model and reduce token limit for better performance
   return await generateText({
-    model: gateway(model),
+    model: gateway(modelToUse),
     temperature: 0.5,
-    maxOutputTokens: 32000,
+    maxOutputTokens: 8000, // Reduced from 32000 - sufficient for changelog summaries
     system: changelogInstructions,
     prompt: prompt,
   });
@@ -97,7 +101,19 @@ const getChangelogs = tool({
     dateRange: ZodrangeDetectorSchema,
   }),
   execute: async ({ prompt, dateRange }) => {
-    return askChangelogAI(prompt, dateRange);
+    try {
+      const result = await askChangelogAI(prompt, dateRange);
+      // Return just the text to ensure consistent serialization
+      const text = result?.text;
+      if (!text) {
+        console.error("getChangelogs: result.text is empty", result);
+        return "No changelog content available.";
+      }
+      return text;
+    } catch (error) {
+      console.error("getChangelogs error:", error);
+      return `Error retrieving changelog: ${error instanceof Error ? error.message : "Unknown error"}`;
+    }
   },
 });
 
