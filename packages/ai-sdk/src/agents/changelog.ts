@@ -101,20 +101,36 @@ const getChangelogs = tool({
   },
 });
 
+// Content type mapping - keys must match what determineSources returns
+const CONTENT_TYPES = {
+  blogs: "Blogs",
+  guides: "Guides",
+  docs: "Docs",
+} as const;
+
+type ContentType = keyof typeof CONTENT_TYPES;
+
+// Only allowed URL prefixes—update as needed for each content type
+const URL_PATTERNS: Record<string, string[]> = {
+  Blogs: ["https://vercel.com/blog/", "https://vercel.com/kb/"],
+  Guides: ["https://vercel.com/kb/"],
+  Docs: ["https://vercel.com/docs/"],
+};
+
 /**
  * Determine the sources to expand the search to
  * @param prompt - The prompt to determine the sources to expand the search to
  * @returns The sources to expand the search to
  */
-async function determineSources(prompt: string): Promise<string[]> {
+async function determineSources(prompt: string): Promise<ContentType[]> {
   const { object } = await generateObject({
     model: gateway(process.env.NANO_MODEL || "openai/gpt-4.1-nano"),
     system: `
 You are a bot that generates an array of search source site strings based on keywords found in the user's prompt.
 ## Rules:
-- If the prompt mentions "guide" or "guidelines", include "guidelines".
+- If the prompt mentions "guide" or "guidelines", include "guides".
 - If the prompt mentions "documentation" or "docs", include "docs".
-- If the prompt mentions "blog post" or "blog posts", include both "blogs".
+- If the prompt mentions "blog post" or "blog posts", include "blogs".
 - If multiple categories are mentioned, include all relevant sources with no duplicates.
 - If none of the above are mentioned, return an empty array.
 - Only include sources that are one of the following: "blogs", "guides", "docs".
@@ -124,26 +140,25 @@ Return a plain array of site source strings. Do not include anything else.
     prompt,
     temperature: 0,
     schema: z.object({
-      sources: z.array(z.string()),
+      sources: z.array(z.enum(["blogs", "guides", "docs"])),
     }),
   });
-  // De-duplicate for safety
-  return Array.from(new Set(object.sources));
+  // De-duplicate and validate
+  const uniqueSources = Array.from(new Set(object.sources));
+  return uniqueSources.filter((s): s is ContentType => s in CONTENT_TYPES);
 }
 
-// Only allowed URL prefixes—update as needed for each content type
-const URL_PATTERNS: Record<string, string[]> = {
-  Blogs: ["https://vercel.com/blog/", "https://vercel.com/kb/"],
-  Guides: ["https://vercel.com/kb/"],
-  Docs: ["https://vercel.com/docs/"],
-};
-
-// Generates the strict system prompt for reference extraction
+/**
+ * Generates the strict system prompt for reference extraction
+ * @param toolName - The name of the tool (e.g., "Blogs", "Guides", "Docs")
+ * @returns The formatted system prompt
+ */
 function generateSystemPrompt(toolName: string): string {
-  const allowedUrls = URL_PATTERNS;
-  return `
-You are a markdown reference assistant taht search the web based on the user's prompt and ONLY extracts items where the URL starts with one of:
-${allowedUrls}
+  const allowedUrls = URL_PATTERNS[toolName] || [];
+  const urlList = allowedUrls.map((url) => `- ${url}`).join("\n");
+
+  return `You are a markdown reference assistant that searches the web based on the user's prompt and ONLY extracts items where the URL starts with one of:
+${urlList}
 
 If you find zero valid URLs, reply: "No additional references available from the specified domains."
 Never guess, rewrite, paraphrase, or summarize sources.
@@ -157,14 +172,22 @@ Format:
 
 No results? Reply only: "No additional references available from the specified domains."
 
-Only output valid references, nothing else.
-`;
+Only output valid references, nothing else.`;
 }
 
+/**
+ * Get Vercel Perplexity tools for searching blogs, guides, and docs
+ * @param changelogResponse - Optional changelog response to provide context
+ * @returns Record of tools for searching different content types
+ */
 function getVercelPerplexityTools(
   changelogResponse: string | null,
 ): Record<string, Tool> {
   const tools: Record<string, Tool> = {};
+
+  // Use sonar-pro for better quality, fallback to sonar for speed/cost
+  const perplexityModel =
+    process.env.PERPLEXITY_MODEL || "perplexity/sonar-pro";
 
   for (const toolName of Object.keys(URL_PATTERNS)) {
     tools[`get${toolName}`] = tool({
@@ -185,32 +208,42 @@ function getVercelPerplexityTools(
         if (!changelogResponse && !changelogResponseTool) {
           return "No changelog context or response available.";
         }
-        console.log(
-          ">>>",
-          "...",
-          (changelogResponse + "").split(" ").slice(0, 4).join(" ") +
-            changelogResponseTool,
-          "...",
-        );
-        const systemPrompt = generateSystemPrompt(toolName);
-        const result = await generateText({
-          model: "perplexity/sonar",
-          temperature: 0,
-          system: systemPrompt,
-          prompt: changelogResponse
-            ? changelogResponseTool + "\n\n" + changelogResponse + " "
-            : `Find any Vercel references about ${changelogResponseTool}`,
-          providerOptions: {
-            search_domain_filter: ["vercel.com", "nextjs.org"],
-          } as any,
-        });
 
-        return result;
+        try {
+          const systemPrompt = generateSystemPrompt(toolName);
+
+          // Construct a clear, focused prompt
+          const searchPrompt = changelogResponse
+            ? `${changelogResponseTool}\n\nBased on the changelog context above, find relevant ${toolName.toLowerCase()} from Vercel's official sources.`
+            : `Find Vercel ${toolName.toLowerCase()} references about: ${changelogResponseTool}`;
+
+          // Perplexity-specific provider options
+          // Note: search_domain_filter is a Perplexity-specific option
+          const result = await generateText({
+            model: perplexityModel,
+            temperature: 0,
+            system: systemPrompt,
+            prompt: searchPrompt,
+            providerOptions: {
+              search_domain_filter: {
+                '0': "vercel.com",
+                '1': "nextjs.org"
+              },
+            },
+          });
+
+          return result.text;
+        } catch (error) {
+          const errorMessage =
+            error instanceof Error ? error.message : "Unknown error";
+          console.error(`Error fetching ${toolName}:`, errorMessage);
+          return `Error retrieving ${toolName.toLowerCase()}: ${errorMessage}`;
+        }
       },
     });
   }
 
-  // Add getChangelogs tool as before if defined elsewhere
+  // Add getChangelogs tool
   tools.getChangelogs = getChangelogs;
 
   return tools;
