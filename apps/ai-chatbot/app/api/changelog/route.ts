@@ -71,11 +71,23 @@ export async function POST(req: Request) {
         );
 
       if (changelogResponse) {
-        latestChangelogResponse = changelogResponse.output.steps
-          .map((step: any) =>
-            step.content.map((content: any) => content.text).join("\n"),
-          )
-          .join("\n");
+        // Handle both string output (new format) and structured output (old format)
+        if (typeof changelogResponse.output === "string") {
+          latestChangelogResponse = changelogResponse.output;
+        } else if (changelogResponse.output?.steps) {
+          // Old structured format with steps
+          latestChangelogResponse = changelogResponse.output.steps
+            .map((step: any) =>
+              step.content.map((content: any) => content.text).join("\n"),
+            )
+            .join("\n");
+        } else {
+          // Fallback: try to stringify or use as-is
+          latestChangelogResponse =
+            typeof changelogResponse.output === "string"
+              ? changelogResponse.output
+              : JSON.stringify(changelogResponse.output);
+        }
       }
     }
 

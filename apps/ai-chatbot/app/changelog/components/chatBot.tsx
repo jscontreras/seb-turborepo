@@ -80,108 +80,72 @@ export function ChatBot({
 
   // Initialize chat state from localStorage
   useEffect(() => {
-    // More reliable reload detection using multiple methods
-    const isHardReload = (() => {
-      // Method 1: Check if this is a fresh page load (not navigation)
-      if (typeof window !== "undefined" && window.performance) {
-        const navigation = window.performance.getEntriesByType(
-          "navigation",
-        )[0] as PerformanceNavigationTiming;
-        if (navigation && navigation.type === "reload") {
-          return true;
-        }
-      }
+    // Always try to load saved state from localStorage
+    // Only clear on explicit user action or corruption
+    setIsRestoring(true);
+    try {
+      const savedMessages = localStorage.getItem(STORAGE_KEYS.MESSAGES);
+      const savedAttachments = localStorage.getItem(STORAGE_KEYS.ATTACHMENTS);
+      const savedInput = localStorage.getItem(STORAGE_KEYS.INPUT);
 
-      // Method 2: Check if session storage has a flag (set on beforeunload)
-      const wasReloading = sessionStorage.getItem("chat-reloading");
-      if (wasReloading === "true") {
-        sessionStorage.removeItem("chat-reloading");
-        return true;
-      }
-
-      // Method 3: Check if we have a session ID mismatch
-      const currentSessionId = sessionStorage.getItem("chat-session-id");
-      const storedSessionId = localStorage.getItem(STORAGE_KEYS.SESSION_ID);
-
-      if (!currentSessionId) {
-        // First time visit, generate session ID
-        const newSessionId = Date.now().toString();
-        sessionStorage.setItem("chat-session-id", newSessionId);
-        localStorage.setItem(STORAGE_KEYS.SESSION_ID, newSessionId);
-        return false;
-      }
-
-      if (currentSessionId !== storedSessionId) {
-        // Session ID mismatch indicates a reload
-        localStorage.setItem(STORAGE_KEYS.SESSION_ID, currentSessionId);
-        return true;
-      }
-
-      return false;
-    })();
-
-    if (isHardReload) {
-      // Clear all chat storage on hard reload
-      localStorage.removeItem(STORAGE_KEYS.MESSAGES);
-      localStorage.removeItem(STORAGE_KEYS.ATTACHMENTS);
-      localStorage.removeItem(STORAGE_KEYS.INPUT);
-      console.log("Hard reload detected - cleared chat history");
-    } else {
-      // Load saved state from localStorage
-      setIsRestoring(true);
-      try {
-        const savedMessages = localStorage.getItem(STORAGE_KEYS.MESSAGES);
-        const savedAttachments = localStorage.getItem(STORAGE_KEYS.ATTACHMENTS);
-        const savedInput = localStorage.getItem(STORAGE_KEYS.INPUT);
-
-        if (savedMessages) {
+      if (savedMessages) {
+        try {
           const parsedMessages = JSON.parse(savedMessages);
-          setMessages(parsedMessages);
+          // Only restore if we have valid messages
+          if (Array.isArray(parsedMessages) && parsedMessages.length > 0) {
+            setMessages(parsedMessages);
+          }
+        } catch (parseError) {
+          console.error("Error parsing saved messages:", parseError);
+          // Clear corrupted data
+          localStorage.removeItem(STORAGE_KEYS.MESSAGES);
         }
-
-        if (savedAttachments) {
-          const parsedAttachments = JSON.parse(savedAttachments);
-          setAttachments(parsedAttachments);
-        }
-
-        if (savedInput) {
-          setInput(savedInput);
-        }
-      } catch (error) {
-        console.error("Error loading chat state from localStorage:", error);
-        // Clear corrupted data
-        localStorage.removeItem(STORAGE_KEYS.MESSAGES);
-        localStorage.removeItem(STORAGE_KEYS.ATTACHMENTS);
-        localStorage.removeItem(STORAGE_KEYS.INPUT);
-      } finally {
-        setIsRestoring(false);
       }
+
+      if (savedAttachments) {
+        try {
+          const parsedAttachments = JSON.parse(savedAttachments);
+          if (Array.isArray(parsedAttachments)) {
+            setAttachments(parsedAttachments);
+          }
+        } catch (parseError) {
+          console.error("Error parsing saved attachments:", parseError);
+          localStorage.removeItem(STORAGE_KEYS.ATTACHMENTS);
+        }
+      }
+
+      if (savedInput) {
+        setInput(savedInput);
+      }
+    } catch (error) {
+      console.error("Error loading chat state from localStorage:", error);
+      // Only clear on actual errors, not on normal page load
+    } finally {
+      setIsRestoring(false);
     }
 
     setIsInitialized(true);
-
-    // Add beforeunload listener to set a flag for hard reload detection
-    const handleBeforeUnload = () => {
-      sessionStorage.setItem("chat-reloading", "true");
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
   }, [setMessages]);
 
   // Save messages to localStorage whenever they change
   useEffect(() => {
-    if (isInitialized && messages.length > 0) {
+    if (isInitialized && !isRestoring) {
       try {
-        localStorage.setItem(STORAGE_KEYS.MESSAGES, JSON.stringify(messages));
+        // Only save if we have messages
+        if (messages.length > 0) {
+          // Ensure messages are serializable - filter out any non-serializable data
+          const serializableMessages = JSON.parse(JSON.stringify(messages));
+          localStorage.setItem(STORAGE_KEYS.MESSAGES, JSON.stringify(serializableMessages));
+        } else {
+          // Don't clear on empty - might be during initialization
+          // Only clear if explicitly clearing (handled by clearChatHistory)
+        }
       } catch (error) {
         console.error("Error saving messages to localStorage:", error);
+        // Don't clear on save error - just log it
       }
     }
-  }, [messages, isInitialized]);
+  }, [messages, isInitialized, isRestoring]);
 
   // Save attachments to localStorage whenever they change
   useEffect(() => {
@@ -199,14 +163,15 @@ export function ChatBot({
 
   // Save input to localStorage whenever it changes
   useEffect(() => {
-    if (isInitialized) {
+    if (isInitialized && !isRestoring) {
       try {
+        // Save input (even if empty, so user can restore their typing)
         localStorage.setItem(STORAGE_KEYS.INPUT, input);
       } catch (error) {
         console.error("Error saving input to localStorage:", error);
       }
     }
-  }, [input, isInitialized]);
+  }, [input, isInitialized, isRestoring]);
 
   const uploadFile = async (file: File): Promise<string> => {
     const formData = new FormData();
