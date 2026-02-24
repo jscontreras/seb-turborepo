@@ -4,9 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "@/app/globals.css"
 import { AppSidebar } from "@/components/app-sidebar"
-import { UrlBreadcrumb } from "@/components/url-breadcrumb"
-import { Suspense } from "react"
-import { Skeleton } from "@repo/ui/components/ui/skeleton"
+
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })

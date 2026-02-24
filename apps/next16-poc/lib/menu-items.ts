@@ -12,9 +12,9 @@ export const menuItems: Record<string, MenuItem[]> = {
       relativeUrl: "/isr",
     },
     {
-      name: "Grouped Layouts",
-      description: "Organize routes without affecting URL paths",
-      relativeUrl: "/grouped-layouts",
+      name: "Cache Tags",
+      description: "Checking Cache Tags with Next.js 16",
+      relativeUrl: "/cache-tags",
     },
     {
       name: "Parallel Routes",
