@@ -1,9 +1,11 @@
 "use client"
 
 import { useState } from "react"
+import { revalidateTagsWithUpdateTag } from "../actions"
 import { Button } from "@repo/ui/components/ui/button"
 import { Checkbox } from "@repo/ui/components/ui/checkbox"
 import { Label } from "@repo/ui/components/ui/label"
+import { Switch } from "@repo/ui/components/ui/switch"
 
 const DEMO_TAGS = [
   {
@@ -37,6 +39,7 @@ export function RevalidatePanel() {
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
+  const [useUpdateTag, setUseUpdateTag] = useState(false)
 
   const toggle = (id: string) => {
     setSelected((prev) => {
@@ -55,22 +58,28 @@ export function RevalidatePanel() {
     }
     setLoading(true)
     setMessage(null)
+    const tags = Array.from(selected)
     try {
-      const res = await fetch("/api/cache-tags-demo/revalidate-stale", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tags: Array.from(selected) }),
-      })
-      const data = await res.json()
-      if (!res.ok) {
-        setMessage(data.error ?? "Revalidation failed")
-        setLoading(false)
-        return
+      if (useUpdateTag) {
+        const data = await revalidateTagsWithUpdateTag(tags)
+        setMessage(`Revalidated (updateTag): ${data.revalidated.join(", ")}.`)
+      } else {
+        const res = await fetch("/api/cache-tags-demo/revalidate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ tags, method: "revalidateTag" }),
+        })
+        const data = await res.json()
+        if (!res.ok) {
+          setMessage(data.error ?? "Revalidation failed")
+          setLoading(false)
+          return
+        }
+        setMessage(`Revalidated (revalidateTag): ${data.revalidated.join(", ")}.`)
       }
-      setMessage(`Revalidated: ${data.revalidated.join(", ")}.`)
-      setLoading(false)
     } catch (e) {
       setMessage(e instanceof Error ? e.message : "Request failed")
+    } finally {
       setLoading(false)
     }
   }
@@ -85,6 +94,19 @@ export function RevalidatePanel() {
         old timestamps first, then fresh data. Select tags and submit to
         revalidate.
       </p>
+      <div className="mb-4 flex items-center gap-3">
+        <span className="text-sm font-medium text-muted-foreground">
+          revalidateTag
+        </span>
+        <Switch
+          checked={useUpdateTag}
+          onCheckedChange={setUseUpdateTag}
+          aria-label="Use updateTag instead of revalidateTag"
+        />
+        <span className="text-sm font-medium text-muted-foreground">
+          updateTag
+        </span>
+      </div>
       <div className="mb-4 flex flex-wrap gap-4">
         {DEMO_TAGS.map(({ id, label, className }) => (
           <div

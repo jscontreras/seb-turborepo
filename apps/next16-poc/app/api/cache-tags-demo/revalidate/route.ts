@@ -1,16 +1,11 @@
 import { NextRequest } from "next/server"
 import { revalidateTag } from "next/cache"
 
-const ALLOWED_TAGS = [
-  "miss-demo-time-a",
-  "miss-demo-time-b",
-  "miss-demo-time-c",
-  "miss-demo",
-  "miss-mode-cards", // ISR page cache; revalidate so next load shows fresh cards
-] as const
+const METHODS = ["revalidateTag", "updateTag"] as const
+type Method = (typeof METHODS)[number]
 
 export async function POST(request: NextRequest) {
-  let body: { tags?: string[] }
+  let body: { tags?: unknown; method?: unknown }
   try {
     body = await request.json()
   } catch {
@@ -20,30 +15,28 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  const requested = Array.isArray(body.tags) ? body.tags : []
-  const toRevalidate = requested.filter((tag) =>
-    ALLOWED_TAGS.includes(tag as (typeof ALLOWED_TAGS)[number])
-  )
+  const requested = Array.isArray(body.tags)
+    ? body.tags.filter((t): t is string => typeof t === "string")
+    : []
 
-  // When revalidating any data tag, also revalidate the page cache so the
-  // next load re-runs the cached component and shows fresh timestamps
-  const dataTags = [
-    "miss-demo-time-a",
-    "miss-demo-time-b",
-    "miss-demo-time-c",
-    "miss-demo",
-  ]
-  const revalidatingData = toRevalidate.some((t) => dataTags.includes(t))
-  const tagsToRevalidate =
-    revalidatingData && !toRevalidate.includes("miss-mode-cards")
-      ? [...toRevalidate, "miss-mode-cards"]
-      : toRevalidate
+  const method = METHODS.includes(body.method as Method)
+    ? (body.method as Method)
+    : "revalidateTag"
 
-  // Use { expire: 0 } so the next request is a cache MISS and gets fresh data.
-  // "max" would use stale-while-revalidate (serve stale, then revalidate in background).
-  for (const tag of tagsToRevalidate) {
+  if (method === "updateTag") {
+    return Response.json(
+      {
+        error:
+          "updateTag can only be called from a Server Action. Use the revalidate panel with method set to updateTag.",
+        revalidated: [],
+      },
+      { status: 400 }
+    )
+  }
+
+  for (const tag of requested) {
     revalidateTag(tag, { expire: 0 })
   }
 
-  return Response.json({ revalidated: tagsToRevalidate })
+  return Response.json({ revalidated: requested })
 }
