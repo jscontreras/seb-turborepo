@@ -83,7 +83,7 @@ function TimeCard({
 async function CacheTagsCards() {
   "use cache"
   // No stale window: revalidate only. Avoid stale so revalidate + refresh shows fresh data.
-  cacheLife({ revalidate: REVALIDATE_SECONDS })
+  cacheLife({ revalidate: REVALIDATE_SECONDS, stale: 0 })
   cacheTag("miss-mode-cards")
 
   const results = await Promise.all(
