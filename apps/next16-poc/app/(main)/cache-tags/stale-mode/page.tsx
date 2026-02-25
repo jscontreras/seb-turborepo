@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { headers } from "next/headers"
 import { Suspense } from "react"
 import { cacheLife, cacheTag } from "next/cache"
 import { DocsCodeButtons } from "@/components/docs-code-buttons"
@@ -22,9 +21,12 @@ async function getCachedTime(
   slot: string,
   uniqueTag: string
 ): Promise<{ timestamp: number; slot: string; tags: string[] }> {
-  const url = `${baseUrl}/api/cache-tags-demo/time?slot=${slot}`
+  const url = `https://api.tc-vercel.dev/api/cache-tags-demo/time?slot=${slot}`
   const res = await fetch(url, {
     cache: "force-cache",
+    headers: {
+      'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+    },
     next: {
       tags: [uniqueTag, SHARED_TAG],
       revalidate: REVALIDATE_SECONDS,
@@ -57,7 +59,7 @@ function TimeCard({
     hour12: false,
   })
   return (
-    <div className="rounded-lg border border-border bg-card p-6">
+    <div className="p-6 border rounded-lg border-border bg-card">
       <h3 className="mb-2 text-lg font-semibold text-card-foreground">
         Slot {data.slot.toUpperCase()}
       </h3>
@@ -79,14 +81,14 @@ function TimeCard({
   )
 }
 
-async function CacheTagsCardsContent({ baseUrl }: { baseUrl: string }) {
+async function CacheTagsCards() {
   "use cache"
   // Stale mode: client can see cached data for STALE_SECONDS before checking; revalidate every REVALIDATE_SECONDS
   cacheLife({ stale: STALE_SECONDS, revalidate: REVALIDATE_SECONDS })
   cacheTag("stale-mode-cards")
 
   const results = await Promise.all(
-    SLOTS.map(({ slot, uniqueTag }) => getCachedTime(baseUrl, slot, uniqueTag))
+    SLOTS.map(({ slot, uniqueTag }) => getCachedTime('', slot, uniqueTag))
   )
 
   return (
@@ -98,29 +100,17 @@ async function CacheTagsCardsContent({ baseUrl }: { baseUrl: string }) {
   )
 }
 
-async function CacheTagsCards() {
-  const headersList = await headers()
-  const host =
-    headersList.get("x-forwarded-host") ??
-    headersList.get("host") ??
-    "localhost:3000"
-  const protocol = headersList.get("x-forwarded-proto") ?? "http"
-  const baseUrl = `${protocol}://${host}`
-
-  return <CacheTagsCardsContent baseUrl={baseUrl} />
-}
-
 function CardsFallback() {
   return (
     <div className="grid gap-4 md:grid-cols-3">
       {[1, 2, 3].map((i) => (
         <div
           key={i}
-          className="rounded-lg border border-border bg-card p-6"
+          className="p-6 border rounded-lg border-border bg-card"
         >
-          <Skeleton className="mb-2 h-5 w-20" />
-          <Skeleton className="mb-2 h-8 w-24" />
-          <Skeleton className="h-4 w-48" />
+          <Skeleton className="w-20 h-5 mb-2" />
+          <Skeleton className="w-24 h-8 mb-2" />
+          <Skeleton className="w-48 h-4" />
         </div>
       ))}
     </div>
