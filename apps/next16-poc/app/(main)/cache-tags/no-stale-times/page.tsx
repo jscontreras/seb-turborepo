@@ -14,7 +14,6 @@ const SLOTS = [
 const SHARED_TAG = "miss-demo"
 
 async function getCachedTime(
-  baseUrl: string,
   slot: string,
   uniqueTag: string
 ): Promise<{ timestamp: number; slot: string; tags: string[] }> {
@@ -84,7 +83,7 @@ async function CacheTagsCards() {
   cacheTag("miss-mode-cards")
 
   const results = await Promise.all(
-    SLOTS.map(({ slot, uniqueTag }) => getCachedTime('', slot, uniqueTag))
+    SLOTS.map(({ slot, uniqueTag }) => getCachedTime(slot, uniqueTag))
   )
 
   return (
