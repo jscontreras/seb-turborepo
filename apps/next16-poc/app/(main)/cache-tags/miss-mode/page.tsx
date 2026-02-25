@@ -142,7 +142,7 @@ export default function CacheTagsMissModePage() {
         <p className="mb-4">
           This page is ISR cached (revalidate: {REVALIDATE_SECONDS}s). Each card is from a cached
           fetch with a unique tag and a shared tag. Use the panel to revalidate
-          by tag and hard refresh to see new timestamps.
+          by tag; refresh the page to see new timestamps.
         </p>
         <DocsCodeButtons docsUrl="/nested-layouts" codeUrl="/grouped-layouts" />
       </div>
