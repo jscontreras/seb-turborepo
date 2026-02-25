@@ -5,8 +5,6 @@ import { DocsCodeButtons } from "@/components/docs-code-buttons"
 import { RevalidatePanel } from "./revalidate-panel"
 import { Skeleton } from "@repo/ui/components/ui/skeleton"
 
-const REVALIDATE_SECONDS = 60
-
 const SLOTS = [
   { slot: "a", uniqueTag: "miss-demo-time-a" },
   { slot: "b", uniqueTag: "miss-demo-time-b" },
@@ -28,7 +26,6 @@ async function getCachedTime(
     cache: "force-cache",
     next: {
       tags: [uniqueTag, SHARED_TAG],
-      revalidate: REVALIDATE_SECONDS,
     },
   })
   const data = (await res.json()) as { timestamp: number; slot: string }
@@ -83,7 +80,7 @@ function TimeCard({
 async function CacheTagsCards() {
   "use cache"
   // No stale window: revalidate only. Avoid stale so revalidate + refresh shows fresh data.
-  cacheLife({ revalidate: REVALIDATE_SECONDS, stale: 0 })
+  cacheLife({ stale: 0 })
   cacheTag("miss-mode-cards")
 
   const results = await Promise.all(
@@ -130,7 +127,7 @@ export default function CacheTagsMissModePage() {
       </h1>
       <div className="text-foreground/90">
         <p className="mb-4">
-          This page is ISR cached (revalidate: {REVALIDATE_SECONDS}s). Each card is from a cached
+          This page is ISR cached, and doesn't revalidate on time (only on demand by tag revalidation). Each card is from a cached
           fetch with a unique tag and a shared tag. Use the panel to revalidate
           by tag; refresh the page to see new timestamps.
         </p>

@@ -23,11 +23,33 @@ export default function CacheTagsPage() {
           </p>
         </Link>
         <Link
-          href="/cache-tags/miss-mode"
+          href="/cache-tags/no-stale"
           className="group rounded-lg border border-border bg-card p-6 transition-colors hover:border-primary hover:bg-accent"
         >
           <h2 className="mb-2 text-lg font-semibold text-card-foreground group-hover:text-primary">
             Revalidate Tags (NO STALE)
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Content revalidated after a cache miss.
+          </p>
+        </Link>
+        <Link
+          href="/cache-tags/stale-mode-time"
+          className="group rounded-lg border border-border bg-card p-6 transition-colors hover:border-primary hover:bg-accent"
+        >
+          <h2 className="mb-2 text-lg font-semibold text-card-foreground group-hover:text-primary">
+            Revalidate Tags (STALE + Time Revalidation)
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Content revalidated when the tag was stale.
+          </p>
+        </Link>
+        <Link
+          href="/cache-tags/no-stale-time"
+          className="group rounded-lg border border-border bg-card p-6 transition-colors hover:border-primary hover:bg-accent"
+        >
+          <h2 className="mb-2 text-lg font-semibold text-card-foreground group-hover:text-primary">
+            Revalidate Tags (NO STALE + Time Revalidation)
           </h2>
           <p className="text-sm text-muted-foreground">
             Content revalidated after a cache miss.

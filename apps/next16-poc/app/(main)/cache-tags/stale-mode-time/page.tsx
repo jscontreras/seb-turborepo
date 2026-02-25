@@ -5,6 +5,7 @@ import { DocsCodeButtons } from "@/components/docs-code-buttons"
 import { RevalidatePanel } from "./revalidate-panel"
 import { Skeleton } from "@repo/ui/components/ui/skeleton"
 
+const REVALIDATE_SECONDS = 30
 const STALE_SECONDS = 15
 
 const SLOTS = [
@@ -28,6 +29,7 @@ async function getCachedTime(
     },
     next: {
       tags: [uniqueTag, SHARED_TAG],
+      revalidate: REVALIDATE_SECONDS,
     },
   })
   const data = (await res.json()) as { timestamp: number; slot: string }
@@ -81,8 +83,8 @@ function TimeCard({
 
 async function CacheTagsCards() {
   "use cache"
-  // Stale mode: client can see cached data for STALE_SECONDS before checking; revalidate only on demand by tag
-  cacheLife({ stale: STALE_SECONDS})
+  // Stale mode: client can see cached data for STALE_SECONDS before checking; revalidate every REVALIDATE_SECONDS
+  cacheLife({ stale: STALE_SECONDS, revalidate: REVALIDATE_SECONDS })
   cacheTag("stale-mode-cards")
 
   const results = await Promise.all(
@@ -130,7 +132,8 @@ export default function CacheTagsStaleModePage() {
       <div className="text-foreground/90">
         <p className="mb-4">
           This page uses <strong>stale-while-revalidate</strong>: cache has a{" "}
-          <strong>stale</strong> window ({STALE_SECONDS}s) and only revalidates on demand by tag. When you revalidate by tag, the server may serve
+          <strong>stale</strong> window ({STALE_SECONDS}s) and revalidates every{" "}
+          {REVALIDATE_SECONDS}s. When you revalidate by tag, the server may serve
           stale content first, then refresh in the background—so you might see
           old timestamps briefly after refresh.
         </p>

@@ -5,15 +5,15 @@ import { DocsCodeButtons } from "@/components/docs-code-buttons"
 import { RevalidatePanel } from "./revalidate-panel"
 import { Skeleton } from "@repo/ui/components/ui/skeleton"
 
-const STALE_SECONDS = 15
+const REVALIDATE_SECONDS = 30
 
 const SLOTS = [
-  { slot: "a", uniqueTag: "stale-demo-time-a" },
-  { slot: "b", uniqueTag: "stale-demo-time-b" },
-  { slot: "c", uniqueTag: "stale-demo-time-c" },
+  { slot: "a", uniqueTag: "miss-demo-time-a" },
+  { slot: "b", uniqueTag: "miss-demo-time-b" },
+  { slot: "c", uniqueTag: "miss-demo-time-c" },
 ] as const
 
-const SHARED_TAG = "stale-demo"
+const SHARED_TAG = "miss-demo"
 
 async function getCachedTime(
   baseUrl: string,
@@ -22,12 +22,13 @@ async function getCachedTime(
 ): Promise<{ timestamp: number; slot: string; tags: string[] }> {
   const url = `https://api.tc-vercel.dev/api/cache-tags-demo/time?slot=${slot}`
   const res = await fetch(url, {
-    cache: "force-cache",
     headers: {
       'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
     },
+    cache: "force-cache",
     next: {
       tags: [uniqueTag, SHARED_TAG],
+      revalidate: REVALIDATE_SECONDS,
     },
   })
   const data = (await res.json()) as { timestamp: number; slot: string }
@@ -38,10 +39,10 @@ async function getCachedTime(
 }
 
 const TAG_COLORS: Record<string, string> = {
-  "stale-demo-time-a": "bg-sky-500/20 text-sky-300 border-sky-500/40",
-  "stale-demo-time-b": "bg-emerald-500/20 text-emerald-300 border-emerald-500/40",
-  "stale-demo-time-c": "bg-amber-500/20 text-amber-300 border-amber-500/40",
-  "stale-demo": "bg-violet-500/20 text-violet-300 border-violet-500/40",
+  "miss-demo-time-a": "bg-sky-500/20 text-sky-300 border-sky-500/40",
+  "miss-demo-time-b": "bg-emerald-500/20 text-emerald-300 border-emerald-500/40",
+  "miss-demo-time-c": "bg-amber-500/20 text-amber-300 border-amber-500/40",
+  "miss-demo": "bg-violet-500/20 text-violet-300 border-violet-500/40",
 }
 
 function TimeCard({
@@ -81,9 +82,9 @@ function TimeCard({
 
 async function CacheTagsCards() {
   "use cache"
-  // Stale mode: client can see cached data for STALE_SECONDS before checking; revalidate only on demand by tag
-  cacheLife({ stale: STALE_SECONDS})
-  cacheTag("stale-mode-cards")
+  // No stale window: revalidate only. Avoid stale so revalidate + refresh shows fresh data.
+  cacheLife({ revalidate: REVALIDATE_SECONDS, stale: 0 })
+  cacheTag("miss-mode-cards")
 
   const results = await Promise.all(
     SLOTS.map(({ slot, uniqueTag }) => getCachedTime('', slot, uniqueTag))
@@ -115,7 +116,7 @@ function CardsFallback() {
   )
 }
 
-export default function CacheTagsStaleModePage() {
+export default function CacheTagsMissModePage() {
   return (
     <div className="space-y-6">
       <Link
@@ -125,14 +126,13 @@ export default function CacheTagsStaleModePage() {
         ← Back to Cache Tags
       </Link>
       <h1 className="text-3xl font-bold text-foreground">
-        Revalidate Tags (stale)
+        Revalidate Tags (NO STALE)
       </h1>
       <div className="text-foreground/90">
         <p className="mb-4">
-          This page uses <strong>stale-while-revalidate</strong>: cache has a{" "}
-          <strong>stale</strong> window ({STALE_SECONDS}s) and only revalidates on demand by tag. When you revalidate by tag, the server may serve
-          stale content first, then refresh in the background—so you might see
-          old timestamps briefly after refresh.
+          This page is ISR cached (revalidate: {REVALIDATE_SECONDS}s). Each card is from a cached
+          fetch with a unique tag and a shared tag. Use the panel to revalidate
+          by tag; refresh the page to see new timestamps.
         </p>
         <DocsCodeButtons docsUrl="/nested-layouts" codeUrl="/grouped-layouts" />
       </div>
