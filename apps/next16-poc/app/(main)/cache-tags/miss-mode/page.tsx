@@ -126,7 +126,7 @@ export default function CacheTagsMissModePage() {
         ← Back to Cache Tags
       </Link>
       <h1 className="text-3xl font-bold text-foreground">
-        Revalidate Tags (MISS)
+        Revalidate Tags (NO STALE)
       </h1>
       <div className="text-foreground/90">
         <p className="mb-4">
