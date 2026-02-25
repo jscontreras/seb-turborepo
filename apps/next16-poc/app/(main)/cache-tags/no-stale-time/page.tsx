@@ -28,7 +28,6 @@ async function getCachedTime(
     cache: "force-cache",
     next: {
       tags: [uniqueTag, SHARED_TAG],
-      revalidate: REVALIDATE_SECONDS,
     },
   })
   const data = (await res.json()) as { timestamp: number; slot: string }
