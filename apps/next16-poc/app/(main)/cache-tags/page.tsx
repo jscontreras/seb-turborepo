@@ -27,7 +27,7 @@ export default function CacheTagsPage() {
           className="group rounded-lg border border-border bg-card p-6 transition-colors hover:border-primary hover:bg-accent"
         >
           <h2 className="mb-2 text-lg font-semibold text-card-foreground group-hover:text-primary">
-            Revalidate Tags (MISS)
+            Revalidate Tags (NO STALE)
           </h2>
           <p className="text-sm text-muted-foreground">
             Content revalidated after a cache miss.
