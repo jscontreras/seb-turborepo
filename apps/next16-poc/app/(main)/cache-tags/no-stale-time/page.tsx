@@ -3,6 +3,7 @@ import { Suspense } from "react"
 import { cacheLife, cacheTag } from "next/cache"
 import { DocsCodeButtons } from "@/components/docs-code-buttons"
 import { RevalidatePanel } from "./revalidate-panel"
+import { CountdownSeconds } from "./countdown-seconds"
 import { Skeleton } from "@repo/ui/components/ui/skeleton"
 
 const REVALIDATE_SECONDS = 30
@@ -128,9 +129,9 @@ export default function CacheTagsMissModePage() {
       </h1>
       <div className="text-foreground/90">
         <p className="mb-4">
-          This page is ISR cached (revalidate: {REVALIDATE_SECONDS}s). Each card is from a cached
-          fetch with a unique tag and a shared tag. Use the panel to revalidate
-          by tag; refresh the page to see new timestamps.
+          This page is ISR cached (revalidate: <CountdownSeconds seconds={REVALIDATE_SECONDS} />s).
+          Each card is from a cached fetch with a unique tag and a shared tag. Use the panel to
+          revalidate by tag; refresh the page to see new timestamps.
         </p>
         <DocsCodeButtons docsUrl="/nested-layouts" codeUrl="/grouped-layouts" />
       </div>

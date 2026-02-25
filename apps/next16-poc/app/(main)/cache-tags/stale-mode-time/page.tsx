@@ -3,6 +3,7 @@ import { Suspense } from "react"
 import { cacheLife, cacheTag } from "next/cache"
 import { DocsCodeButtons } from "@/components/docs-code-buttons"
 import { RevalidatePanel } from "./revalidate-panel"
+import { CountdownSeconds } from "../no-stale-time/countdown-seconds"
 import { Skeleton } from "@repo/ui/components/ui/skeleton"
 
 const REVALIDATE_SECONDS = 30
@@ -130,10 +131,10 @@ export default function CacheTagsStaleModePage() {
       <div className="text-foreground/90">
         <p className="mb-4">
           This page uses <strong>stale-while-revalidate</strong>: cache has a{" "}
-          <strong>stale</strong> window ({STALE_SECONDS}s) and revalidates every{" "}
-          {REVALIDATE_SECONDS}s. When you revalidate by tag, the server may serve
-          stale content first, then refresh in the background—so you might see
-          old timestamps briefly after refresh.
+          <strong>stale</strong> window of <span style={{ color: "rgb(34,197,94)" }}>{STALE_SECONDS}</span>s and
+          revalidates every <CountdownSeconds seconds={REVALIDATE_SECONDS} />s. When you revalidate
+          by tag, the server may serve stale content first, then refresh in the background—so you
+          might see old timestamps briefly after refresh.
         </p>
         <DocsCodeButtons docsUrl="/nested-layouts" codeUrl="/grouped-layouts" />
       </div>
